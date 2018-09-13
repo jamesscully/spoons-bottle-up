@@ -1,36 +1,32 @@
 package com.test.yames.bottleup;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.Toast;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class Plaque extends LinearLayout {
 
     private int color;
     private TextView pick;
-
-    public Bottle bottleData;
-
-    public int bottleMax, thisCount;
+    public int btlCount;
+    public Bottle bottle;
     boolean hidden;
 
     Context thisContext;
 
 
     public Plaque(Context context, Bottle btl) {
-        super(context); bottleData = btl;
+        super(context); bottle = btl;
         LayoutInflater.from(context).inflate(R.layout.plaque_layout, this, true);
         thisContext = context;
         init(context, null, 0);
@@ -51,6 +47,11 @@ public class Plaque extends LinearLayout {
     public void setAccent() {
         color = 225;
         setBackgroundColor(Color.rgb(color, color, color));
+    }
+
+    public void setCount(int n) {
+        btlCount = n;
+        pick.setText(Integer.toString(btlCount));
     }
 
 
@@ -76,8 +77,8 @@ public class Plaque extends LinearLayout {
         pick = findViewById(R.id.bottleMax);
 
 
-        lblName.setText(bottleData.name);
-        lblMax.setText(Integer.toString(bottleData.max));
+        lblName.setText(bottle.name);
+        lblMax.setText(Integer.toString(bottle.max));
         setupButtons();
         setupCounter();
     }
@@ -88,13 +89,15 @@ public class Plaque extends LinearLayout {
         dec = findViewById(R.id.btnDec);
         stepInc = findViewById(R.id.btnStepInc);
         stepDec = findViewById(R.id.btnStepDec);
+        Button clr = findViewById(R.id.btnClear);
+
+
 
         inc.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(thisCount++ < bottleData.max);
-                    pick.setText(Integer.toString(thisCount));
-
+                btlCount++;
+                pick.setText(Integer.toString(btlCount));
             }
         });
 
@@ -102,8 +105,10 @@ public class Plaque extends LinearLayout {
         dec.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(thisCount-- > 0);
-                    pick.setText(Integer.toString(thisCount));
+                if(btlCount - 1 >= 0) {
+                    btlCount--;
+                    pick.setText(Integer.toString(btlCount));
+                }
             }
         });
 
@@ -111,8 +116,8 @@ public class Plaque extends LinearLayout {
             @Override
             public void onClick(View view) {
                 if(true) {
-                    thisCount += 5;
-                    pick.setText(Integer.toString(thisCount));
+                    btlCount += 5;
+                    pick.setText(Integer.toString(btlCount));
                 }
             }
         });
@@ -120,26 +125,25 @@ public class Plaque extends LinearLayout {
         stepDec.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(thisCount - 5 >= 0)
-                    thisCount -= 5;
+                if(btlCount - 5 >= 0)
+                    btlCount -= 5;
                 else
-                    thisCount = 0;
+                    setCount(0);
 
-                pick.setText(Integer.toString(thisCount));
+                pick.setText(Integer.toString(btlCount));
             }
         });
+
+
     }
-
-
-
 
     // code for setting up picker
     public void setupCounter() {
-        pick.setText(Integer.toString(thisCount));
+        pick.setText(Integer.toString(btlCount));
     }
 
     public void toggle() {
-        if(hidden)
+        if(!hidden)
             this.setVisibility(View.GONE);
         else
             this.setVisibility(View.VISIBLE);

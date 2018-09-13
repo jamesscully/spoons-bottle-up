@@ -19,7 +19,7 @@
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnInc"
+        android:layout_toStartOf="@+id/btnStepDec"
         android:layout_weight="1"
         android:text="++" />
 
@@ -27,8 +27,8 @@
         android:id="@+id/btnDec"
         android:layout_width="50dp"
         android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnStepDec"
         android:layout_weight="1"
         android:text="-" />
 
@@ -38,6 +38,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="115dp"
         android:layout_weight="1"
         android:text="--" />
 

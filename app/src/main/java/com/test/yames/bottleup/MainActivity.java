@@ -1,18 +1,14 @@
 package com.test.yames.bottleup;
 
-import android.database.Cursor;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
 
     BottleDatabase db;
     int bottleCount;
+
+    List<Plaque> plqs = new ArrayList<>();
+    List<LinearLayout> containers = new ArrayList<>();
+    List<Bottle> bottles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,42 +32,77 @@ public class MainActivity extends AppCompatActivity {
         db = new BottleDatabase(this);  // create connection to db
         db.createDB();
         db.openDB();
-        bottleCount = ((int) db.getCount());
 
-        List<Bottle> bottles = db.getBottles(); // create bottle list + plaques
-        List<LinearLayout> containers = new ArrayList<>();
+        bottleCount = ((int) db.getCount());
+        bottles = db.getBottles(); // create bottle list + plaques
+
         containers.add((LinearLayout) findViewById(R.id.ctnrFirst));
         containers.add((LinearLayout) findViewById(R.id.ctnrIPA));
         containers.add((LinearLayout) findViewById(R.id.ctnrTonic));
         containers.add((LinearLayout) findViewById(R.id.ctnrBack));
 
-        Button toggle = new Button(this);
-        toggle = findViewById(R.id.btnHideShow);
+        setupPlaque();
+        setupButtons();
 
 
+    }
 
-        final Plaque[] plqs = new Plaque[bottleCount];
-
+    public void setupPlaque() {
         for(int i = 0; i < bottleCount; i++) {
-            plqs[i] = new Plaque(getApplicationContext(), bottles.get(i));
+            plqs.add(i, new Plaque(getApplicationContext(), bottles.get(i)));
+            Plaque curPlq = plqs.get(i);
             if(i % 2 == 1)
-                plqs[i].setAccent();
+                curPlq.setAccent();
 
-            containers.get(bottles.get(i).fridge).addView(plqs[i]);
+            containers.get(bottles.get(i).fridge).addView(curPlq);
         }
+    }
+
+    public void setupButtons() {
+        Button toggle = findViewById(R.id.btnHideShow);
+        Button clr = findViewById(R.id.btnClear);
+
 
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 for(int i = 0; i < bottleCount; i++) {
-                    if(plqs[i].thisCount == 0)
-                        plqs[i].toggle();
+                    if(plqs.get(i).btlCount == 0)
+                        plqs.get(i).toggle();
                 }
             }
         });
-    }
 
+        clr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                for(Plaque p : plqs) {
+                                    p.setCount(0);
+                                    p.setVisibility(View.VISIBLE);
+                                    p.hidden = false;
+                                }
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener);
+
+                AlertDialog diag = builder.create();
+
+                diag.show();
+
+
+            }
+        });
+    }
 
 
 

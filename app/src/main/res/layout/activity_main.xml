@@ -22,11 +22,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnHideShow"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Hide/Show" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnHideShow"
+                    android:layout_width="209dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hide/Show" />
+
+                <Button
+                    android:id="@+id/btnClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Clear" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/lblFront"
