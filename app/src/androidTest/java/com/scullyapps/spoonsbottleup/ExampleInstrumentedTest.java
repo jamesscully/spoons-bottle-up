@@ -1,4 +1,4 @@
-package com.test.yames.bottleup;
+package com.scullyapps.spoonsbottleup;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.test.yames.bottleup", appContext.getPackageName());
+        assertEquals("com.yames.bottleup", appContext.getPackageName());
     }
 }

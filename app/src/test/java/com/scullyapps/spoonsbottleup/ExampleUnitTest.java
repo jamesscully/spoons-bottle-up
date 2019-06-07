@@ -1,4 +1,4 @@
-package com.test.yames.bottleup;
+package com.scullyapps.spoonsbottleup;
 
 import org.junit.Test;
 

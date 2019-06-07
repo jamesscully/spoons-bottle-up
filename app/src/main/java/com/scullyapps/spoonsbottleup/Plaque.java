@@ -1,8 +1,6 @@
-package com.test.yames.bottleup;
+package com.scullyapps.spoonsbottleup;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.Nullable;

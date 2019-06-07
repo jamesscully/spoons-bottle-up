@@ -1,4 +1,4 @@
-package com.test.yames.bottleup;
+package com.scullyapps.spoonsbottleup;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,14 +11,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BottleDatabase extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "Bottle.db";
-    public static final String DB_PATH = "/data/data/com.test.yames.bottleup/";
+    public static final String DB_PATH = "/data/data/com.scullyapps.spoonsbottleup/";
     private SQLiteDatabase db;
     private Context thisContext;
 
