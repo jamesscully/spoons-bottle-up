@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#878787</color>
+    <color name="colorAccent">#3D3838</color>
+
+    <color name="plaqueBg">#FFFFFF</color>
+    <color name="plaqueBgAccent">#B5B5B5</color>
+    <color name="plaqueText">#000000</color>
+
 </resources>
