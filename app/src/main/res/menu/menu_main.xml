@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.scullyapps.spoonsbottleup.MainActivity">
     <item
+        android:id="@+id/bottleup_btn"
+        android:title="Item" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

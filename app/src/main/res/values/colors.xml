@@ -8,4 +8,6 @@
     <color name="plaqueBgAccent">#B5B5B5</color>
     <color name="plaqueText">#000000</color>
 
+    <color name="fridgeHeaderBg">#999999</color>
+
 </resources>

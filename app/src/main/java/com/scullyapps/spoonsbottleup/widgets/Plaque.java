@@ -1,9 +1,9 @@
-package com.scullyapps.spoonsbottleup;
+package com.scullyapps.spoonsbottleup.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.TextView;
+
+import com.scullyapps.spoonsbottleup.Bottle;
+import com.scullyapps.spoonsbottleup.R;
+
+import androidx.annotation.Nullable;
 
 public class Plaque extends LinearLayout {
 
@@ -87,8 +92,6 @@ public class Plaque extends LinearLayout {
         dec = findViewById(R.id.btnDec);
         stepInc = findViewById(R.id.btnStepInc);
         stepDec = findViewById(R.id.btnStepDec);
-        Button clr = findViewById(R.id.btnClear);
-
 
 
         inc.setOnClickListener(new OnClickListener() {
@@ -113,10 +116,8 @@ public class Plaque extends LinearLayout {
         stepInc.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(true) {
                     btlCount += 5;
                     pick.setText(Integer.toString(btlCount));
-                }
             }
         });
 

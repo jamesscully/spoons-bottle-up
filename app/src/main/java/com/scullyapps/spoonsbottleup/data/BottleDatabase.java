@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup;
+package com.scullyapps.spoonsbottleup.data;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -6,6 +6,8 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.scullyapps.spoonsbottleup.Bottle;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

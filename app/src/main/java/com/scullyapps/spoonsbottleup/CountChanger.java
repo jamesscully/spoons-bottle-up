@@ -2,12 +2,14 @@ package com.scullyapps.spoonsbottleup;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+
+import androidx.annotation.Nullable;
 
 public class CountChanger extends LinearLayout {
 
