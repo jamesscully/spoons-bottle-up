@@ -2,18 +2,31 @@ package com.scullyapps.spoonsbottleup;
 
 import android.os.Bundle;
 
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.scullyapps.spoonsbottleup.data.BottleDatabase;
+import com.scullyapps.spoonsbottleup.widgets.Fridge;
 import com.scullyapps.spoonsbottleup.widgets.Plaque;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.overviewScroll)
+    ScrollView main;
+
+    @BindView(R.id.fridgeContainer)
+    LinearLayout main2;
 
     BottleDatabase db;
     int bottleCount;
@@ -22,12 +35,16 @@ public class MainActivity extends AppCompatActivity {
     List<LinearLayout> containers = new ArrayList<>();
     List<Bottle> bottles          = new ArrayList<>();
 
+    Fridge def;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+
+        ButterKnife.bind(this);
 
         db = new BottleDatabase(this);  // create connection to db
         db.createDB();
@@ -43,8 +60,12 @@ public class MainActivity extends AppCompatActivity {
         containers.add((LinearLayout) findViewById(R.id.ctnrBack));
         */
 
+        def = new Fridge(getApplicationContext(), "Default");
+
         setupPlaque();
         setupButtons();
+
+        main2.addView(def);
 
 
     }
@@ -56,8 +77,11 @@ public class MainActivity extends AppCompatActivity {
             if(i % 2 == 1)
                 curPlq.setAccent();
 
-            containers.get(bottles.get(i).fridge).addView(curPlq);
+            def.addBottle(bottles.get(i));
+
+            //containers.get(bottles.get(i).fridge).addView(curPlq);
         }
+
     }
 
     public void setupButtons() {

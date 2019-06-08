@@ -2,8 +2,10 @@ package com.scullyapps.spoonsbottleup.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.scullyapps.spoonsbottleup.Bottle;
 import com.scullyapps.spoonsbottleup.R;
@@ -24,6 +26,9 @@ public class Fridge extends LinearLayout implements FridgeInterface {
 
     @BindView(R.id.fridgeBtlContainer)
     LinearLayout bottleContainer;
+
+    @BindView(R.id.fridgeName)
+    TextView fridgeName;
 
     public Fridge(Context context, String name) {
         super(context);
@@ -48,13 +53,21 @@ public class Fridge extends LinearLayout implements FridgeInterface {
 
     public void init() {
         LayoutInflater.from(context).inflate(R.layout.fridge_layout, this, true);
-
         ButterKnife.bind(this);
+
+        fridgeName.setText(name);
+        bottles = new ArrayList<>();
     }
 
 
     @Override
     public void addBottle(Bottle bottle) {
+
+        if(bottle == null) {
+            Log.e("Fridge addBottle", "Bottle was null!");
+            return;
+        }
+
         bottleContainer.addView(new Plaque(context, bottle));
         bottles.add(bottle);
     }

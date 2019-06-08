@@ -10,13 +10,14 @@
     <TextView
         android:id="@+id/fridgeName"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="50dp"
         android:background="@color/fridgeHeaderBg"
         android:gravity="bottom|left"
         android:paddingLeft="4dp"
         android:paddingBottom="4dp"
         android:text="Fridge Name"
         android:textColor="#000000"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <LinearLayout
