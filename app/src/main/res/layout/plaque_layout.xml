@@ -1,73 +1,92 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item"
     android:layout_width="fill_parent"
     android:layout_height="50dp"
     android:background="@drawable/border">
 
-    <Button
-        android:id="@+id/btnInc"
-        android:layout_width="50dp"
+    <TextView
+        android:id="@+id/bottleMax"
+        android:layout_width="30dp"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnDec"
-        android:layout_weight="1"
-        android:text="+" />
-
-    <Button
-        android:id="@+id/btnStepInc"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnStepDec"
-        android:layout_weight="1"
-        android:text="++" />
-
-    <Button
-        android:id="@+id/btnDec"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_weight="1"
-        android:text="-" />
-
-    <Button
-        android:id="@+id/btnStepDec"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="115dp"
-        android:layout_weight="1"
-        android:text="--" />
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:paddingRight="0dp"
+        android:text="?"
+        android:textColor="@color/plaqueText"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/strBtlName"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="39dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_weight="1"
         android:drawableRight="@drawable/border"
         android:gravity="left|center"
         android:paddingRight="5dp"
         android:text="TextView"
+        android:textColor="@color/plaqueText"
         android:textSize="14sp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintLeft_toRightOf="@+id/bottleMax"
+        app:layout_constraintStart_toEndOf="@+id/bottleMax"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/bottleMax"
-        android:layout_width="30dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:paddingRight="0dp"
-        android:text="?"
-        android:textColor="#000000"
-        android:textSize="24sp" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btnStepInc"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="++" />
+
+        <Button
+            android:id="@+id/btnStepDec"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="--" />
+
+        <Space
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnInc"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/btnDec"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="-" />
+    </LinearLayout>
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

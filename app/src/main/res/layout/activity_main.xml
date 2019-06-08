@@ -1,143 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:orientation="vertical"
-    android:padding="0dp"
     android:scrollbarStyle="outsideOverlay">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/ctnrBase"
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".MainActivity">
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Overview" />
 
-        <LinearLayout
-            android:id="@+id/ctnrBtns"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
-            <Button
-                android:id="@+id/btnHideShow"
-                android:layout_width="209dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/button_test"
-                android:text="Hide/Show" />
 
-            <Button
-                android:id="@+id/btnClear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/button_test"
-                android:text="Clear" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/lblFront"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#afafaf"
-            android:paddingBottom="3dp"
-            android:paddingLeft="7dp"
-            android:paddingTop="7dp"
-            android:text="Front fridge"
-            android:textSize="24sp"
-            android:textStyle="bold|italic"
-            tools:background="#f0f0f0" />
-
-        <LinearLayout
-            android:id="@+id/ctnrFirst"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/lblIPA"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#afafaf"
-            android:paddingBottom="3dp"
-            android:paddingLeft="7dp"
-            android:paddingTop="7dp"
-            android:text="IPA Fridge"
-            android:textSize="24sp"
-            android:textStyle="bold|italic"
-            tools:background="#f0f0f0" />
-
-        <LinearLayout
-            android:id="@+id/ctnrIPA"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/lblTonic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#afafaf"
-            android:paddingBottom="3dp"
-            android:paddingLeft="7dp"
-            android:paddingTop="7dp"
-            android:text="Tonics"
-            android:textSize="24sp"
-            android:textStyle="bold|italic"
-            tools:background="#f0f0f0" />
-
-        <LinearLayout
-            android:id="@+id/ctnrTonic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/lblBack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#afafaf"
-            android:paddingBottom="3dp"
-            android:paddingLeft="7dp"
-            android:paddingTop="7dp"
-            android:text="Back Fridge"
-            android:textSize="24sp"
-            android:textStyle="bold|italic"
-            tools:background="#f0f0f0" />
-
-        <LinearLayout
-            android:id="@+id/ctnrBack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+</android.support.constraint.ConstraintLayout>
