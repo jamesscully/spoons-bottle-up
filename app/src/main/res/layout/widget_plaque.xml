@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/plaque_text_count"
-        android:layout_width="50dp"
+        android:layout_width="30dp"
         android:layout_height="match_parent"
         android:layout_weight="0"
         android:gravity="center"
@@ -21,6 +21,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0"
         android:gravity="center"
+        android:paddingLeft="10dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="18sp"
