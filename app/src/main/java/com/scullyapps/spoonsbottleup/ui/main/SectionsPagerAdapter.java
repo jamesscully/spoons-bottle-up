@@ -32,9 +32,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-            case 1:
-            case 2:
                 return new GeneralSettingsFragment();
+
+            case 1:
+                return new BottleListFragment();
+
+            case 2:
+                return new FridgeFragment();
         }
 
         return new GeneralSettingsFragment();
