@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3E3946</color>
-    <color name="colorPrimaryDark">#2D2A32</color>
-    <color name="colorAccent">#3D3838</color>
-
-    <color name="plaqueBg">#FFFFFF</color>
-    <color name="plaqueBgAccent">#B5B5B5</color>
-    <color name="plaqueText">#000000</color>
-
-    <color name="fridgeHeaderBg">#999999</color>
-
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
 </resources>
