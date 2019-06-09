@@ -21,6 +21,10 @@ public class Bottle {
         this.max = max;
     }
 
+    public void setStep(int step) {
+        this.step = step;
+    }
+
     public String getName() {
         return name;
     }

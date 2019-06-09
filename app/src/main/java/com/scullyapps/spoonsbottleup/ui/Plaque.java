@@ -59,6 +59,8 @@ public class Plaque extends LinearLayout {
 
         txtName.setText(bottle.getName());
 
+        setupButtons();
+
     }
 
     public void setupButtons() {
@@ -76,18 +78,16 @@ public class Plaque extends LinearLayout {
         else
             count += amt;
 
-        txtName.setText(count);
+        txtCount.setText(count);
     }
 
     public void decrement(int amt) {
         if(count - amt >= 0) {
             count -= amt;
-            txtName.setText(count);
+            txtCount.setText(count);
         }
         Log.i("Plaque decrement()", "attempted to decrement below 0");
     }
-
-
 
 
 
