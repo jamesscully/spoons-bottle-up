@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar.hide();
 
         setupButtons();
-
-
     }
 
     private void setupButtons() {
