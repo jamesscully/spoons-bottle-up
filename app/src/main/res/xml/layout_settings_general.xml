@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
-        app:key="notifications"
-        app:title="Enable message notifications"/>
+        app:key="floating_bottleup_btn"
+        app:title="Enable floating bottle up button"
+        app:summary=""/>
 
     <Preference
         app:key="feedback"

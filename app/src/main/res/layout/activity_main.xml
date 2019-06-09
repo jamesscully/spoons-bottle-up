@@ -23,8 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Bottle Up"
+            android:text="Bottle Up 🍺"
             android:textAlignment="center"
+            android:textColor="@android:color/white"
             android:textSize="32sp"
             android:textStyle="bold" />
 
@@ -33,20 +34,28 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Start" />
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_bottleup"
+            android:text="Start"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/mmenu_button_settings"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Settings" />
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_bottleup"
+            android:text="Settings"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/mmenu_button_exit"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Exit" />
+            android:background="@drawable/button_bottleup"
+            android:text="Exit"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

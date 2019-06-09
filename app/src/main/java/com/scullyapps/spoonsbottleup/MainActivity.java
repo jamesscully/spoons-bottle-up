@@ -31,10 +31,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
+
+        Intent start = new Intent();
+
+        btnStart.setOnClickListener(v -> {
+            start.setClass(this, CountActivity.class);
+            startActivity(start);
+        });
+
         btnSettings.setOnClickListener(v -> {
-            Intent settings = new Intent();
-            settings.setClass(this, SettingsActivity.class);
-            startActivity(settings);
+            start.setClass(this, SettingsActivity.class);
+            startActivity(start);
         });
 
         btnExit.setOnClickListener(v -> {

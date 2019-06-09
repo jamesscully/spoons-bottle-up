@@ -3,4 +3,8 @@
     <color name="colorPrimary">#424B73</color>
     <color name="colorPrimaryDark">#313856</color>
     <color name="colorAccent">#4F60AE</color>
+
+    <color name="plaqueBackground">#FAFAFA</color>
+    <color name="plaqueBackgroundAcc">#DBDBDB</color>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.scullyapps.spoonsbottleup.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.scullyapps.spoonsbottleup.Bottle;
 import com.scullyapps.spoonsbottleup.DrinkType;
@@ -78,19 +80,20 @@ public class Plaque extends LinearLayout {
         else
             count += amt;
 
-        txtCount.setText(count);
+        txtCount.setText(Integer.toString(count));
     }
 
     public void decrement(int amt) {
         if(count - amt >= 0) {
             count -= amt;
-            txtCount.setText(count);
+            txtCount.setText(Integer.toString(count));
         }
         Log.i("Plaque decrement()", "attempted to decrement below 0");
     }
 
-
-
+    public int getCount() {
+        return count;
+    }
 
     public String getName() {
         return bottle.getName();

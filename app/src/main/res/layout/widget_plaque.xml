@@ -3,6 +3,8 @@
     android:id="@+id/plaque_layout_root"
     android:layout_width="match_parent"
     android:layout_height="40dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:orientation="horizontal">
 
     <TextView
@@ -23,6 +25,7 @@
         android:layout_weight="0"
         android:gravity="center"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -40,7 +43,8 @@
         android:layout_height="match_parent"
         android:layout_weight="0"
         android:background="@drawable/actual_circle_button"
-        android:text="++" />
+        android:text="++"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/plaque_button_stepdec"
@@ -49,7 +53,8 @@
         android:layout_height="match_parent"
         android:layout_weight="0"
         android:background="@drawable/actual_circle_button"
-        android:text="--" />
+        android:text="--"
+        android:textAlignment="center" />
 
     <Space
         android:layout_width="15dp"
@@ -63,7 +68,8 @@
         android:layout_height="match_parent"
         android:layout_weight="0"
         android:background="@drawable/actual_circle_button"
-        android:text="+" />
+        android:text="+"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/plaque_button_dec"
@@ -72,5 +78,6 @@
         android:layout_height="match_parent"
         android:layout_weight="0"
         android:background="@drawable/actual_circle_button"
-        android:text="-" />
+        android:text="-"
+        android:textAlignment="center" />
 </LinearLayout>
