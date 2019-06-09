@@ -11,10 +11,10 @@
         android:radius="100dp" />
 
     <padding
-        android:left="1dp"
-        android:right="1dp"
-        android:top="1dp"
-        android:bottom="1dp"/>
+        android:left="@dimen/plaqueButtonPad"
+        android:right="@dimen/plaqueButtonPad"
+        android:top="@dimen/plaqueButtonPad"
+        android:bottom="@dimen/plaqueButtonPad"/>
 
     <solid android:color="#dfdfdf"/>
 

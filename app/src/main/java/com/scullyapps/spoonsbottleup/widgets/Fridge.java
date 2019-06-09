@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ public class Fridge extends LinearLayout implements FridgeInterface {
     String name;
     Context context;
 
-    ArrayList<Bottle> bottles;
+    ArrayList<Plaque> bottles;
 
     @BindView(R.id.fridgeBtlContainer)
     LinearLayout bottleContainer;
@@ -68,8 +69,10 @@ public class Fridge extends LinearLayout implements FridgeInterface {
             return;
         }
 
-        bottleContainer.addView(new Plaque(context, bottle));
-        bottles.add(bottle);
+        Plaque toAdd = new Plaque(context, bottle);
+
+        bottleContainer.addView(toAdd);
+        bottles.add(toAdd);
     }
 
     @Override
@@ -83,11 +86,27 @@ public class Fridge extends LinearLayout implements FridgeInterface {
     }
 
     @Override
+    public void hideUnusedBottles() {
+        for(Plaque p : bottles) {
+            if(p.btlCount == 0) {
+                p.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @Override
+    public void unhideUnusedBottles() {
+        for(Plaque p : bottles) {
+            p.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public boolean removeBottleByName(String name) {
 
         int index = 0;
-        for(Bottle b : bottles) {
-            if(b.name.equals(name)) {
+        for(Plaque p : bottles) {
+            if(p.bottle.name.equals(name)) {
                 bottles.remove(index);
                 bottleContainer.removeViewAt(index);
                 return true;

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.scullyapps.spoonsbottleup.data.BottleDatabase;
 import com.scullyapps.spoonsbottleup.widgets.Fridge;
@@ -22,11 +23,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.overviewScroll)
-    ScrollView main;
-
     @BindView(R.id.fridgeContainer)
-    LinearLayout main2;
+    LinearLayout scrollView;
 
     BottleDatabase db;
     int bottleCount;
@@ -41,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
 
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setupPlaque();
         setupButtons();
 
-        main2.addView(def);
+        scrollView.addView(def);
 
 
     }
