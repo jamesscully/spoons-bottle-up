@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.scullyapps.spoonsbottleup.R;
@@ -38,7 +39,7 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
+        holder.txtName.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -59,21 +60,42 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final View     mView;
+        public final TextView txtName;
+        public final Button   btnEdit;
+        public final Button   btnDel;
+
+
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
-        }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            mView = view;
+
+            txtName = view.findViewById(R.id.txt_fridgevh_name);
+            btnEdit = view.findViewById(R.id.btn_fridgevh_edit);
+            btnDel = view.findViewById(R.id.btn_fridgevh_add);
+
+
         }
     }
+
+//    public class ViewHolder extends RecyclerView.ViewHolder {
+//        public final View mView;
+//        public final TextView mIdView;
+//        public final TextView mContentView;
+//        public DummyItem mItem;
+//
+//        public ViewHolder(View view) {
+//            super(view);
+//            mView = view;
+//            mIdView = (TextView) view.findViewById(R.id.item_number);
+//            mContentView = (TextView) view.findViewById(R.id.content);
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return super.toString() + " '" + mContentView.getText() + "'";
+//        }
+//    }
 }

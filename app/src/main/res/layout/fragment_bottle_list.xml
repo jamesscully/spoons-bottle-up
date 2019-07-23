@@ -5,9 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.BottleListFragment">
 
-    <LinearLayout
-        android:id="@+id/settings_bottlelist_root"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/settings_bottlelist_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
 </FrameLayout>

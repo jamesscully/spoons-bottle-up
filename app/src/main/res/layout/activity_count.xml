@@ -32,16 +32,21 @@
             android:id="@+id/count_layout_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:orientation="vertical" >
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="64dp" />
+        </LinearLayout>
     </ScrollView>
 
     <Button
         android:id="@+id/count_button_bottleup"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="160dp"
         android:layout_marginEnd="163dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button_bottleup"
         android:text="Bottle Up!  🍻"
         android:textColor="#ffffff"

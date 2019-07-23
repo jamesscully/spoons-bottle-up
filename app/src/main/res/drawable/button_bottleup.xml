@@ -4,7 +4,7 @@
     android:thicknessRatio="2"
     android:useLevel="false">
 
-    <solid android:color="@color/colorAccent" />
+    <solid android:color="@color/colorPrimary" />
 
 
 

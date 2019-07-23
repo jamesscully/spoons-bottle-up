@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottle_display_root"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="wrap_content"
     android:padding="12dp">
 
     <TextView
         android:id="@+id/bottle_display_text_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Bottle Name"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/bottle_display_text_fridge"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,9 +22,11 @@
         android:id="@+id/bottle_display_text_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Bottle Type"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottle_display_text_name" />
 
     <TextView
         android:id="@+id/bottle_display_text_fridge"

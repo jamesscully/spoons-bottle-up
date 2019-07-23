@@ -4,6 +4,7 @@ public class Bottle {
 
 
     private String name;
+    private int id;
     private DrinkType type;
     private int max;
 

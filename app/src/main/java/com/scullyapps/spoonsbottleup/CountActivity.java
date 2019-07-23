@@ -12,8 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Space;
 
+import com.scullyapps.spoonsbottleup.database.BottleDatabase;
+import com.scullyapps.spoonsbottleup.database.DatabaseHelper;
 import com.scullyapps.spoonsbottleup.ui.Plaque;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,16 +46,26 @@ public class CountActivity extends AppCompatActivity {
         if(actionBar != null)
             actionBar.hide();
 
-        Bottle test = new Bottle("test", DrinkType.ALE);
-        
+        BottleDatabase db = new BottleDatabase(this, null, null, 1);
 
-        boolean accent = false;
-        for(int i = 0; i < 100; i++ ) {
-            Plaque toAdd = new Plaque(this, test);
+        List<String> names = db.getNames();
+
+        boolean accent = true;
+        for(int i = 0; i < names.size(); i++ ) {
+
+
+            Bottle btl = new Bottle(names.get(i), DrinkType.ALE);
+
+            Plaque toAdd = new Plaque(this, btl);
             if(accent) toAdd.setBackgroundResource(R.color.plaqueBackgroundAcc);
-            mainContainer.addView(toAdd);
+            mainContainer.addView(toAdd, 0);
             accent = !accent;
         }
+
+
+        Space padding = new Space(this);
+        mainContainer.addView(padding);
+        padding.setVisibility(View.INVISIBLE);
 
         btnBottleup.setOnClickListener(v -> {
             for(int i = 0; i < mainContainer.getChildCount(); i++) {

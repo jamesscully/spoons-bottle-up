@@ -16,8 +16,12 @@ import android.widget.TextView;
 import com.scullyapps.spoonsbottleup.Bottle;
 import com.scullyapps.spoonsbottleup.DrinkType;
 import com.scullyapps.spoonsbottleup.R;
+import com.scullyapps.spoonsbottleup.database.BottleDatabase;
 import com.scullyapps.spoonsbottleup.ui.BottleDisplay;
 import com.scullyapps.spoonsbottleup.ui.Plaque;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,9 +72,13 @@ public class BottleListFragment extends Fragment {
 
         LinearLayout root = view.findViewById(R.id.settings_bottlelist_root);
 
-        BottleDisplay test = new BottleDisplay(view.getContext(), new Bottle("New Bottle", DrinkType.SOFT));
+        BottleDatabase db = new BottleDatabase(view.getContext(), null, null, 1);
 
-        root.addView(test);
+        List<Bottle> bottles = db.getBottles();
+
+        for(Bottle b : bottles) {
+            root.addView(new BottleDisplay(view.getContext(), b));
+        }
     }
 
     @Override
@@ -80,9 +88,6 @@ public class BottleListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
     }
 
     @Override
