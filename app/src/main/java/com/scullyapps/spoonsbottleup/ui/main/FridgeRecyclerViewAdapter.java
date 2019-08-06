@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.scullyapps.spoonsbottleup.Bottle;
 import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.ui.main.FridgeFragment.OnListFragmentInteractionListener;
 import com.scullyapps.spoonsbottleup.ui.main.dummy.DummyContent.DummyItem;
@@ -21,10 +22,10 @@ import java.util.List;
  */
 public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Bottle> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public FridgeRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public FridgeRecyclerViewAdapter(List<Bottle> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -38,9 +39,8 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.txtName.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.bottle = mValues.get(position);
+        holder.txtName.setText(mValues.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +48,7 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.bottle);
                 }
             }
         });
@@ -65,7 +65,7 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
         public final Button   btnEdit;
         public final Button   btnDel;
 
-
+        public Bottle bottle;
 
         public ViewHolder(View view) {
             super(view);
@@ -75,8 +75,6 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
             txtName = view.findViewById(R.id.txt_fridgevh_name);
             btnEdit = view.findViewById(R.id.btn_fridgevh_edit);
             btnDel = view.findViewById(R.id.btn_fridgevh_add);
-
-
         }
     }
 

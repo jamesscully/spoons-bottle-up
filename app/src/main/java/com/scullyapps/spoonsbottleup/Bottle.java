@@ -2,51 +2,88 @@ package com.scullyapps.spoonsbottleup;
 
 public class Bottle {
 
-
-    private String name;
     private int id;
+    private String name;
     private DrinkType type;
+    private int step;
     private int max;
 
-    // default step for inc/dec is 5
-    public int step = 5;
+    public static class Builder {
 
-    public Bottle(String name, DrinkType type) {
-        this.name = name;
-        this.type = type;
+        private final static int DEFAULT_MAX = 10;
+
+        private int id;
+        private String name;
+        private DrinkType type;
+        private int step;
+        private int max;
+
+        public Builder(int id) {
+            this.id = id;
+            this.name = "Unnamed";
+            this.type = DrinkType.DUMMY;
+            this.max = DEFAULT_MAX;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+
+            return this;
+        }
+
+        public Builder type(DrinkType type) {
+            this.type = type;
+
+            return this;
+        }
+
+        public Builder max(int max) {
+            this.max = max;
+
+            return this;
+        }
+
+        public Builder step(int inc) {
+            this.step = inc;
+
+            return this;
+        }
+
+        public Bottle build() {
+            Bottle create = new Bottle(this.id, this.name, this.type, this.max, this.step);
+
+            return create;
+        }
     }
 
-    public Bottle(String name, DrinkType type, int max) {
+    public Bottle(int id, String name, DrinkType type, int max, int step) {
+        this.id   = id;
         this.name = name;
         this.type = type;
-        this.max = max;
-    }
-
-    public void setStep(int step) {
+        this.max  = max;
         this.step = step;
+
     }
+
+    public int getStep() { return this.step; }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getId() {
+        return this.id;
     }
 
     public DrinkType getType() {
-        return type;
-    }
-
-    public void setType(DrinkType type) {
-        this.type = type;
+        return this.type;
     }
 
     public int getMax() {
-        return max;
+        return this.max;
     }
 
-    public void setMax(int max) {
-        this.max = max;
-    }
+
 }
+
+

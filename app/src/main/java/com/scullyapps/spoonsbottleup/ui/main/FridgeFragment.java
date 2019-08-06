@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.scullyapps.spoonsbottleup.Bottle;
 import com.scullyapps.spoonsbottleup.R;
+import com.scullyapps.spoonsbottleup.database.BottleDatabase;
 import com.scullyapps.spoonsbottleup.ui.main.dummy.DummyContent;
 import com.scullyapps.spoonsbottleup.ui.main.dummy.DummyContent.DummyItem;
 
@@ -71,7 +73,10 @@ public class FridgeFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            BottleDatabase bottleDatabase = new BottleDatabase(view.getContext(), null, null, 1);
+
+            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(bottleDatabase.getBottles(), mListener));
         }
         return view;
     }
@@ -106,6 +111,6 @@ public class FridgeFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Bottle item);
     }
 }

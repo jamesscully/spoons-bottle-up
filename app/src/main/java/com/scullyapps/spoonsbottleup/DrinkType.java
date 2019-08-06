@@ -1,7 +1,7 @@
 package com.scullyapps.spoonsbottleup;
 
 public enum DrinkType {
-    WINE("Wine"), CIDER("Cider"), BEER("Beer/Lager"), ALE("Ale"), SOFT("Soft Drink"), DUMMY("DUMMYNAME");
+    WINE("Wine"), CIDER("Cider"), BEER("Beer/Lager"), ALE("Ale"), SOFT("Soft Drink"), DUMMY("DUMMYNAME"), SPACER("SPACE");
 
     private String name;
 

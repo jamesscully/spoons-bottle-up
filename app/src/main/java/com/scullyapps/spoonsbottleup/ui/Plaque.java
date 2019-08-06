@@ -68,8 +68,8 @@ public class Plaque extends LinearLayout {
     public void setupButtons() {
         btnInc.setOnClickListener(v -> increment(1));
         btnDec.setOnClickListener(v -> decrement(1));
-        btnStepDec.setOnClickListener(v -> decrement(bottle.step));
-        btnStepInc.setOnClickListener(v -> increment(bottle.step));
+        btnStepDec.setOnClickListener(v -> decrement(bottle.getStep()));
+        btnStepInc.setOnClickListener(v -> increment(bottle.getStep()));
     }
 
 
@@ -90,6 +90,9 @@ public class Plaque extends LinearLayout {
         }
         Log.i("Plaque decrement()", "attempted to decrement below 0");
     }
+
+
+    public Bottle getBottle() { return bottle; }
 
     public int getCount() {
         return count;

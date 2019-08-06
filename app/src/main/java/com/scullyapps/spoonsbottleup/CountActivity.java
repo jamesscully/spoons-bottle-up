@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Space;
+import android.widget.Toast;
 
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
 import com.scullyapps.spoonsbottleup.database.DatabaseHelper;
@@ -48,18 +49,22 @@ public class CountActivity extends AppCompatActivity {
 
         BottleDatabase db = new BottleDatabase(this, null, null, 1);
 
-        List<String> names = db.getNames();
+        List<Bottle> bottles = db.getBottles();
 
         boolean accent = true;
-        for(int i = 0; i < names.size(); i++ ) {
+        for(int i = 0; i < bottles.size(); i++ ) {
 
 
-            Bottle btl = new Bottle(names.get(i), DrinkType.ALE);
 
-            Plaque toAdd = new Plaque(this, btl);
+            Plaque toAdd = new Plaque(this, bottles.get(i));
             if(accent) toAdd.setBackgroundResource(R.color.plaqueBackgroundAcc);
+
             mainContainer.addView(toAdd, 0);
             accent = !accent;
+
+            if(bottles.get(i).getType() == DrinkType.SPACER) {
+                mainContainer.getChildAt(0).setVisibility(View.INVISIBLE);
+            }
         }
 
 
@@ -69,13 +74,21 @@ public class CountActivity extends AppCompatActivity {
 
         btnBottleup.setOnClickListener(v -> {
             for(int i = 0; i < mainContainer.getChildCount(); i++) {
-                if(bottling_up)
-                    mainContainer.getChildAt(i).setVisibility(View.VISIBLE);
+                if(bottling_up) {
+                    if(mainContainer.getChildAt(i) instanceof Plaque) {
+                        Plaque exam = (Plaque) mainContainer.getChildAt(i);
+                        Bottle btl = exam.getBottle();
+
+                        if(btl.getType() != DrinkType.SPACER)
+                            mainContainer.getChildAt(i).setVisibility(View.VISIBLE);
+
+                    }
+                }
 
                 if(mainContainer.getChildAt(i) instanceof Plaque && !bottling_up) {
                     Plaque current = (Plaque) mainContainer.getChildAt(i);
 
-                    if(current.getCount() == 0) {
+                    if(current.getCount() == 0 && current.getBottle().getType() != DrinkType.SPACER) {
                         current.setVisibility(View.GONE);
                     }
                 }

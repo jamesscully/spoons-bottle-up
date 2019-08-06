@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity implements BottleListFra
 
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        Toast.makeText(this, "Item Pressed" + item.content, Toast.LENGTH_SHORT).show();
+    public void onListFragmentInteraction(Bottle item) {
+        Toast.makeText(this, "Item Pressed" + item.getName(), Toast.LENGTH_SHORT).show();
     }
 }
