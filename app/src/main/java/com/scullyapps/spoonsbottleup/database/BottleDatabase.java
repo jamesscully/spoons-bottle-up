@@ -75,8 +75,6 @@ public class BottleDatabase extends DatabaseHelper {
 
         while(!cur.isAfterLast()) {
 
-
-
                  int id = cur.getInt(0);
             String name = cur.getString(1);
 
@@ -86,8 +84,6 @@ public class BottleDatabase extends DatabaseHelper {
                 Random rand = new Random();
                 bottles.add(new Bottle.Builder(rand.nextInt()).type(DrinkType.SPACER).name("SPACER").max(99).build());
             }
-
-
 
             // todo: implement these
             // DrinkType type = cur.getString(2);

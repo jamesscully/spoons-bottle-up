@@ -8,7 +8,7 @@ public class Fridge {
     List<Bottle> bottles;
 
     public Fridge(String name) {
-
+        this.name = name;
     }
 
     public void addBottle(Bottle bottle) {
@@ -21,6 +21,14 @@ public class Fridge {
                 bottles.remove(b);
             }
         }
+    }
+
+    public void serialize() {
+
+    }
+
+    public void deserialize() {
+
     }
 
 }

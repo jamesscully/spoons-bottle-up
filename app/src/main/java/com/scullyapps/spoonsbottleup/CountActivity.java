@@ -51,22 +51,19 @@ public class CountActivity extends AppCompatActivity {
 
         List<Bottle> bottles = db.getBottles();
 
-        boolean accent = true;
         for(int i = 0; i < bottles.size(); i++ ) {
 
-
-
             Plaque toAdd = new Plaque(this, bottles.get(i));
-            if(accent) toAdd.setBackgroundResource(R.color.plaqueBackgroundAcc);
 
             mainContainer.addView(toAdd, 0);
-            accent = !accent;
 
             if(bottles.get(i).getType() == DrinkType.SPACER) {
                 mainContainer.getChildAt(0).setVisibility(View.INVISIBLE);
             }
+
         }
 
+        accentize();
 
         Space padding = new Space(this);
         mainContainer.addView(padding);
@@ -93,10 +90,38 @@ public class CountActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            accentize();
+
             // we're done here; invert flag
             bottling_up = !bottling_up;
         });
 
+    }
+
+    private void accentize() {
+
+        boolean accent = false;
+
+        for(int i = 0; i < mainContainer.getChildCount(); i++) {
+
+            Object o = mainContainer.getChildAt(i);
+
+            if(!(o instanceof Plaque))
+                continue;
+
+            Plaque current = (Plaque) o;
+
+            if(current.getVisibility() != View.VISIBLE)
+                continue;
+
+            if(accent)
+                current.setBackgroundResource(R.color.plaqueBackgroundAcc);
+            else
+                current.setBackgroundResource(R.color.plaqueBackground);
+
+            accent = !accent;
+        }
     }
 
 }
