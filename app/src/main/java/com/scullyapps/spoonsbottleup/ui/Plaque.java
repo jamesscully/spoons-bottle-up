@@ -75,7 +75,7 @@ public class Plaque extends LinearLayout {
 
     public void increment(int amt) {
 
-        Log.w("[Plaque bottle: " + getName() + " ]", "Adding " + amt + " to current count: " + count);
+        Log.w(" [ Plaque bottle: " + getName() + " ]", "Adding " + amt + " to current count: " + count);
 
         // if for some reason we're incrementing <= 0, just add 1
         if(amt <= 0)
@@ -88,7 +88,7 @@ public class Plaque extends LinearLayout {
 
     public void decrement(int amt) {
 
-        Log.w("[Plaque bottle: " + getName() + " ]", "Removing " + amt + " from current count: " + count);
+        Log.w(" [ Plaque bottle: " + getName() + " ]", "Removing " + amt + " from current count: " + count);
 
         if(count - amt >= 0) {
             count -= amt;

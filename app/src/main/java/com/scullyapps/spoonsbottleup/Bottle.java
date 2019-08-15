@@ -32,6 +32,7 @@ public class Bottle {
             this.name = "Unnamed";
             this.type = DrinkType.DUMMY;
             this.max = DEFAULT_MAX;
+            this.step = 2;
             this.fridgeName = "Default";
             this.listOrder = 0;
         }
@@ -49,13 +50,19 @@ public class Bottle {
         }
 
         public Builder max(int max) {
-            this.max = max;
+
+            // likewise, we can't really have a max of 0
+            if(max > 0)
+                this.max = max;
 
             return this;
         }
 
         public Builder step(int inc) {
-            this.step = inc;
+
+            // step must be positive, else use default
+            if(inc > 0)
+                this.step = inc;
 
             return this;
         }
