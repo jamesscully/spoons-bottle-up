@@ -1,34 +1,88 @@
 package com.scullyapps.spoonsbottleup;
 
+import android.content.Context;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.scullyapps.spoonsbottleup.ui.Plaque;
 
-public class Fridge {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-          String name;
-    List<Bottle> bottles;
+public class Fridge extends LinearLayout {
 
-    public Fridge(String name) {
+          String  name;
+    List<Integer> ids;
+    Context       context;
+
+    @BindView(R.id.txt_fridgename)
+    TextView fridgeName;
+
+    @BindView(R.id.layout_widget_fridge)
+    LinearLayout fridgeLayout;
+
+
+    public Fridge(Context context, String name) {
+        super(context);
         this.name = name;
+        this.context = context;
+
+        init();
+    }
+
+
+    private void init() {
+        LayoutInflater.from(context).inflate(R.layout.widget_fridge, this, true);
+
+        ButterKnife.bind(this);
+
+        fridgeName.setText(name);
+
+        ids = new ArrayList<>();
     }
 
     public void addBottle(Bottle bottle) {
-        bottles.add(bottle);
+        ids.add(bottle.getId());
+
+        fridgeLayout.addView(new Plaque(context, bottle));
+
+        serialize();
     }
 
     public void rmBottle(Bottle bottle) {
-        for(Bottle b : bottles) {
-            if(b.equals(bottle)) {
-                bottles.remove(b);
+        for(Integer id : ids) {
+            if(id.equals(bottle)) {
+                ids.remove(id);
             }
         }
     }
 
-    public void serialize() {
-
+    public String serialize() {
+        Gson serial = new GsonBuilder().setPrettyPrinting().create();
+        Log.i(String.format("Writing Json for %s", name), serial.toJson(ids) + "\n");
+        return serial.toJson(ids);
     }
 
-    public void deserialize() {
+    public static Fridge deserialize(String json) {
 
+        return null;
+    }
+
+    public boolean hasBottle(int id) {
+        return ids.contains(id);
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

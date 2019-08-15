@@ -3,23 +3,18 @@ package com.scullyapps.spoonsbottleup;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Space;
-import android.widget.Toast;
 
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
-import com.scullyapps.spoonsbottleup.database.DatabaseHelper;
+import com.scullyapps.spoonsbottleup.database.FridgeRepository;
 import com.scullyapps.spoonsbottleup.ui.Plaque;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,6 +37,8 @@ public class CountActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        App app = new App();
+
         ActionBar actionBar = getSupportActionBar();
 
         if(actionBar != null)
@@ -49,9 +46,15 @@ public class CountActivity extends AppCompatActivity {
 
         BottleDatabase db = new BottleDatabase(this, null, null, 1);
 
-        List<Bottle> bottles = db.getBottles();
+        List<Bottle> bottles = db.getAllBottles();
+
+        Fridge main = new Fridge(this, "Tester");
+
+        mainContainer.addView(main);
 
         for(int i = 0; i < bottles.size(); i++ ) {
+
+            main.addBottle(bottles.get(i));
 
             Plaque toAdd = new Plaque(this, bottles.get(i));
 
@@ -62,6 +65,8 @@ public class CountActivity extends AppCompatActivity {
             }
 
         }
+
+        FridgeRepository.saveFridge(main);
 
         accentize();
 

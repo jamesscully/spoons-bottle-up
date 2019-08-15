@@ -1,5 +1,10 @@
 package com.scullyapps.spoonsbottleup;
 
+import android.content.Context;
+
+import com.scullyapps.spoonsbottleup.ui.BottleDisplay;
+import com.scullyapps.spoonsbottleup.ui.Plaque;
+
 public class Bottle {
 
     private int id;
@@ -7,6 +12,8 @@ public class Bottle {
     private DrinkType type;
     private int step;
     private int max;
+    private String fridgeName;
+    private int listOrder;
 
     public static class Builder {
 
@@ -17,12 +24,16 @@ public class Bottle {
         private DrinkType type;
         private int step;
         private int max;
+        private String fridgeName;
+        private int listOrder;
 
         public Builder(int id) {
             this.id = id;
             this.name = "Unnamed";
             this.type = DrinkType.DUMMY;
             this.max = DEFAULT_MAX;
+            this.fridgeName = "Default";
+            this.listOrder = 0;
         }
 
         public Builder name(String name) {
@@ -49,19 +60,31 @@ public class Bottle {
             return this;
         }
 
-        public Bottle build() {
-            Bottle create = new Bottle(this.id, this.name, this.type, this.max, this.step);
+        public Builder fridge (String id) {
+            this.fridgeName = id;
 
-            return create;
+            return this;
+        }
+
+        public Builder order (int order) {
+            this.listOrder = order;
+
+            return this;
+        }
+
+        public Bottle build() {
+            return new Bottle(this.id, this.name, this.type, this.max, this.step, this.fridgeName, this.listOrder);
         }
     }
 
-    public Bottle(int id, String name, DrinkType type, int max, int step) {
+    public Bottle(int id, String name, DrinkType type, int max, int step, String fridge, int order) {
         this.id   = id;
         this.name = name;
         this.type = type;
         this.max  = max;
         this.step = step;
+        this.fridgeName = fridge;
+        this.listOrder = order;
 
     }
 
@@ -81,6 +104,18 @@ public class Bottle {
 
     public int getMax() {
         return this.max;
+    }
+
+    public String getFridgeName() {
+        return this.fridgeName;
+    }
+
+    public BottleDisplay toDisplay(Context context) {
+        return new BottleDisplay(context, this);
+    }
+
+    public Plaque toPlaque(Context context) {
+        return new Plaque(context, this);
     }
 
 

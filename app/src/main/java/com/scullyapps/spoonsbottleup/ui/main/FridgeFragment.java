@@ -15,10 +15,7 @@ import android.view.ViewGroup;
 import com.scullyapps.spoonsbottleup.Bottle;
 import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
-import com.scullyapps.spoonsbottleup.ui.main.dummy.DummyContent;
-import com.scullyapps.spoonsbottleup.ui.main.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.scullyapps.spoonsbottleup.database.FridgeRepository;
 
 /**
  * A fragment representing a list of Items.
@@ -76,7 +73,7 @@ public class FridgeFragment extends Fragment {
 
             BottleDatabase bottleDatabase = new BottleDatabase(view.getContext(), null, null, 1);
 
-            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(bottleDatabase.getBottles(), mListener));
+            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(bottleDatabase.getAllBottles(), mListener));
         }
         return view;
     }

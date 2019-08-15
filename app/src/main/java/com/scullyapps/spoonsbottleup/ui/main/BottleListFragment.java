@@ -11,16 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.scullyapps.spoonsbottleup.Bottle;
-import com.scullyapps.spoonsbottleup.DrinkType;
 import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
 import com.scullyapps.spoonsbottleup.ui.BottleDisplay;
-import com.scullyapps.spoonsbottleup.ui.Plaque;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,7 +70,7 @@ public class BottleListFragment extends Fragment {
 
         BottleDatabase db = new BottleDatabase(view.getContext(), null, null, 1);
 
-        List<Bottle> bottles = db.getBottles();
+        List<Bottle> bottles = db.getAllBottles();
 
         for(Bottle b : bottles) {
             root.addView(new BottleDisplay(view.getContext(), b));

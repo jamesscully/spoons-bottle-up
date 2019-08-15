@@ -12,13 +12,13 @@ import com.scullyapps.spoonsbottleup.ui.BottleDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class BottleDatabase extends DatabaseHelper {
 
     private final static String         TABLE_NAME = "Bottles";
     private final static String SQL_QUERY_ALLNAMES = "SELECT Name FROM " + TABLE_NAME;
     private final static String SQL_QUERY_ALLBOTTLES = "SELECT * FROM " + TABLE_NAME + " ORDER BY ListOrder DESC";
+    private final static String SQL_QUERY_BYFRIDGE = "SELECT * FROM Bottles WHERE FridgeID = ";
 
     public BottleDatabase(Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -28,13 +28,10 @@ public class BottleDatabase extends DatabaseHelper {
 
         create();
 
-        //if(!context.getDatabasePath(DB_NAME).exists()) {
-        //    create();
-        //}
     }
 
     public List<BottleDisplay> getBottleDisplay() {
-        List<Bottle> bottles = getBottles();
+        List<Bottle> bottles = getAllBottles();
 
         List<BottleDisplay> ret = new ArrayList<>();
 
@@ -46,7 +43,7 @@ public class BottleDatabase extends DatabaseHelper {
     }
 
     public List<String> getNames() {
-        List<Bottle> bottles = getBottles();
+        List<Bottle> bottles = getAllBottles();
         List<String> names = new ArrayList<>();
 
         for(Bottle b : bottles) {
@@ -56,50 +53,49 @@ public class BottleDatabase extends DatabaseHelper {
         return names;
     }
 
-    public List<Bottle> getBottles() {
+    public List<Bottle> getAllBottles() {
+
         List<Bottle> bottles = new ArrayList<>();
 
         if(database == null) {
-            bottles.add(new Bottle.Builder(0)
-                            .name("SQLError")
-                            .type(DrinkType.DUMMY)
-                            .max(99).build());
+            bottles.add(new Bottle.Builder(0).name("SQL Error occured").build());
             return bottles;
         }
+
 
         Cursor cur = database.rawQuery(SQL_QUERY_ALLBOTTLES, null);
 
         cur.moveToFirst();
 
-        int prevFridgeNum = 0;
-
         while(!cur.isAfterLast()) {
-
-                 int id = cur.getInt(0);
-            String name = cur.getString(1);
-
-            int tempFridgeNum = cur.getInt(2);
-
-            if(tempFridgeNum != prevFridgeNum) {
-                Random rand = new Random();
-                bottles.add(new Bottle.Builder(rand.nextInt()).type(DrinkType.SPACER).name("SPACER").max(99).build());
-            }
-
-            // todo: implement these
-            // DrinkType type = cur.getString(2);
-            // int max = cur.getInt(3);
-
-            bottles.add(new Bottle.Builder(id)
-                                    .name(name)
-                                    .type(DrinkType.DUMMY)
-                                    .max(99).build());
-
-            prevFridgeNum = tempFridgeNum;
+            bottles.add(getBottle(cur));
             cur.moveToNext();
         }
 
         cur.close();
 
         return bottles;
+    }
+
+    public ArrayList<Bottle> getBottlesByFridge(String fridgeID) {
+
+        Cursor cur = database.rawQuery(SQL_QUERY_BYFRIDGE + fridgeID + "ORDER BY ListOrder", null);
+
+        while(!cur.isAfterLast()) {
+            getBottle(cur);
+        }
+
+        return null;
+    }
+
+    private Bottle getBottle(Cursor cursor) {
+        Bottle.Builder builder = new Bottle.Builder(cursor.getInt(0));
+
+        return builder.name(cursor.getString(1))
+                .order(cursor.getInt(2))
+                .step(cursor.getInt(3))
+                .max(cursor.getInt(4))
+                .fridge(cursor.getString(5))
+                .build();
     }
 }
