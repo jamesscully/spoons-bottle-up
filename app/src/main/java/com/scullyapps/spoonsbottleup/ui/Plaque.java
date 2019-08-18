@@ -80,7 +80,9 @@ public class Plaque extends LinearLayout {
         // if for some reason we're incrementing <= 0, just add 1
         if(amt <= 0)
             count++;
-        else if( (count + amt) <= getMax())
+        else if( (count + amt) > getMax())
+            count = getMax();
+        else
             count += amt;
 
         txtCount.setText(Integer.toString(count));
@@ -90,10 +92,13 @@ public class Plaque extends LinearLayout {
 
         Log.w(" [ Plaque bottle: " + getName() + " ]", "Removing " + amt + " from current count: " + count);
 
-        if(count - amt >= 0) {
+        if(count - amt < 0)
+            count = 0;
+        else
             count -= amt;
-            txtCount.setText(Integer.toString(count));
-        }
+
+        txtCount.setText(Integer.toString(count));
+
     }
 
 
