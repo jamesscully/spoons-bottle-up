@@ -48,6 +48,6 @@ public class BottleDisplay extends ConstraintLayout {
         ButterKnife.bind(this);
 
         txtName.setText(bottle.getName());
-        txtType.setText(bottle.getType().getName());
+        txtType.setText("Max: " + bottle.getMax());
     }
 }

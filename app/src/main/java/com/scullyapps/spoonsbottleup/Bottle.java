@@ -17,7 +17,7 @@ public class Bottle {
 
     public static class Builder {
 
-        private final static int DEFAULT_MAX = 10;
+        private final static int DEFAULT_MAX = 32;
 
         private int id;
         private String name;

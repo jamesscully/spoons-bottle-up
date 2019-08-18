@@ -62,7 +62,6 @@ public class BottleDatabase extends DatabaseHelper {
             return bottles;
         }
 
-
         Cursor cur = database.rawQuery(SQL_QUERY_ALLBOTTLES, null);
 
         cur.moveToFirst();

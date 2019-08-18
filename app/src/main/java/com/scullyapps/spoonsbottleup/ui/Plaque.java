@@ -25,14 +25,12 @@ public class Plaque extends LinearLayout {
     private int count = 0;
     private Context context;
 
-    @BindView(R.id.plaque_button_inc)     Button btnInc;
-    @BindView(R.id.plaque_button_dec)     Button btnDec;
-    @BindView(R.id.plaque_button_stepinc) Button btnStepInc;
-    @BindView(R.id.plaque_button_stepdec) Button btnStepDec;
-    @BindView(R.id.plaque_text_count)     TextView txtCount;
-    @BindView(R.id.plaque_text_name)      TextView txtName;
-
-
+    @BindView(R.id.plaque_button_inc)     Button    btnInc;
+    @BindView(R.id.plaque_button_dec)     Button    btnDec;
+    @BindView(R.id.plaque_button_stepinc) Button    btnStepInc;
+    @BindView(R.id.plaque_button_stepdec) Button    btnStepDec;
+    @BindView(R.id.plaque_text_count)     TextView  txtCount;
+    @BindView(R.id.plaque_text_name)      TextView  txtName;
 
     public Plaque(Context context, Bottle bottle) {
         super(context);

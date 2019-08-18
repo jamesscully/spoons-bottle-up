@@ -2,8 +2,8 @@
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:key="floating_bottleup_btn"
+    <SwitchPreference
+        app:key="floatbtn"
         app:title="Enable floating bottle up button"
         app:summary=""/>
 

@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,6 +33,14 @@ public class FridgeFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.e("DEBUG", "Creating options menu for Fridge");
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.menu_settings_fridges, menu);
+    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -54,6 +65,11 @@ public class FridgeFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        setHasOptionsMenu(true);
+
+
+
     }
 
     @Override
@@ -73,7 +89,7 @@ public class FridgeFragment extends Fragment {
 
             BottleDatabase bottleDatabase = new BottleDatabase(view.getContext(), null, null, 1);
 
-            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(bottleDatabase.getAllBottles(), mListener));
+            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(bottleDatabase.getAllBottles()    , mListener));
         }
         return view;
     }
