@@ -45,8 +45,6 @@ public class SettingsActivity extends AppCompatActivity implements BottleListFra
 
         setupListeners();
 
-
-
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.view_pager, new GeneralSettingsFragment())
@@ -80,8 +78,6 @@ public class SettingsActivity extends AppCompatActivity implements BottleListFra
                     case R.id.action_add_fridge:
                         Toast.makeText(context, "Pressed adding fridge", Toast.LENGTH_LONG).show();
                         break;
-
-
                 }
 
                 return false;
@@ -91,8 +87,13 @@ public class SettingsActivity extends AppCompatActivity implements BottleListFra
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 // update class-wide tab selection
                 CURRENT_TAB = tab.getPosition();
+
+                // 0 - general
+                // 1 - bottles
+                // 2 - fridges
 
                 switch (CURRENT_TAB) {
                     case 0:
@@ -106,7 +107,6 @@ public class SettingsActivity extends AppCompatActivity implements BottleListFra
                     case 2:
                         toolbar.inflateMenu(R.menu.menu_settings_fridges);
                         break;
-
                 }
             }
 

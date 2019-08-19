@@ -18,6 +18,7 @@ public class Bottle {
     public static class Builder {
 
         private final static int DEFAULT_MAX = 32;
+        private final static int DEFAULT_STEP = 2;
 
         private int id;
         private String name;
@@ -32,50 +33,41 @@ public class Bottle {
             this.name = "Unnamed";
             this.type = DrinkType.DUMMY;
             this.max = DEFAULT_MAX;
-            this.step = 2;
+            this.step = DEFAULT_STEP;
             this.fridgeName = "Default";
             this.listOrder = 0;
         }
 
         public Builder name(String name) {
             this.name = name;
-
             return this;
         }
 
         public Builder type(DrinkType type) {
             this.type = type;
-
             return this;
         }
 
         public Builder max(int max) {
-
-            // likewise, we can't really have a max of 0
             if(max > 0)
                 this.max = max;
-
             return this;
         }
 
         public Builder step(int inc) {
-
             // step must be positive, else use default
             if(inc > 0)
                 this.step = inc;
-
             return this;
         }
 
         public Builder fridge (String id) {
             this.fridgeName = id;
-
             return this;
         }
 
         public Builder order (int order) {
             this.listOrder = order;
-
             return this;
         }
 
@@ -92,10 +84,11 @@ public class Bottle {
         this.step = step;
         this.fridgeName = fridge;
         this.listOrder = order;
-
     }
 
-    public int getStep() { return this.step; }
+    public int getStep() {
+        return this.step;
+    }
 
     public String getName() {
         return this.name;

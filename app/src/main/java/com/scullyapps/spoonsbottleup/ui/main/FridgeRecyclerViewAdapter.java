@@ -60,10 +60,10 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View     mView;
+        public final View mView;
         public final TextView txtName;
-        public final Button   btnEdit;
-        public final Button   btnDel;
+        public final Button btnEdit;
+        public final Button btnDel;
 
         public Bottle bottle;
 
@@ -77,6 +77,7 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
             btnDel = view.findViewById(R.id.btn_fridgevh_add);
         }
     }
+}
 
 //    public class ViewHolder extends RecyclerView.ViewHolder {
 //        public final View mView;
@@ -96,4 +97,4 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
 //            return super.toString() + " '" + mContentView.getText() + "'";
 //        }
 //    }
-}
+
