@@ -50,25 +50,12 @@ public class CountActivity extends AppCompatActivity {
 
         List<Bottle> bottles = db.getAllBottles();
 
-        Fridge main = new Fridge(this, "Tester");
+        mainContainer.addView(db.getDefaultFridge(this));
 
-        mainContainer.addView(main);
-
-        for(int i = 0; i < bottles.size(); i++ ) {
-
-            main.addBottle(bottles.get(i));
-
-            Plaque toAdd = new Plaque(this, bottles.get(i));
-
-            mainContainer.addView(toAdd, 0);
-
-            if(bottles.get(i).getType() == DrinkType.SPACER) {
-                mainContainer.getChildAt(0).setVisibility(View.INVISIBLE);
-            }
-
+        for(Fridge f : db.getFridges()) {
+            mainContainer.addView(f);
         }
 
-        FridgeRepository.saveFridge(main);
 
         accentize();
 

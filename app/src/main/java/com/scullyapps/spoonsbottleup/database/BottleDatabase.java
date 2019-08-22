@@ -82,16 +82,16 @@ public class BottleDatabase extends DatabaseHelper {
         return bottles;
     }
 
-    public ArrayList<Bottle> getBottlesByFridge(String fridgeID) {
+    public static ArrayList<Bottle> getBottlesByFridge(@Nullable  String fridgeID) {
 
         ArrayList<Bottle> out = new ArrayList<>();
 
+        String SQL;
 
-
-        String SQL = SQL_QUERY_BYFRIDGE  + fridgeID + "' ORDER BY ListOrder";
-
-        if(fridgeID.equals("Default"))
+        if(fridgeID == null)
             SQL = "SELECT * FROM Bottles WHERE FridgeID IS NULL";
+        else
+            SQL = SQL_QUERY_BYFRIDGE  + fridgeID + "' ORDER BY ListOrder";
 
         Cursor cur = database.rawQuery(SQL, null);
 
@@ -124,10 +124,9 @@ public class BottleDatabase extends DatabaseHelper {
                 continue;
             }
 
-
             Fridge add = new Fridge(context, name);
 
-
+            add.setBottles(getBottlesByFridge(name));
 
             out.add(add);
             cur.moveToNext();
@@ -152,7 +151,6 @@ public class BottleDatabase extends DatabaseHelper {
     public void removeFromFridge(Bottle bottle) {
         String SQL = "UPDATE Bottles SET FridgeID='' WHERE Name='" + bottle.getName() + "'";
 
-        Log.d("DEBUG", "removeFromFridge: db is open: " + database.isOpen());
         Log.d("DEBUG", "removeFromFridge: executing SQL: " + SQL);
 
         ContentValues cv = new ContentValues();
@@ -161,7 +159,15 @@ public class BottleDatabase extends DatabaseHelper {
         database.update("Bottles", cv, "Name='" + bottle.getName() + "'", null);
     }
 
-    private Bottle getBottle(Cursor cursor) {
+    public Fridge getDefaultFridge(Context context) {
+        Fridge ret = new Fridge(context, "Default");
+
+        ret.setBottles(getBottlesByFridge(null));
+
+        return ret;
+    }
+
+    private static Bottle getBottle(Cursor cursor) {
         Bottle.Builder builder = new Bottle.Builder(cursor.getInt(0));
 
         return builder.name(cursor.getString(1))

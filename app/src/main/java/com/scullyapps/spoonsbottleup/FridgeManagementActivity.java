@@ -2,8 +2,10 @@ package com.scullyapps.spoonsbottleup;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,7 +66,7 @@ public class FridgeManagementActivity extends AppCompatActivity {
         for(int i = 0; i < bottles.size(); i++) {
             Bottle btl = bottles.get(i);
 
-            CheckBox check = new CheckBox(this);
+            BottleEntry check = new BottleEntry(this);
             check.setText(btl.getName());
             check.setChecked(true);
 
@@ -119,5 +121,18 @@ public class FridgeManagementActivity extends AppCompatActivity {
                 .create();
 
         confirm.show();
+    }
+
+    private class BottleEntry extends AppCompatCheckBox {
+
+        Context context;
+
+        public BottleEntry(Context context) {
+            super(context);
+            this.context = context;
+
+            setMinimumHeight(48);
+
+        }
     }
 }

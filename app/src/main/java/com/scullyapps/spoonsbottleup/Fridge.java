@@ -53,14 +53,14 @@ public class Fridge extends LinearLayout {
 
     public void addBottle(Bottle bottle) {
         bottles.add(bottle);
-
         fridgeLayout.addView(new Plaque(context, bottle));
 
         serialize();
     }
 
     public void setBottles(ArrayList<Bottle> bottles) {
-        this.bottles = bottles;
+        for(Bottle b : bottles)
+            addBottle(b);
     }
 
     public void rmBottle(Bottle bottle) {
