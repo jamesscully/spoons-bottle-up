@@ -21,6 +21,8 @@ import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
 import com.scullyapps.spoonsbottleup.database.FridgeRepository;
 
+import java.util.ArrayList;
+
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -85,7 +87,13 @@ public class FridgeFragment extends Fragment {
 
             BottleDatabase bottleDatabase = new BottleDatabase(view.getContext(), null, null, 1);
 
-            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(bottleDatabase.getFridges(), mListener));
+            ArrayList<Fridge> fridges = bottleDatabase.getFridges();
+
+            // add the default fridge to the first/top of the list
+            Fridge def = new Fridge(view.getContext(), "Default");
+            fridges.add(0, def);
+
+            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(fridges, mListener));
         }
         return view;
     }

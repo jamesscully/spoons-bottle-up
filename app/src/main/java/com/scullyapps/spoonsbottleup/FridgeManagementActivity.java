@@ -2,6 +2,7 @@ package com.scullyapps.spoonsbottleup;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -38,10 +39,12 @@ public class FridgeManagementActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
 
-        Fridge fridge = null;
+        Fridge fridge;
 
 
         BottleDatabase bottleDatabase = new BottleDatabase(this, null, null, 1);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_fridgeman);
 
 
         if(b != null) {
@@ -52,6 +55,9 @@ public class FridgeManagementActivity extends AppCompatActivity {
             fridge.setBottles(bottleDatabase.getBottlesByFridge(b.getString("name")));
 
             bottles = bottleDatabase.getBottlesByFridge(b.getString("name"));
+
+            toolbar.setTitle("Editing " + fridgeName);
+
 
         }
 

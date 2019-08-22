@@ -18,6 +18,7 @@ import java.util.List;
 
 public class BottleDatabase extends DatabaseHelper {
 
+
     private final static String         TABLE_NAME = "Bottles";
     private final static String SQL_QUERY_ALLNAMES = "SELECT Name FROM " + TABLE_NAME;
     private final static String SQL_QUERY_ALLBOTTLES = "SELECT * FROM " + TABLE_NAME + " ORDER BY ListOrder DESC";
@@ -28,6 +29,8 @@ public class BottleDatabase extends DatabaseHelper {
         this.context = context;
 
         this.DB_NAME = "Bottles.db";
+
+
 
         create();
 
@@ -83,7 +86,16 @@ public class BottleDatabase extends DatabaseHelper {
 
         ArrayList<Bottle> out = new ArrayList<>();
 
-        Cursor cur = database.rawQuery(SQL_QUERY_BYFRIDGE  + fridgeID + "' ORDER BY ListOrder", null);
+
+
+        String SQL = SQL_QUERY_BYFRIDGE  + fridgeID + "' ORDER BY ListOrder";
+
+        if(fridgeID.equals("Default"))
+            SQL = "SELECT * FROM Bottles WHERE FridgeID IS NULL";
+
+        Cursor cur = database.rawQuery(SQL, null);
+
+        Log.d("BottleDatabase ", "getBottlesByFridge: executing SQL " + SQL);
 
         cur.moveToFirst();
 
@@ -107,8 +119,11 @@ public class BottleDatabase extends DatabaseHelper {
 
             String name = cur.getString(0);
 
-            if(name.equals(""))
-                name = "Default";
+            if(name == null) {
+                cur.moveToNext();
+                continue;
+            }
+
 
             Fridge add = new Fridge(context, name);
 

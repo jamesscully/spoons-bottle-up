@@ -2,6 +2,8 @@ package com.scullyapps.spoonsbottleup.ui.main;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,17 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.fridge = mValues.get(position);
-        holder.txtName.setText(mValues.get(position).getName());
+
+        TextView txtName = holder.txtName;
+
+        txtName.setText(mValues.get(position).getName());
+
+        if(holder.fridge.getName().equals("Default")) {
+            txtName.setTypeface(null, Typeface.BOLD);
+            txtName.setTextSize(TypedValue.COMPLEX_UNIT_PX, txtName.getTextSize() + 12);
+            holder.disableButtons();
+        }
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +88,12 @@ public class FridgeRecyclerViewAdapter extends RecyclerView.Adapter<FridgeRecycl
             txtName = view.findViewById(R.id.txt_fridgevh_name);
             btnEdit = view.findViewById(R.id.btn_fridgevh_edit);
             btnDel = view.findViewById(R.id.btn_fridgevh_add);
+
+        }
+
+        public void disableButtons() {
+            btnDel.setVisibility(View.INVISIBLE);
+            btnEdit.setVisibility(View.INVISIBLE);
         }
     }
 }
