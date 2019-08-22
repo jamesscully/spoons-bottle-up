@@ -115,7 +115,6 @@ public class Fridge extends LinearLayout {
                 if(p.inverted) {
                     p.setCount(p.getMax() - p.getCount());
                     p.invert(false);
-
                 }
 
                 p.setInputMode(false);
@@ -164,4 +163,8 @@ public class Fridge extends LinearLayout {
     public int getSize() {
         return bottles.size();
     }
+
+
+
+
 }

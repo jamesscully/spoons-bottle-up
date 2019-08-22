@@ -2,6 +2,7 @@ package com.scullyapps.spoonsbottleup.ui;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -37,6 +38,8 @@ public class Plaque extends LinearLayout {
     @BindView(R.id.plaque_text_name)      TextView  txtName;
     @BindView(R.id.plaque_text_max)       TextView  txtMax;
 
+    int normalBgId = 0;
+
     public Plaque(Context context, Bottle bottle) {
         super(context);
         this.bottle = bottle;
@@ -63,10 +66,6 @@ public class Plaque extends LinearLayout {
         ButterKnife.bind(this);
 
         txtName.setText(bottle.getName());
-
-        String max = Integer.toString(getMax());
-
-
         txtMax.setText(String.format("/%3d", getMax()));
 
         setupButtons();
@@ -119,15 +118,25 @@ public class Plaque extends LinearLayout {
 
     public void invert() {
 
+
+
         if(!inverted) {
-            this.setBackgroundResource(R.color.colorPrimary);
+
+            // use super class to temporarily modify color
+            super.setBackgroundResource(R.color.colorPrimary);
 
             txtName.setTextColor(Color.WHITE);
+            txtCount.setTextColor(Color.WHITE);
+
             txtMax.setVisibility(INVISIBLE);
         } else {
-            this.setBackgroundColor(Color.WHITE);
+
+            // use our version to revert to accentized colour
+            this.setBackgroundResource(normalBgId);
 
             txtName.setTextColor(Color.parseColor("#8A000000"));
+            txtCount.setTextColor(Color.parseColor("#8A000000"));
+
             txtMax.setVisibility(VISIBLE);
         }
 
@@ -156,6 +165,12 @@ public class Plaque extends LinearLayout {
         }
     }
 
+
+    @Override
+    public void setBackgroundResource(int resID) {
+        super.setBackgroundResource(resID);
+        this.normalBgId = resID;
+    }
 
     public Bottle getBottle() { return bottle; }
 
