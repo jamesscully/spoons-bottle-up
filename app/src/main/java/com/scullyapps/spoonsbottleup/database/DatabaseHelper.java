@@ -52,6 +52,7 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
                 out.flush();
                 out.close();
+
             input.close();
 
             this.database = SQLiteDatabase.openDatabase(outFile.getPath(), null, SQLiteDatabase.OPEN_READWRITE);

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scullyapps.spoonsbottleup.Bottle;
+import com.scullyapps.spoonsbottleup.Fridge;
 import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
 import com.scullyapps.spoonsbottleup.database.FridgeRepository;
@@ -36,7 +37,6 @@ public class FridgeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        Log.e("DEBUG", "Creating options menu for Fridge");
         super.onCreateOptionsMenu(menu, inflater);
 
         inflater.inflate(R.menu.menu_settings_fridges, menu);
@@ -70,6 +70,7 @@ public class FridgeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_fridge_list, container, false);
 
         // Set the adapter
@@ -84,7 +85,7 @@ public class FridgeFragment extends Fragment {
 
             BottleDatabase bottleDatabase = new BottleDatabase(view.getContext(), null, null, 1);
 
-            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(bottleDatabase.getAllBottles()    , mListener));
+            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(bottleDatabase.getFridges(), mListener));
         }
         return view;
     }
@@ -119,6 +120,7 @@ public class FridgeFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
+        void onListFragmentInteraction(Fridge item);
         void onListFragmentInteraction(Bottle item);
     }
 }

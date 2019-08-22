@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
 public class Fridge extends LinearLayout {
 
           String  name;
-    List<Integer> ids;
+    ArrayList<Bottle> bottles;
     Context       context;
 
     @BindView(R.id.txt_fridgename)
@@ -47,29 +48,33 @@ public class Fridge extends LinearLayout {
 
         fridgeName.setText(name);
 
-        ids = new ArrayList<>();
+        bottles = new ArrayList<>();
     }
 
     public void addBottle(Bottle bottle) {
-        ids.add(bottle.getId());
+        bottles.add(bottle);
 
         fridgeLayout.addView(new Plaque(context, bottle));
 
         serialize();
     }
 
+    public void setBottles(ArrayList<Bottle> bottles) {
+        this.bottles = bottles;
+    }
+
     public void rmBottle(Bottle bottle) {
-        for(Integer id : ids) {
-            if(id.equals(bottle)) {
-                ids.remove(id);
+        for(Bottle b : bottles) {
+            if(b.equals(bottle)) {
+                bottles.remove(b);
             }
         }
     }
 
     public String serialize() {
         Gson serial = new GsonBuilder().setPrettyPrinting().create();
-        Log.i(String.format("Writing Json for %s", name), serial.toJson(ids) + "\n");
-        return serial.toJson(ids);
+        Log.i(String.format("Writing Json for %s", name), serial.toJson(bottles) + "\n");
+        return serial.toJson(bottles);
     }
 
     public static Fridge deserialize(String json) {
@@ -78,7 +83,7 @@ public class Fridge extends LinearLayout {
     }
 
     public boolean hasBottle(int id) {
-        return ids.contains(id);
+        return bottles.contains(id);
     }
 
     public String getName() {

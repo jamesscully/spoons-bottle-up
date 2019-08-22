@@ -1,6 +1,7 @@
 package com.scullyapps.spoonsbottleup;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -64,6 +65,15 @@ public class SettingsActivity extends AppCompatActivity implements BottleListFra
         Toast.makeText(this, "Item Pressed " + item.getName(), Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onListFragmentInteraction(Fridge item) {
+        Intent i = new Intent(this, FridgeManagementActivity.class);
+        i.putExtra("name", item.getName());
+
+        startActivity(i);
+
+    }
+
     private void setupListeners() {
         // menu options
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -72,7 +82,7 @@ public class SettingsActivity extends AppCompatActivity implements BottleListFra
 
                 switch (item.getItemId()) {
                     case R.id.action_add_bottle:
-                        Toast.makeText(context, "Pressed adding bottle", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Pressed adding fridge", Toast.LENGTH_LONG).show();
                         break;
 
                     case R.id.action_add_fridge:
