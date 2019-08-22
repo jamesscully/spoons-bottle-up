@@ -30,34 +30,10 @@ public class BottleDatabase extends DatabaseHelper {
 
         this.DB_NAME = "Bottles.db";
 
-
-
         create();
 
     }
 
-    public List<BottleDisplay> getBottleDisplay() {
-        List<Bottle> bottles = getAllBottles();
-
-        List<BottleDisplay> ret = new ArrayList<>();
-
-        for(Bottle b : bottles) {
-            ret.add(new BottleDisplay(context, b));
-        }
-
-        return ret;
-    }
-
-    public List<String> getNames() {
-        List<Bottle> bottles = getAllBottles();
-        List<String> names = new ArrayList<>();
-
-        for(Bottle b : bottles) {
-            names.add(b.getName());
-        }
-
-        return names;
-    }
 
     public List<Bottle> getAllBottles() {
 
