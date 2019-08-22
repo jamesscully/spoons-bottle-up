@@ -8,9 +8,13 @@
     <TextView
         android:id="@+id/txt_fridgename"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#808080"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:gravity="bottom"
+        android:paddingLeft="8dp"
+        android:paddingBottom="8dp"
         android:text="Fridge Name"
+        android:textColor="@android:color/white"
         android:textSize="20dp"
         android:textStyle="bold" />
 </LinearLayout>

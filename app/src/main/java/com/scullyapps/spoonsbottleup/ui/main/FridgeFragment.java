@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +18,6 @@ import com.scullyapps.spoonsbottleup.Bottle;
 import com.scullyapps.spoonsbottleup.Fridge;
 import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
-import com.scullyapps.spoonsbottleup.database.FridgeRepository;
 
 import java.util.ArrayList;
 

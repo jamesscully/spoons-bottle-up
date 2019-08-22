@@ -87,7 +87,7 @@ public class BottleDatabase extends DatabaseHelper {
 
         ArrayList<Fridge> out = new ArrayList<>();
 
-        Cursor cur = database.rawQuery("SELECT DISTINCT FridgeID FROM Bottles", null);
+        Cursor cur = database.rawQuery("SELECT DISTINCT FridgeID FROM Bottles b JOIN Fridges f ON b.FridgeID = f.Name ORDER BY f.ListOrder", null);
 
         cur.moveToFirst();
 
@@ -104,7 +104,7 @@ public class BottleDatabase extends DatabaseHelper {
 
             add.setBottles(getBottlesByFridge(name));
 
-            out.add(add);
+            out.add(0, add);
             cur.moveToNext();
         }
 

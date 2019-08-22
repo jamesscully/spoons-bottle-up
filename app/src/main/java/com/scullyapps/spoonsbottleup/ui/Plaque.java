@@ -2,9 +2,11 @@ package com.scullyapps.spoonsbottleup.ui;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,12 +27,15 @@ public class Plaque extends LinearLayout {
     private int count = 0;
     private Context context;
 
+    public boolean inverted = false;
+
     @BindView(R.id.plaque_button_inc)     Button    btnInc;
     @BindView(R.id.plaque_button_dec)     Button    btnDec;
     @BindView(R.id.plaque_button_stepinc) Button    btnStepInc;
     @BindView(R.id.plaque_button_stepdec) Button    btnStepDec;
     @BindView(R.id.plaque_text_count)     TextView  txtCount;
     @BindView(R.id.plaque_text_name)      TextView  txtName;
+    @BindView(R.id.plaque_text_max)       TextView  txtMax;
 
     public Plaque(Context context, Bottle bottle) {
         super(context);
@@ -59,7 +64,20 @@ public class Plaque extends LinearLayout {
 
         txtName.setText(bottle.getName());
 
+        String max = Integer.toString(getMax());
+
+
+        txtMax.setText(String.format("/%3d", getMax()));
+
         setupButtons();
+
+        setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                invert();
+                return true;
+            }
+        });
 
     }
 
@@ -99,11 +117,55 @@ public class Plaque extends LinearLayout {
 
     }
 
+    public void invert() {
+
+        if(!inverted) {
+            this.setBackgroundResource(R.color.colorPrimary);
+
+            txtName.setTextColor(Color.WHITE);
+            txtMax.setVisibility(INVISIBLE);
+        } else {
+            this.setBackgroundColor(Color.WHITE);
+
+            txtName.setTextColor(Color.parseColor("#8A000000"));
+            txtMax.setVisibility(VISIBLE);
+        }
+
+        inverted = !inverted;
+    }
+
+    public void invert(boolean b) {
+        this.inverted = !b;
+        invert();
+    }
+
+    public void setInputMode(boolean mode) {
+        // enable buttons
+        if(!mode) {
+            btnStepDec.setVisibility(GONE);
+            btnDec.setVisibility(GONE);
+
+            btnStepInc.setVisibility(GONE);
+            btnInc.setVisibility(GONE);
+        } else {
+            btnStepDec.setVisibility(VISIBLE);
+            btnDec.setVisibility(VISIBLE);
+
+            btnStepInc.setVisibility(VISIBLE);
+            btnInc.setVisibility(VISIBLE);
+        }
+    }
+
 
     public Bottle getBottle() { return bottle; }
 
     public int getCount() {
         return count;
+    }
+
+    public void setCount(int count) {
+        txtCount.setText(Integer.toString(count));
+        this.count = count;
     }
 
     public String getName() {
@@ -118,3 +180,5 @@ public class Plaque extends LinearLayout {
         return bottle.getType();
     }
 }
+
+

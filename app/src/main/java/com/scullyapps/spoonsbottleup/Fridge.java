@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,13 +55,13 @@ public class Fridge extends LinearLayout {
     public void addBottle(Bottle bottle) {
         bottles.add(bottle);
         fridgeLayout.addView(new Plaque(context, bottle));
-
-        serialize();
     }
 
     public void setBottles(ArrayList<Bottle> bottles) {
         for(Bottle b : bottles)
             addBottle(b);
+
+        accentize();
     }
 
     public void rmBottle(Bottle bottle) {
@@ -71,16 +72,6 @@ public class Fridge extends LinearLayout {
         }
     }
 
-    public String serialize() {
-        Gson serial = new GsonBuilder().setPrettyPrinting().create();
-        Log.i(String.format("Writing Json for %s", name), serial.toJson(bottles) + "\n");
-        return serial.toJson(bottles);
-    }
-
-    public static Fridge deserialize(String json) {
-
-        return null;
-    }
 
     public boolean hasBottle(int id) {
         return bottles.contains(id);
@@ -90,4 +81,87 @@ public class Fridge extends LinearLayout {
         return name;
     }
 
+    public void bottleUp(boolean hide) {
+
+        // used to determine if we've hid anything; can hide the entire thing else
+        boolean modified = false;
+
+        ArrayList<Plaque> plaques = getPlaques();
+
+
+        // if we're not in bottling up, then show everything
+        if(!hide) {
+            this.setVisibility(VISIBLE);
+
+            for(Plaque p : plaques) {
+                p.setVisibility(VISIBLE);
+                p.setInputMode(true);
+            }
+
+            return;
+        }
+
+        // if we are, hide only those with amt = 0
+        for(Plaque p : plaques) {
+            int amt = p.getCount();
+
+
+
+            if(amt == 0) {
+                p.setVisibility(GONE);
+            } else {
+                // if we're here, then we've had a plaque with count > 0
+
+                if(p.inverted) {
+                    p.setCount(p.getMax() - p.getCount());
+                    p.invert(false);
+
+                }
+
+                p.setInputMode(false);
+
+                modified = true;
+            }
+        }
+
+        if(!modified) {
+            // hide all this; hides fridge headers if not needed
+            this.setVisibility(GONE);
+        }
+
+        accentize();
+    }
+
+    public void accentize() {
+        boolean accent = false;
+
+        for(Plaque p : getPlaques()) {
+            if(p.getVisibility() == VISIBLE) {
+                if(accent)
+                    p.setBackgroundResource(R.color.plaqueBackgroundAcc);
+                else
+                    p.setBackgroundResource(R.color.plaqueBackground);
+
+                accent = !accent;
+            }
+        }
+    }
+
+    public ArrayList<Plaque> getPlaques() {
+
+        ArrayList<Plaque> ret = new ArrayList<>();
+
+        for(int i = 0; i < fridgeLayout.getChildCount(); i++) {
+            if(fridgeLayout.getChildAt(i) instanceof Plaque) {
+                ret.add( (Plaque) fridgeLayout.getChildAt(i) );
+            }
+        }
+
+        return ret;
+    }
+
+
+    public int getSize() {
+        return bottles.size();
+    }
 }
