@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.mmenu_button_settings) Button btnSettings;
     @BindView(R.id.mmenu_button_exit)     Button btnExit;
     @BindView(R.id.mmenu_button_start)    Button btnStart;
+
+    @BindView(R.id.mmenu_about_button)
+    LinearLayout btnAbout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +49,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(start);
         });
 
+        btnAbout.setOnClickListener(v -> {
+            Toast.makeText(this, "Implement me!", Toast.LENGTH_SHORT).show();
+        });
+
         btnExit.setOnClickListener(v -> {
             System.exit(0);
         });
+
+
     }
 }

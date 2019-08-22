@@ -4,6 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +17,8 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
+import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback;
+import com.scullyapps.spoonsbottleup.ui.fridgeman.RecyclerListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +28,16 @@ import butterknife.ButterKnife;
 
 public class FridgeManagementActivity extends AppCompatActivity {
 
-    @BindView(R.id.fridgeman_layout_list)
-    LinearLayout list;
+    @BindView(R.id.fridgeman_recycler)
+    RecyclerView list;
 
     ArrayList<Bottle> bottles;
 
     List<Bottle> toRemove = new ArrayList<>();
 
     String fridgeName;
+
+    private ItemTouchHelper itemTouchHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +55,6 @@ public class FridgeManagementActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_fridgeman);
 
-
         if(b != null) {
             fridgeName = b.getString("name", "NONE");
 
@@ -59,9 +65,26 @@ public class FridgeManagementActivity extends AppCompatActivity {
             bottles = bottleDatabase.getBottlesByFridge(b.getString("name"));
 
             toolbar.setTitle("Editing " + fridgeName);
-
-
         }
+
+        RecyclerListAdapter adapter = new RecyclerListAdapter(bottles);
+
+        ItemTouchHelper.Callback callback = new ItemTouchCallback(adapter);
+
+        itemTouchHelper = new ItemTouchHelper(callback);
+
+        list = (RecyclerView) findViewById(R.id.fridgeman_recycler);
+
+        list.setHasFixedSize(true);
+        list.setAdapter(adapter);
+        list.setLayoutManager(new LinearLayoutManager(this));
+
+        itemTouchHelper.attachToRecyclerView(list);
+
+        adapter.setIth(itemTouchHelper);
+
+
+
 
         for(int i = 0; i < bottles.size(); i++) {
             Bottle btl = bottles.get(i);
@@ -80,7 +103,7 @@ public class FridgeManagementActivity extends AppCompatActivity {
                 }
             });
 
-            list.addView(check);
+            // list.addView(check);
         }
     }
 
