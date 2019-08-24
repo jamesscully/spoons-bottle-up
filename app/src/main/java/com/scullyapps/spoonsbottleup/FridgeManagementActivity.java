@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
@@ -88,22 +91,6 @@ public class FridgeManagementActivity extends AppCompatActivity {
 
         for(int i = 0; i < bottles.size(); i++) {
             Bottle btl = bottles.get(i);
-
-            BottleEntry check = new BottleEntry(this);
-            check.setText(btl.getName());
-            check.setChecked(true);
-
-            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked)
-                        toRemove.remove(btl);
-                    else
-                        toRemove.add(btl);
-                }
-            });
-
-            // list.addView(check);
         }
     }
 
@@ -119,20 +106,36 @@ public class FridgeManagementActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        RecyclerListAdapter adapter = (RecyclerListAdapter) list.getAdapter();
+
+
         // if no changes made, then we can safely exit
-        if(toRemove.isEmpty()) {
+        if(!adapter.modified) {
             super.onBackPressed();
             return;
         }
 
-        BottleDatabase bottleDatabase = new BottleDatabase(this, null, null, 1);
 
         AlertDialog confirm = new AlertDialog.Builder(this)
                 .setMessage("Do you wish to save changes?")
                 .setPositiveButton("Save changes", (dialog, which) -> {
-                    for(Bottle b : toRemove) {
-                        bottleDatabase.removeFromFridge(b);
+
+
+                    List<Bottle> toChange = adapter.getItems();
+
+                    if(toChange == null)
+                        super.onBackPressed();
+
+                    BottleDatabase bottleDatabase = new BottleDatabase(this, null, null, 1);
+
+
+                    for(int i = 0; i < toChange.size(); i++) {
+
+                        Bottle current = toChange.get(i);
+                        bottleDatabase.updateListOrder(i, current.getId());
+                        bottleDatabase.updateListOrder(99, 5);
                     }
+
                     super.onBackPressed();
                     dialog.cancel();
                 })
@@ -142,6 +145,8 @@ public class FridgeManagementActivity extends AppCompatActivity {
                     dialog.cancel();
                 })
                 .create();
+
+
 
         confirm.show();
     }

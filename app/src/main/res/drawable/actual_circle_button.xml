@@ -5,6 +5,6 @@
           android:bottom="@dimen/plaqueButtonPad"
           android:left="@dimen/plaqueButtonPad"
 
-          android:drawable="@drawable/button_circle"/>
+          android:drawable="@drawable/button_circle_stroke"/>
 
 </layer-list>

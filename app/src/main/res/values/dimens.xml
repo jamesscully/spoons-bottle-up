@@ -6,6 +6,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
 
+    <dimen name="itemViewHeight">65dp</dimen>
+    <dimen name="itemViewInset">8dp</dimen>
+
     <dimen name="plaqueButtonPad">3dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 

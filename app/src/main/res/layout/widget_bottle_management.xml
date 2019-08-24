@@ -4,23 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-    android:background="#F0F0F0">
+    android:layout_height="@dimen/itemViewHeight"
+    android:layout_marginTop="@dimen/itemViewInset"
+    android:layout_marginBottom="@dimen/itemViewInset"
+    android:background="@color/itemViewBackground">
+
+    <!-- F0F0F0  -->
 
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center|left"
         android:orientation="vertical"
         android:weightSum="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btlm_dragview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -28,7 +30,6 @@
             android:id="@+id/btlm_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:gravity="center"
             android:text="TextView"
             android:textAlignment="viewStart"
@@ -40,20 +41,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Max: 99"
-            android:textStyle="bold"
             android:visibility="visible" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/btlm_dragview"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
+        android:layout_width="66dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/ic_dragview"
+        android:adjustViewBounds="false"
+        android:cropToPadding="true"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_dragview" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center|right"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btlm_dragview"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
+            android:layout_weight="0"
+            android:background="@drawable/button_circle"
+
+            android:backgroundTint="@color/grayScaleLighter"
+            android:foreground="@drawable/ic_edit"
+            android:foregroundGravity="center"
+            android:foregroundTint="@color/grayScaleDark" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

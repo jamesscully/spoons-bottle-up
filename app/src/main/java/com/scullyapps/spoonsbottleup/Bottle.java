@@ -28,14 +28,19 @@ public class Bottle {
         private String fridgeName;
         private int listOrder;
 
-        public Builder(int id) {
-            this.id = id;
+        public Builder() {
+            this.id = 1337;
             this.name = "Unnamed";
             this.type = DrinkType.DUMMY;
             this.max = DEFAULT_MAX;
             this.step = DEFAULT_STEP;
             this.fridgeName = "Default";
             this.listOrder = 0;
+        }
+
+        public Builder id(int id) {
+            this.id = id;
+            return this;
         }
 
         public Builder name(String name) {

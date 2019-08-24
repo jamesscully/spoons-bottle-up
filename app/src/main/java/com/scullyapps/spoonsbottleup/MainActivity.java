@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.scullyapps.spoonsbottleup.database.BottleDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         ActionBar toolbar = getSupportActionBar();
         toolbar.hide();
+
+
+        //        db.updateListOrder(0,0);
 
         setupButtons();
     }

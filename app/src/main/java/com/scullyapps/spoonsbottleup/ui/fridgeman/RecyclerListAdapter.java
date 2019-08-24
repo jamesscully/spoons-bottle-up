@@ -17,21 +17,26 @@ import com.scullyapps.spoonsbottleup.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ViewHolder> implements ItemTouchHelperAdapter{
 
     private final List<Bottle> items = new ArrayList<>();
 
+    public List<Bottle> toRemove = new ArrayList<>();
+
     private ItemTouchHelper ith;
 
-    private static final String[] STRINGS = new String[]{
-            "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"
-    };
+    public boolean modified;
 
     public RecyclerListAdapter(ArrayList<Bottle> bottles) {
 
         items.addAll(bottles);
+    }
+
+    public List<Bottle> getItems() {
+        return items;
     }
 
     @NonNull
@@ -75,12 +80,12 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        Bottle prev = items.remove(fromPosition);
 
-        items.add(toPosition > fromPosition ? toPosition - 1 : toPosition, prev);
+        modified = true;
+
+        Collections.swap(items, fromPosition, toPosition);
 
         notifyItemMoved(fromPosition, toPosition);
-
     }
 
     public void setIth(ItemTouchHelper ith) {
@@ -89,7 +94,12 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 
     @Override
     public void onItemDismiss(int position) {
+
+        modified = true;
+
+        toRemove.add(items.get(position));
         items.remove(position);
+
         notifyItemRemoved(position);
     }
 
@@ -105,13 +115,11 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-
-
             textView = itemView.findViewById(R.id.btlm_text);
             maxText = itemView.findViewById(R.id.btlm_text_max);
             drag = itemView.findViewById(R.id.btlm_dragview);
 
-            maxText.setVisibility(View.GONE);
+            // maxText.setVisibility(View.GONE);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

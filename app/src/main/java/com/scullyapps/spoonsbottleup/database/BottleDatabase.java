@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -13,10 +14,15 @@ import com.scullyapps.spoonsbottleup.DrinkType;
 import com.scullyapps.spoonsbottleup.Fridge;
 import com.scullyapps.spoonsbottleup.ui.BottleDisplay;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottleDatabase extends DatabaseHelper {
+public class BottleDatabase extends SQLiteOpenHelper {
 
 
     private final static String         TABLE_NAME = "Bottles";
@@ -24,13 +30,45 @@ public class BottleDatabase extends DatabaseHelper {
     private final static String SQL_QUERY_ALLBOTTLES = "SELECT * FROM " + TABLE_NAME + " ORDER BY ListOrder DESC";
     private final static String SQL_QUERY_BYFRIDGE = "SELECT * FROM Bottles WHERE FridgeID = '";
 
+    private Context context;
+    private static SQLiteDatabase database;
+
     public BottleDatabase(Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
         this.context = context;
 
-        this.DB_NAME = "Bottles.db";
+        String DB_NAME = "Bottles.db";
 
-        create();
+        if(database != null && database.isOpen()) {
+            Log.d("BottleDatabase", "Database open, skipping");
+            return;
+        }
+
+        try {
+
+            InputStream input = context.getAssets().open(DB_NAME);
+
+            File outFile = context.getDatabasePath(DB_NAME);
+
+            OutputStream out = new FileOutputStream(outFile);
+
+            byte[] buf = new byte[1024];
+            int length;
+
+            while( (length = input.read(buf)) > 0) {
+                out.write(buf, 0, length);
+            }
+
+            out.flush();
+            out.close();
+
+            input.close();
+
+            database = SQLiteDatabase.openDatabase(outFile.getPath(), null, SQLiteDatabase.OPEN_READWRITE);
+
+        } catch (IOException e ) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -40,7 +78,7 @@ public class BottleDatabase extends DatabaseHelper {
         List<Bottle> bottles = new ArrayList<>();
 
         if(database == null) {
-            bottles.add(new Bottle.Builder(0).name("SQL Error occured").build());
+            bottles.add(new Bottle.Builder().name("SQL Error occured").build());
             return bottles;
         }
 
@@ -58,7 +96,21 @@ public class BottleDatabase extends DatabaseHelper {
         return bottles;
     }
 
-    public static ArrayList<Bottle> getBottlesByFridge(@Nullable  String fridgeID) {
+    public void updateListOrder(int order, int id) {
+        ContentValues cv = new ContentValues();
+        cv.put("ListOrder", Integer.toString(order));
+
+        database.update("Bottles", cv, "ID = " + id, null);
+
+        Cursor test = database.rawQuery("SELECT ListOrder FROM Bottles WHERE ID=5", null);
+
+        test.moveToFirst();
+
+        Log.d("SQL RETURNED", test.getString(0));
+
+    }
+
+    public ArrayList<Bottle> getBottlesByFridge(@Nullable  String fridgeID) {
 
         ArrayList<Bottle> out = new ArrayList<>();
 
@@ -79,6 +131,8 @@ public class BottleDatabase extends DatabaseHelper {
             out.add(getBottle(cur));
             cur.moveToNext();
         }
+
+        cur.close();
 
         return out;
     }
@@ -144,13 +198,27 @@ public class BottleDatabase extends DatabaseHelper {
     }
 
     private static Bottle getBottle(Cursor cursor) {
-        Bottle.Builder builder = new Bottle.Builder(cursor.getInt(0));
+        Bottle.Builder builder = new Bottle.Builder();
 
-        return builder.name(cursor.getString(1))
+        int id = Integer.parseInt(cursor.getString(0));
+
+        return builder
+                .id(id)
+                .name(cursor.getString(1))
                 .order(cursor.getInt(2))
                 .step(cursor.getInt(3))
                 .max(cursor.getInt(4))
                 .fridge(cursor.getString(5))
                 .build();
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
     }
 }

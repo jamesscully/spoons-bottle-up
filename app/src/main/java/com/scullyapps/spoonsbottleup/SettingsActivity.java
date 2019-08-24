@@ -51,7 +51,6 @@ public class SettingsActivity extends AppCompatActivity implements BottleListFra
                 .replace(R.id.view_pager, new GeneralSettingsFragment())
                 .commit();
 
-
     }
 
     @Override

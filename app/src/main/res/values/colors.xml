@@ -4,6 +4,14 @@
     <color name="colorPrimaryDark">#313856</color>
     <color name="colorAccent">#4F60AE</color>
 
+
+    <color name="grayScaleDark">#4E4E4E</color>
+    <color name="grayScaleMed">#757575</color>
+    <color name="grayScaleLight">#A0A0A0</color>
+    <color name="grayScaleLighter">#D3D3D3</color>
+
+    <color name="itemViewBackground">#F0F0F0</color>
+
     <color name="plaqueBackground">#FAFAFA</color>
     <color name="plaqueBackgroundAcc">#DBDBDB</color>
 

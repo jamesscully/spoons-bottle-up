@@ -17,7 +17,7 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     protected String DB_NAME = "None";
     protected Context context;
 
-    protected static SQLiteDatabase database;
+    protected SQLiteDatabase database;
 
 
 

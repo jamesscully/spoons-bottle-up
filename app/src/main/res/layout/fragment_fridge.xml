@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginBottom="10dp"
-    android:orientation="horizontal">
+    android:layout_height="@dimen/itemViewHeight"
+    android:layout_marginTop="@dimen/itemViewInset"
+    android:background="#F7F7F7"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/itemViewInset"
+    android:paddingRight="@dimen/itemViewInset">
 
     <TextView
         android:id="@+id/txt_fridgevh_name"
@@ -19,8 +20,8 @@
     <Button
         android:id="@+id/btn_fridgevh_edit"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
         android:layout_weight="0"
@@ -31,8 +32,8 @@
     <Button
         android:id="@+id/btn_fridgevh_add"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
         android:layout_weight="0"
