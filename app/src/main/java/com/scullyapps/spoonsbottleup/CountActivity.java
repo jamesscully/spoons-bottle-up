@@ -12,7 +12,7 @@ import android.widget.ScrollView;
 import android.widget.Space;
 
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
-import com.scullyapps.spoonsbottleup.ui.Plaque;
+import com.scullyapps.spoonsbottleup.ui.Fridge;
 
 import java.util.ArrayList;
 

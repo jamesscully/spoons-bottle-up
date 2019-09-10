@@ -14,10 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.scullyapps.spoonsbottleup.ui.main.BottleListFragment;
-import com.scullyapps.spoonsbottleup.ui.main.FridgeFragment;
-import com.scullyapps.spoonsbottleup.ui.main.GeneralSettingsFragment;
-import com.scullyapps.spoonsbottleup.ui.main.SectionsPagerAdapter;
+import com.scullyapps.spoonsbottleup.ui.Fridge;
+import com.scullyapps.spoonsbottleup.ui.settings.BottleListFragment;
+import com.scullyapps.spoonsbottleup.ui.settings.FridgeFragment;
+import com.scullyapps.spoonsbottleup.ui.settings.GeneralSettingsFragment;
+import com.scullyapps.spoonsbottleup.ui.settings.SectionsPagerAdapter;
 
 public class SettingsActivity extends AppCompatActivity implements BottleListFragment.OnFragmentInteractionListener, FridgeFragment.OnListFragmentInteractionListener {
 

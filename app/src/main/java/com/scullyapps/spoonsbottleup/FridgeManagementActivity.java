@@ -8,18 +8,12 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 
 import com.scullyapps.spoonsbottleup.database.BottleDatabase;
+import com.scullyapps.spoonsbottleup.ui.Fridge;
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback;
 import com.scullyapps.spoonsbottleup.ui.fridgeman.RecyclerListAdapter;
 
@@ -119,8 +113,6 @@ public class FridgeManagementActivity extends AppCompatActivity {
         AlertDialog confirm = new AlertDialog.Builder(this)
                 .setMessage("Do you wish to save changes?")
                 .setPositiveButton("Save changes", (dialog, which) -> {
-
-
                     List<Bottle> toChange = adapter.getItems();
 
                     if(toChange == null)
@@ -146,21 +138,6 @@ public class FridgeManagementActivity extends AppCompatActivity {
                 })
                 .create();
 
-
-
         confirm.show();
-    }
-
-    private class BottleEntry extends AppCompatCheckBox {
-
-        Context context;
-
-        public BottleEntry(Context context) {
-            super(context);
-            this.context = context;
-
-            setMinimumHeight(48);
-
-        }
     }
 }

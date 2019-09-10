@@ -10,9 +10,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.scullyapps.spoonsbottleup.Bottle;
-import com.scullyapps.spoonsbottleup.DrinkType;
-import com.scullyapps.spoonsbottleup.Fridge;
-import com.scullyapps.spoonsbottleup.ui.BottleDisplay;
+import com.scullyapps.spoonsbottleup.ui.Fridge;
 
 import java.io.File;
 import java.io.FileOutputStream;
