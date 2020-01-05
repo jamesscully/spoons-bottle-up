@@ -15,10 +15,9 @@ You can either clone this repository and run the following in the root:
 
 You'll then find the compiled .apk at ``app/build/outputs/apk/debug/app-debug.apk``
 
-
+Note that this app is specified for The Red Lion, and is currently unmaintained due to other works.
 
 ## Credits
 
 **The Red Lion, Skegness** - for having me :)
-
 **iPaulPro** - for demystifising drag/drop RecyclerViews
