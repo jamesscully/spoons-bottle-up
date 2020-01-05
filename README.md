@@ -1,18 +1,19 @@
 
-<img src="bottleupbanner.png" alt="Bottle up logo" height="200px"/>
 
-<br></br>
-
-An application used to assist restocking fridges, specifically behind a bar.
+# Bottle Up
+An application created for use in restocking fridges behind the bar. Predominantly used to save time writing each individual bottle-name and count on a piece of paper, which is easily lost.
 
 ## Features
 
-* Easy to modify - use +/- buttons or step as needed (i.e. 2 rows = +2)
-* "Inverted" count - use the max to deduce amount needed
-* Organizable fridge list
+* **Easy to count** - use +/- buttons or step (++/--) in a specified amount
+* **Inverted counting** - count how many bottles are present, get the amount needed
+* **Organizable fridge list** - drag and drop bottles if their order is changed
 
 ## Installation
-The project itself should be able to be imported into Android Studio after being cloned.
+You can either clone this repository and run the following in the root:
+``./gradlew assembleDebug``
+
+You'll then find the compiled .apk at ``app/build/outputs/apk/debug/app-debug.apk``
 
 
 
