@@ -2,8 +2,6 @@ package com.scullyapps.spoonsbottleup.ui;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.scullyapps.spoonsbottleup.Bottle;
-import com.scullyapps.spoonsbottleup.DrinkType;
 import com.scullyapps.spoonsbottleup.R;
 
 import butterknife.BindView;
