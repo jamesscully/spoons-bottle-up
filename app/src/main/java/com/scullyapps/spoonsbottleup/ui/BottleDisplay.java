@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.scullyapps.spoonsbottleup.Bottle;
+import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.R;
 
 import butterknife.BindView;

@@ -1,8 +1,10 @@
-package com.scullyapps.spoonsbottleup;
+package com.scullyapps.spoonsbottleup.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.scullyapps.spoonsbottleup.R;
 
 public class EditBottleActivity extends AppCompatActivity {
 

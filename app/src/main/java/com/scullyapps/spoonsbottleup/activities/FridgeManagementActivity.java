@@ -1,18 +1,18 @@
-package com.scullyapps.spoonsbottleup;
+package com.scullyapps.spoonsbottleup.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.scullyapps.spoonsbottleup.database.BottleDatabase;
+import com.scullyapps.spoonsbottleup.R;
+import com.scullyapps.spoonsbottleup.data.BottleDatabase;
+import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.ui.Fridge;
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback;
 import com.scullyapps.spoonsbottleup.ui.fridgeman.RecyclerListAdapter;

@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup.ui.settings;
+package com.scullyapps.spoonsbottleup.fragments;
 
 
 

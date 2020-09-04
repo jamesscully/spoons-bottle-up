@@ -23,6 +23,8 @@ data class Bottle(
         custom = true
     }
 
+    constructor() : this("Error", 0, 1)
+
     companion object {
         fun fromJson() {
 

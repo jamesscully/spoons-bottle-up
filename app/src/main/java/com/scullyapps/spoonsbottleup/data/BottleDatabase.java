@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup.database;
+package com.scullyapps.spoonsbottleup.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.scullyapps.spoonsbottleup.Bottle;
+import com.scullyapps.spoonsbottleup.DrinkType;
+import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.ui.Fridge;
 
 import java.io.File;
@@ -76,7 +77,7 @@ public class BottleDatabase extends SQLiteOpenHelper {
         List<Bottle> bottles = new ArrayList<>();
 
         if(database == null) {
-            bottles.add(new Bottle.Builder().name("SQL Error occured").build());
+            bottles.add(new Bottle());
             return bottles;
         }
 
@@ -196,18 +197,14 @@ public class BottleDatabase extends SQLiteOpenHelper {
     }
 
     private static Bottle getBottle(Cursor cursor) {
-        Bottle.Builder builder = new Bottle.Builder();
+        int       id = Integer.parseInt(cursor.getString(0));
+        String   name = cursor.getString(1);
+        int     order = cursor.getInt(2);
+        int      step = cursor.getInt(3);
+        int       max = cursor.getInt(4);
+        String fridge = cursor.getString(5);
 
-        int id = Integer.parseInt(cursor.getString(0));
-
-        return builder
-                .id(id)
-                .name(cursor.getString(1))
-                .order(cursor.getInt(2))
-                .step(cursor.getInt(3))
-                .max(cursor.getInt(4))
-                .fridge(cursor.getString(5))
-                .build();
+        return new Bottle(id, name, DrinkType.DUMMY, step, max, fridge, order);
     }
 
     @Override

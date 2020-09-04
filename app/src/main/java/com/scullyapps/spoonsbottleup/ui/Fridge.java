@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.scullyapps.spoonsbottleup.Bottle;
+import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.ui.Plaque;
 

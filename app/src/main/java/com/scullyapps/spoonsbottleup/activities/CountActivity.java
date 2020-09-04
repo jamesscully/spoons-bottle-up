@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup;
+package com.scullyapps.spoonsbottleup.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Space;
 
-import com.scullyapps.spoonsbottleup.database.BottleDatabase;
+import com.scullyapps.spoonsbottleup.App;
+import com.scullyapps.spoonsbottleup.R;
+import com.scullyapps.spoonsbottleup.data.BottleDatabase;
 import com.scullyapps.spoonsbottleup.ui.Fridge;
 
 import java.util.ArrayList;

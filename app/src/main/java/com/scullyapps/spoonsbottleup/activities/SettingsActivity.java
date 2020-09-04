@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup;
+package com.scullyapps.spoonsbottleup.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,11 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.scullyapps.spoonsbottleup.R;
+import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.ui.Fridge;
-import com.scullyapps.spoonsbottleup.ui.settings.BottleListFragment;
-import com.scullyapps.spoonsbottleup.ui.settings.FridgeFragment;
-import com.scullyapps.spoonsbottleup.ui.settings.GeneralSettingsFragment;
-import com.scullyapps.spoonsbottleup.ui.settings.SectionsPagerAdapter;
+import com.scullyapps.spoonsbottleup.fragments.BottleListFragment;
+import com.scullyapps.spoonsbottleup.fragments.FridgeFragment;
+import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment;
+import com.scullyapps.spoonsbottleup.adapters.SectionsPagerAdapter;
 
 public class SettingsActivity extends AppCompatActivity implements BottleListFragment.OnFragmentInteractionListener, FridgeFragment.OnListFragmentInteractionListener {
 

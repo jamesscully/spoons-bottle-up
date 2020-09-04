@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup.ui.settings;
+package com.scullyapps.spoonsbottleup.adapters;
 
 import android.content.Context;
 
@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.scullyapps.spoonsbottleup.R;
+import com.scullyapps.spoonsbottleup.fragments.BottleListFragment;
+import com.scullyapps.spoonsbottleup.fragments.FridgeFragment;
+import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
