@@ -10,10 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.EditBottleActivity"></activity>
+        <activity
+            android:name=".activities.SetupActivity"
+            android:label="@string/title_activity_setup"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.EditBottleActivity" />
         <activity
             android:name=".activities.FridgeManagementActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.CountActivity" />
         <activity
             android:name=".activities.SettingsActivity"

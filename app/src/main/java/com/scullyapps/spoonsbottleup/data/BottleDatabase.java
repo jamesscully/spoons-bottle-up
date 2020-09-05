@@ -24,10 +24,10 @@ import java.util.List;
 public class BottleDatabase extends SQLiteOpenHelper {
 
 
-    private final static String         TABLE_NAME = "Bottles";
-    private final static String SQL_QUERY_ALLNAMES = "SELECT Name FROM " + TABLE_NAME;
+    private final static String         TABLE_NAME   = "Bottles";
+    private final static String SQL_QUERY_ALLNAMES   = "SELECT Name FROM " + TABLE_NAME;
     private final static String SQL_QUERY_ALLBOTTLES = "SELECT * FROM " + TABLE_NAME + " ORDER BY ListOrder DESC";
-    private final static String SQL_QUERY_BYFRIDGE = "SELECT * FROM Bottles WHERE FridgeID = '";
+    private final static String SQL_QUERY_BYFRIDGE   = "SELECT * FROM Bottles WHERE FridgeID = '";
 
     private Context context;
     private static SQLiteDatabase database;
