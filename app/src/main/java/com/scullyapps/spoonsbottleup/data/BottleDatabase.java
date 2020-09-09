@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.scullyapps.spoonsbottleup.App;
 import com.scullyapps.spoonsbottleup.DrinkType;
 import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.ui.Fridge;
