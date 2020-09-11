@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup
+package com.scullyapps.spoonsbottleup.models
 
 enum class DrinkType(name : String) {
     WINE("Wine"),

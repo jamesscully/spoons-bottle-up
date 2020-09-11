@@ -13,22 +13,19 @@ import kotlin.collections.ArrayList
 class CountActivity : AppCompatActivity() {
     private var bottlingUp = false
     private var fridges: ArrayList<Fridge> = ArrayList()
-    private lateinit var db : BottleDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_count)
 
-        db = BottleDatabase(this, null, null, 1)
-
         val actionBar = supportActionBar
             actionBar?.hide()
 
         // get all fridges
-        fridges = db.fridges
+        fridges = BottleDatabase.fridges
 
         // add default fridge to front
-        val defaultFridge = db.getDefaultFridge(this)
+        val defaultFridge = BottleDatabase.getDefaultFridge(this)
 
         if (defaultFridge.size > 0)
             fridges.add(defaultFridge)

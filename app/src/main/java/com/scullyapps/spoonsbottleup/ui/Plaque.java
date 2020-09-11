@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.scullyapps.spoonsbottleup.DrinkType;
+import com.scullyapps.spoonsbottleup.models.DrinkType;
 import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.R;
 

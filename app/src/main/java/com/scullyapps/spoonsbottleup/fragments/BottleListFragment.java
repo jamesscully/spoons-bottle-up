@@ -68,9 +68,7 @@ public class BottleListFragment extends Fragment {
 
         LinearLayout root = view.findViewById(R.id.settings_bottlelist_root);
 
-        BottleDatabase db = new BottleDatabase(view.getContext(), null, null, 1);
-
-        List<Bottle> bottles = db.getAllBottles();
+        List<Bottle> bottles = BottleDatabase.INSTANCE.getBottles();
 
         for(Bottle b : bottles) {
             root.addView(new BottleDisplay(view.getContext(), b));

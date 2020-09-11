@@ -1,13 +1,12 @@
 package com.scullyapps.spoonsbottleup.models
 
+import android.database.Cursor
 
-import android.util.Log
-import com.scullyapps.spoonsbottleup.DrinkType
 
 data class Bottle(
         val id : Int,
-        val name : String,
-        val type : DrinkType,
+        var name : String,
+        var type : DrinkType,
         var step : Int = 2,
         var max  : Int = 32,
         var fridgeName : String = "Default Fridge",
@@ -28,6 +27,16 @@ data class Bottle(
     companion object {
         fun fromJson() {
 
+        }
+
+        fun fromCursor(cursor : Cursor) : Bottle {
+            val id = cursor.getString(0).toInt()
+            val name = cursor.getString(1)
+            val order = cursor.getInt(2)
+            val step = cursor.getInt(3)
+            val max = cursor.getInt(4)
+            val fridge = cursor.getString(5)
+            return Bottle(id, name, DrinkType.DUMMY, step, max, fridge, order)
         }
     }
 }

@@ -48,8 +48,6 @@ public class FridgeManagementActivity extends AppCompatActivity {
         Fridge fridge;
 
 
-        BottleDatabase bottleDatabase = new BottleDatabase(this, null, null, 1);
-
         Toolbar toolbar = findViewById(R.id.toolbar_fridgeman);
 
         if(b != null) {
@@ -57,9 +55,9 @@ public class FridgeManagementActivity extends AppCompatActivity {
 
             fridge = new Fridge(this, fridgeName);
 
-            fridge.setBottles(bottleDatabase.getBottlesByFridge(b.getString("name")));
+            fridge.setBottles(BottleDatabase.INSTANCE.getBottlesByFridge(b.getString("name")));
 
-            bottles = bottleDatabase.getBottlesByFridge(b.getString("name"));
+            bottles = BottleDatabase.INSTANCE.getBottlesByFridge(b.getString("name"));
 
             toolbar.setTitle("Editing " + fridgeName);
         }
@@ -118,14 +116,11 @@ public class FridgeManagementActivity extends AppCompatActivity {
                     if(toChange == null)
                         super.onBackPressed();
 
-                    BottleDatabase bottleDatabase = new BottleDatabase(this, null, null, 1);
-
-
                     for(int i = 0; i < toChange.size(); i++) {
 
                         Bottle current = toChange.get(i);
-                        bottleDatabase.updateListOrder(i, current.getId());
-                        bottleDatabase.updateListOrder(99, 5);
+                        BottleDatabase.INSTANCE.updateListOrder(i, current.getId());
+                        BottleDatabase.INSTANCE.updateListOrder(99, 5);
                     }
 
                     super.onBackPressed();
