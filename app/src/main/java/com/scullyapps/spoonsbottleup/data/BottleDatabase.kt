@@ -114,7 +114,7 @@ object BottleDatabase {
                 }
 
                 val newFridge = Fridge(context, name)
-                    newFridge.setBottles(getBottlesByFridge(name))
+                    newFridge.bottles = getBottlesByFridge(name)
 
                 fridges.add(0, newFridge)
 
@@ -128,7 +128,7 @@ object BottleDatabase {
     private fun getFridge(cursor: Cursor): Fridge {
         var out: Fridge? = null
         out = Fridge(context, cursor.getString(6))
-        out.setBottles(getBottlesByFridge(cursor.getString(6)))
+        out.bottles = getBottlesByFridge(cursor.getString(6))
         return out
     }
 
@@ -140,9 +140,9 @@ object BottleDatabase {
         database.update("Bottles", cv, "Name='" + bottle.name + "'", null)
     }
 
-    fun getDefaultFridge(context: Context?): Fridge {
+    fun getDefaultFridge(context: Context): Fridge {
         val ret = Fridge(context, "Default")
-        ret.setBottles(getBottlesByFridge(null))
+        ret.bottles = getBottlesByFridge(null)
         return ret
     }
 

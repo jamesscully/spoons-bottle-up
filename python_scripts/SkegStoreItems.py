@@ -13,7 +13,6 @@ menuList = requests.get(url = API_URLs.MenuListURL)
 
 data = menuList.json()
 
-
 class Bottle:
 	id = -1
 	name = 'Default'
@@ -37,6 +36,7 @@ class Bottle:
 		self.description = parent['description']
 
 		self.isAlcohol = self.minimumAge >= 18
+		self.milliliters = self.getML()
 
 	def print(self):
 		print("{} - {}".format(self.name, self.minimumAge))
@@ -132,8 +132,30 @@ def processSoftDrink():
 
 processSoftDrink()
 
-
 conn = sqlite3.connect('bottles.db')
+
+bottles_table_create = ''' 
+CREATE TABLE "Bottles" (
+	"ID"	INTEGER UNIQUE,
+	"Name"	TEXT UNIQUE,
+	"ListOrder"	INTEGER,
+	"StepAmount"	INTEGER,
+	"MaxAmount"	INTEGER,
+	"FridgeID"	TEXT,
+	PRIMARY KEY("ID")
+) '''
+
+
+def createTable():
+
+	try:
+		cursor = conn.cursor()
+		cursor.execute(bottles_table_create)
+	except sqlite3.OperationalError as e:
+		print(e)
+
+createTable()
+
 
 def addBottleToDB(bottle):
 
@@ -160,20 +182,11 @@ def addBottleToDB(bottle):
 	else:
 		print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
 
-	# cursor = conn.cursor()
-	# cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name) VALUES (?,?)", (item.id, item.name))
-	# conn.commit()
-	# cursor.close()
+	cursor = conn.cursor()
+	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount) VALUES (?,?,?,?,?)", (item.id, item.name, 0, 4, 12))
+	conn.commit()
+	cursor.close()
 	
-
-
-
-
-
-# for x in alcoholNames:
-# 	conn.execute("INSERT or IGNORE INTO Bottles (ID, Name) VALUES (?,?)", (x[0],x[1]))
-
-
 for item in alcohols:
 	addBottleToDB(item)
 	# item.print()
@@ -182,68 +195,4 @@ for item in soft_drinks:
 	addBottleToDB(item)
 	# item.print()
 
-
-
-
-
-
-
-
-
-
-# alcohol = data['menus'][8]['subMenu']
-
-# alcoholNames = [] 
-
-# cursor = menus
-
-# for sub in alcohol:
-# 	menu = sub['productGroups']
-# 	for grp in menu:
-# 		prods = grp['products']
-# 		for x in prods:
-# 			if x['minimumAge'] > 0:
-
-# 				tup = (x['productId'], x['displayName']);
-# 				alcoholNames.append(tup)
-
-
-
-
-
-
-# if len(alcoholNames) == 0:
-# 	print("No bottles found, API error?")
-# 	exit()
-
-# print(len(alcoholNames))
-# # remove duplicates 
-# alcoholNames = list(dict.fromkeys(alcoholNames))
-
-
-# print("Count: " + len(alcoholNames))
-
-# for x in alcoholNames:
-# 	print("ID / Alcohol: " + str(x[0]) + " / " + x[1])	
-
-
-# conn = sqlite3.connect('bottles.db')
-
-
-# for x in alcoholNames:
-# 	conn.execute("INSERT or IGNORE INTO Bottles (ID, Name) VALUES (?,?)", (x[0],x[1]))
-
-# conn.commit()
-# conn.close()
-
-# exit()
-
-# for x in test:
-# 	prod = x['products']
-# 	for y in prod:
-# 		print(y['displayName'])
-
-# for x in btlcan:
-# 	print(x['displayName'])
-# 	print("\n")
 
