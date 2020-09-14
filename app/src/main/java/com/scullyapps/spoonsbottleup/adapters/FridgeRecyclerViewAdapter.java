@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup.ui.settings;
+package com.scullyapps.spoonsbottleup.adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.scullyapps.spoonsbottleup.ui.Fridge;
 import com.scullyapps.spoonsbottleup.R;
-import com.scullyapps.spoonsbottleup.ui.settings.FridgeFragment.OnListFragmentInteractionListener;
+import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 

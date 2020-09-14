@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup.ui.settings;
+package com.scullyapps.spoonsbottleup.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.scullyapps.spoonsbottleup.Bottle;
+import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.R;
-import com.scullyapps.spoonsbottleup.database.BottleDatabase;
+import com.scullyapps.spoonsbottleup.data.BottleDatabase;
 import com.scullyapps.spoonsbottleup.ui.BottleDisplay;
 
 import java.util.List;
@@ -68,9 +68,7 @@ public class BottleListFragment extends Fragment {
 
         LinearLayout root = view.findViewById(R.id.settings_bottlelist_root);
 
-        BottleDatabase db = new BottleDatabase(view.getContext(), null, null, 1);
-
-        List<Bottle> bottles = db.getAllBottles();
+        List<Bottle> bottles = BottleDatabase.INSTANCE.getBottles();
 
         for(Bottle b : bottles) {
             root.addView(new BottleDisplay(view.getContext(), b));

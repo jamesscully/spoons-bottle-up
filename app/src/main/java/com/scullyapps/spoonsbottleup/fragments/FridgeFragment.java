@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup.ui.settings;
+package com.scullyapps.spoonsbottleup.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,10 +14,11 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.scullyapps.spoonsbottleup.Bottle;
+import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.ui.Fridge;
 import com.scullyapps.spoonsbottleup.R;
-import com.scullyapps.spoonsbottleup.database.BottleDatabase;
+import com.scullyapps.spoonsbottleup.data.BottleDatabase;
+import com.scullyapps.spoonsbottleup.adapters.FridgeRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -83,9 +84,8 @@ public class FridgeFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            BottleDatabase bottleDatabase = new BottleDatabase(view.getContext(), null, null, 1);
 
-            ArrayList<Fridge> fridges = bottleDatabase.getFridges();
+            ArrayList<Fridge> fridges = BottleDatabase.INSTANCE.getFridges();
 
             // add the default fridge to the first/top of the list
             Fridge def = new Fridge(view.getContext(), "Default");
