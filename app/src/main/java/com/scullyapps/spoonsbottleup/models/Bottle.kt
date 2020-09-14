@@ -25,6 +25,7 @@ data class Bottle(
     constructor() : this("Error", 0, 1)
 
     companion object {
+
         fun fromJson() {
 
         }

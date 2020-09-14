@@ -92,3 +92,5 @@ app/.idea
 
 # hide API endpoints for now
 app/src/main/java/com/scullyapps/spoonsbottleup/data/API.kt
+
+python_scripts/API_URLs.py

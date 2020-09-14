@@ -19,9 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        val toolbar = supportActionBar
-        toolbar!!.hide()
+        supportActionBar?.hide()
 
         // db.updateListOrder(0,0);
 
