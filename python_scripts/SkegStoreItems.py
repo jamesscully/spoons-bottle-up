@@ -43,11 +43,11 @@ class Bottle:
 
 
 	def getML(self):
-		ret = "XXXXXXXXXXXXXXXXXXXX"
+		ret = -1
 		search = re.search('[0-9]*ml', self.description)
 		
 		if search: 
-			ret = search.group(0)
+			ret = search.group(0)[:-2]
 
 		return ret
 
@@ -142,17 +142,44 @@ CREATE TABLE "Bottles" (
 	"StepAmount"	INTEGER,
 	"MaxAmount"	INTEGER,
 	"FridgeID"	TEXT,
+	"MinimumAge" INTEGER,
+	"SizeML" INTEGER,
 	PRIMARY KEY("ID")
 ) '''
 
+fridges_table_create = '''
+	CREATE TABLE "Fridges" (
+	"Name"	TEXT NOT NULL UNIQUE,
+	"ListOrder"	INTEGER UNIQUE,
+	PRIMARY KEY("Name")
+	)
+'''
+
 
 def createTable():
-
 	try:
 		cursor = conn.cursor()
 		cursor.execute(bottles_table_create)
+		cursor.execute(fridges_table_create)
+
+
+		# create our fridges at pub in order
+		fridges = ["Cupboard", "Cordial", "Front", "Tonic", "Alcohol", "Small"]
+		i = 0
+
+		# for each, populate name + index
+		for name in fridges:
+			cursor.execute("INSERT or IGNORE INTO Fridges (Name, ListOrder) VALUES (?,?)", (name, i))
+			i += 1
+
+		conn.commit()
+		
+
 	except sqlite3.OperationalError as e:
 		print(e)
+
+
+
 
 createTable()
 
@@ -173,7 +200,11 @@ def addBottleToDB(bottle):
 		10000063480,
 		10000080630,
 		10000000310,
-		10000007990
+		10000007990,
+		10000000415,
+		10000000412,
+		10000001319,
+		10000000413
 	]
 
 	if bottle.id in blacklist:
@@ -183,9 +214,11 @@ def addBottleToDB(bottle):
 		print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
 
 	cursor = conn.cursor()
-	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount) VALUES (?,?,?,?,?)", (item.id, item.name, 0, 4, 12))
+	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount, MinimumAge, SizeML) VALUES (?,?,?,?,?,?,?)", (item.id, item.name, 0, 4, 12, item.minimumAge, item.getML()))
 	conn.commit()
 	cursor.close()
+
+
 	
 for item in alcohols:
 	addBottleToDB(item)
@@ -194,5 +227,67 @@ for item in alcohols:
 for item in soft_drinks:
 	addBottleToDB(item)
 	# item.print()
+
+
+
+def presets():
+	#######################
+	### Presets		    ###
+	#######################
+
+	cursor = conn.cursor()
+
+	### Alcohol
+
+	cursor.execute("UPDATE Bottles SET FridgeID = ? WHERE MinimumAge >= ?", ("Alcohol", 18))
+
+
+
+	### Tonics
+
+	# For Britvic tonics / juices
+	cursor.execute("UPDATE Bottles SET FridgeID = 'Tonic' WHERE Name LIKE '%britvic%'")
+
+	# For Fentimans
+	cursor.execute("UPDATE Bottles SET FridgeID = 'Tonic' WHERE Name LIKE '%fentimans%'")
+
+
+	### Cordials
+	cursor.execute("UPDATE Bottles SET FridgeID = 'Cordial' WHERE Name LIKE '%cordial%'")
+
+
+
+	### Small fridge
+	juices = ["10000005291", "10000005292", "10000007056"]
+
+	for id in juices:
+		cursor.execute("UPDATE Bottles SET FridgeID = 'Small' WHERE ID = " + id)
+
+
+
+	### Front-fridge - most will be NULL by this point!
+	cursor.execute("UPDATE Bottles SET FridgeID = 'Front' WHERE FridgeID IS NULL")
+
+	# Product names /shouldnt/ contain the world alcohol unless low/free - kept in front
+	cursor.execute("UPDATE Bottles SET FridgeID = 'Front' WHERE Name LIKE '%alcohol%'")
+
+	# Hardy's wines stored in front fridge
+	cursor.execute("UPDATE Bottles SET FridgeID = 'Front' WHERE Name LIKE '%hardy%'")
+
+	front_wines = [10000000399, 10000017483]
+
+	for id in front_wines:
+		cursor.execute("UPDATE Bottles SET FridgeID = 'Front' WHERE ID = " + str(id))
+
+
+	cupboard_wines = [10000139071, 10000086214, 10000014636]
+
+	for id in cupboard_wines:
+		cursor.execute("UPDATE Bottles SET FridgeID = 'Cupboard' WHERE ID = " + str(id))
+
+	conn.commit()
+
+
+presets()
 
 

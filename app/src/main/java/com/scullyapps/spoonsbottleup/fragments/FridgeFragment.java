@@ -48,6 +48,7 @@ public class FridgeFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public FridgeFragment() {
+
     }
 
     // TODO: Customize parameter initialization
@@ -83,7 +84,6 @@ public class FridgeFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-
 
             ArrayList<Fridge> fridges = BottleDatabase.INSTANCE.getFridges();
 

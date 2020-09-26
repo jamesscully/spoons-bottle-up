@@ -31,13 +31,22 @@ data class Bottle(
         }
 
         fun fromCursor(cursor : Cursor) : Bottle {
-            val id = cursor.getString(0).toInt()
+            val id = cursor.getInt(0)
             val name = cursor.getString(1)
             val order = cursor.getInt(2)
             val step = cursor.getInt(3)
             val max = cursor.getInt(4)
-            val fridge = cursor.getString(5)
+            val fridge = cursor.getString(5) ?: "Default"
             return Bottle(id, name, DrinkType.DUMMY, step, max, fridge, order)
         }
+    }
+
+    object SQL {
+        val ID = "ID"
+        val NAME = "Name"
+        val LIST_ORDER = "ListOrder"
+        val STEP = "StepAmount"
+        val MAX = "MaxAmount"
+        val FRIDGE = "FridgeID"
     }
 }

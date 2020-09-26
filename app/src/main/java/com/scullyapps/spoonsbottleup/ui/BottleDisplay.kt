@@ -17,20 +17,24 @@ class BottleDisplay : ConstraintLayout {
 
     constructor(context: Context, bottle: Bottle) : super(context) {
         this.bottle = bottle
+        init()
     }
 
     constructor(context: Context, attrs: AttributeSet?, bottle: Bottle) : super(context, attrs) {
         this.bottle = bottle
+        init()
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, bottle: Bottle) : super(context, attrs, defStyleAttr) {
         this.bottle = bottle
+        init()
     }
 
-    init {
+    fun init() {
         LayoutInflater.from(context).inflate(R.layout.fragment_bottle_display, this, true)
 
         bottle_display_text_name.text = bottle.name
-        bottle_display_text_fridge.text = "Max: " + bottle.max
+        bottle_display_text_fridge.text = "Max: $bottle.max"
+        bottle_display_text_type.text = bottle.type.name
     }
 }

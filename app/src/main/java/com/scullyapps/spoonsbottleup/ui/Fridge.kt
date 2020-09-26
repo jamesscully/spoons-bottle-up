@@ -100,7 +100,10 @@ class Fridge(context: Context, var name: String) : LinearLayout(context) {
         }
     }
 
-
+    object SQL {
+        val NAME = "Name"
+        val LIST_ORDER = "ListOrder"
+    }
 
 
 }

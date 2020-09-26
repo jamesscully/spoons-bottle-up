@@ -3,12 +3,14 @@ package com.scullyapps.spoonsbottleup.data
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.scullyapps.spoonsbottleup.App
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.Fridge
+import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
@@ -21,9 +23,11 @@ object BottleDatabase {
     private var context : Context
 
     private const val DB_NAME = "Bottles.db"
-    private const val TABLE_NAME = "Bottles"
-    private const val SQL_QUERY_ALLNAMES = "SELECT Name FROM " + TABLE_NAME
-    private const val SQL_QUERY_ALLBOTTLES = "SELECT * FROM " + TABLE_NAME + " ORDER BY ListOrder DESC"
+    private const val BOTTLE_TABLE = "Bottles"
+    private const val FRIDGE_TABLE = "Fridges"
+
+    private const val SQL_QUERY_ALLNAMES = "SELECT Name FROM $BOTTLE_TABLE"
+    private const val SQL_QUERY_ALLBOTTLES = "SELECT * FROM $BOTTLE_TABLE ORDER BY ListOrder DESC"
     private const val SQL_QUERY_BYFRIDGE = "SELECT * FROM Bottles WHERE FridgeID = '"
 
 
@@ -38,16 +42,14 @@ object BottleDatabase {
             override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) { }
         }
 
+        val dbPath = context.getDatabasePath(DB_NAME).path
         // read proper DB file from file from databases/
-        try {
 
-            val dbPath = context.getDatabasePath(DB_NAME).path
+        if(!File(dbPath).exists())
+            copyDatabaseFromAssets()
 
-            if(dbPath.isEmpty())
-                copyFridgeFromAssets()
+        database = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE)
 
-            database = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE)
-        } catch (e: IOException) { e.printStackTrace() }
     }
 
 
@@ -146,7 +148,54 @@ object BottleDatabase {
         return ret
     }
 
-    private fun copyFridgeFromAssets() {
+
+
+
+    /* Fridge CRUD */
+
+    fun createFridge(fridge: Fridge) {
+        val cv = ContentValues()
+
+        cv.put("Name", fridge.name)
+
+        database.insert(FRIDGE_TABLE, "", cv)
+    }
+
+    fun updateFridge(fridge: Fridge) {
+        for(bottle in fridge.bottles) {
+            // update all bottles to match
+            val cv = ContentValues()
+                cv.put("FridgeID", fridge.name)
+                database.update(BOTTLE_TABLE, cv, "id=${bottle.id}", null)
+        }
+
+    }
+
+    fun createFridge(fridge : String) {
+        val cv = ContentValues().apply {
+            put(Fridge.SQL.NAME, fridge)
+        }
+
+        database.insert(FRIDGE_TABLE, "", cv)
+    }
+
+    fun deleteFridge(fridge : Fridge) {
+        deleteFridge(fridge.name)
+    }
+
+    fun deleteFridge(fridgeName : String) {
+
+        val cv = ContentValues()
+        cv.putNull("FridgeID")
+
+        // remove the fridge from our list
+        database.delete(FRIDGE_TABLE, "Name=$fridgeName", null)
+
+        // remove any bottles association with this fridge
+        database.update(BOTTLE_TABLE, cv, "FridgeID=$fridgeName", null)
+    }
+
+    private fun copyDatabaseFromAssets() {
         // where to write to (database/ path)
         val dbFile = context.getDatabasePath(DB_NAME)
 
