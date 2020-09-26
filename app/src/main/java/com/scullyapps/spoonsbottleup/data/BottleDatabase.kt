@@ -69,11 +69,18 @@ object BottleDatabase {
             return bottles
         }
 
-    fun updateListOrder(order: Int, id: Int) {
+    fun updateListOrder(order: Int, id: String) {
         val cv = ContentValues()
             cv.put("ListOrder", order.toString())
 
-        database.update("Bottles", cv, "ID = $id", null)
+        val code = database.update("Bottles", cv, "ID = $id", null)
+
+        val result = database.rawQuery("SELECT * FROM Bottles WHERE ID=$id", null)
+
+
+
+        Log.d("BottlesDB", "$id Rows affected = ${code}")
+
     }
 
     fun getBottlesByFridge(fridgeID: String?): ArrayList<Bottle> {

@@ -315,6 +315,10 @@ def presets():
 		# 660
 
 
+	### Standard can size is 330ml - these fit 5 on a row
+	# cursor.execute("UPDATE Bottles SET MaxAmount = 10 WHERE SizeML = 330 AND FridgeID = 'Front'")
+
+
 	### Tonics Max / Step
 
 	# Diet / Normal

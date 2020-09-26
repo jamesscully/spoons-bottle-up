@@ -2,6 +2,7 @@ package com.scullyapps.spoonsbottleup.activities
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import com.scullyapps.spoonsbottleup.R
+import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.data.BottleDatabase.getBottlesByFridge
-import com.scullyapps.spoonsbottleup.data.BottleDatabase.updateListOrder
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.Fridge
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback
@@ -61,6 +62,18 @@ class FridgeManagementActivity : AppCompatActivity() {
         }
     }
 
+    fun saveOrder() {
+        val adapter = fridgeman_recycler.adapter as RecyclerListAdapter
+
+        for(i in 0 until adapter.items.size) {
+            val bottle = adapter.items.get(i)
+
+            Log.d("SaveOrder", "Updating (${bottle.name}) ${bottle.id} to LO: $i")
+
+            BottleDatabase.updateListOrder(i, bottle.id)
+        }
+    }
+
     override fun onBackPressed() {
         val adapter = fridgeman_recycler.adapter as RecyclerListAdapter
 
@@ -75,11 +88,9 @@ class FridgeManagementActivity : AppCompatActivity() {
                 .setPositiveButton("Save changes") { dialog: DialogInterface, which: Int ->
                     val toChange = adapter.items
                     if (toChange == null) super.onBackPressed()
-                    for (i in toChange.indices) {
-                        val (id) = toChange[i]
-                        updateListOrder(i, id)
-                        updateListOrder(99, 5)
-                    }
+
+                    saveOrder()
+
                     super.onBackPressed()
                     dialog.cancel()
                 }
