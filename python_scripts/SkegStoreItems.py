@@ -214,7 +214,7 @@ def addBottleToDB(bottle):
 		print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
 
 	cursor = conn.cursor()
-	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount, MinimumAge, SizeML) VALUES (?,?,?,?,?,?,?)", (item.id, item.name, 0, 4, 12, item.minimumAge, item.getML()))
+	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount, MinimumAge, SizeML) VALUES (?,?,?,?,?,?,?)", (item.id, item.name, 0, 2, 32, item.minimumAge, item.getML()))
 	conn.commit()
 	cursor.close()
 
@@ -248,6 +248,7 @@ def presets():
 	# For Britvic tonics / juices
 	cursor.execute("UPDATE Bottles SET FridgeID = 'Tonic' WHERE Name LIKE '%britvic%'")
 
+
 	# For Fentimans
 	cursor.execute("UPDATE Bottles SET FridgeID = 'Tonic' WHERE Name LIKE '%fentimans%'")
 
@@ -274,6 +275,12 @@ def presets():
 	# Hardy's wines stored in front fridge
 	cursor.execute("UPDATE Bottles SET FridgeID = 'Front' WHERE Name LIKE '%hardy%'")
 
+
+	# Monsters
+	cursor.execute("UPDATE Bottles SET MaxAmount = 12 WHERE Name LIKE '%monster%'")
+	cursor.execute("UPDATE Bottles SET StepAmount = 2 WHERE Name LIKE '%monster%'")
+
+
 	front_wines = [10000000399, 10000017483]
 
 	for id in front_wines:
@@ -285,7 +292,43 @@ def presets():
 	for id in cupboard_wines:
 		cursor.execute("UPDATE Bottles SET FridgeID = 'Cupboard' WHERE ID = " + str(id))
 
+
+
+	### Update max/step bottles based upon size of drink
+
+
+	### Possible choices:
+		# -1
+		# 150
+		# 187
+		# 200
+		# 250
+		# 275
+		# 330 - 6 max (dep on rows)
+		# 355
+		# 398 - Ignore 
+		# 470
+		# 500
+		# 550
+		# 568
+		# 640
+		# 660
+
+
+	### Tonics Max / Step
+
+	# Diet / Normal
+	cursor.execute("UPDATE Bottles SET MaxAmount = 24 WHERE (ID = ?) OR (ID = ?)", (str(10000000431), str(10000000455)))
+
+	# Flavours
+	tonic_flavours = [10000000423, 10000000425, 10000006650, 10000009754, 10000061457]
+
+	for id in tonic_flavours:
+		cursor.execute("UPDATE Bottles SET MaxAmount = 6 WHERE ID = " + str(id))
+
 	conn.commit()
+
+
 
 
 presets()
