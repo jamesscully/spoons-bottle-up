@@ -88,8 +88,12 @@ public class FridgeFragment extends Fragment {
             ArrayList<Fridge> fridges = BottleDatabase.INSTANCE.getFridges();
 
             // add the default fridge to the first/top of the list
-            Fridge def = new Fridge(view.getContext(), "Default");
-            fridges.add(0, def);
+            Fridge defaultFridge = new Fridge(view.getContext(), "Default");
+
+            if(defaultFridge.getSize() > 0) {
+                fridges.add(0, defaultFridge);
+            }
+
 
             recyclerView.setAdapter(new FridgeRecyclerViewAdapter(fridges, mListener));
         }

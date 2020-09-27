@@ -42,9 +42,8 @@ class Plaque : LinearLayout {
         init()
     }
 
-    fun init() {
+    private fun init() {
         LayoutInflater.from(context).inflate(R.layout.widget_plaque, this, true)
-        ButterKnife.bind(this)
         plaque_text_name.text = bottle.name
         plaque_text_max.text = String.format("/%3d", max)
         setupButtons()
@@ -55,29 +54,41 @@ class Plaque : LinearLayout {
         }
     }
 
-    fun setupButtons() {
+    private fun setupButtons() {
         plaque_button_inc.setOnClickListener { increment(1) }
         plaque_button_dec.setOnClickListener { decrement(1) }
         plaque_button_stepdec.setOnClickListener { decrement(bottle.step) }
         plaque_button_stepinc.setOnClickListener { increment(bottle.step) }
     }
 
-    fun increment(amt: Int) {
+    private fun increment(amt: Int) {
         Log.w(" [ Plaque fridge: $name ]", "Adding $amt to current count: $count")
 
         // if for some reason we're incrementing <= 0, just add 1
-        if (amt <= 0)
+        if (amt <= 0) {
             count++
+            totalSelected++
+        }
         else if (count + amt > max)
             count = max
-        else count += amt
+        else  {
+            count += amt
+            totalSelected += amt
+        }
 
         plaque_text_count!!.text = Integer.toString(count)
     }
 
-    fun decrement(amt: Int) {
+    private fun decrement(amt: Int) {
         Log.w(" [ Plaque fridge: $name ]", "Removing $amt from current count: $count")
-        if (count - amt < 0) count = 0 else count -= amt
+
+        if (count - amt < 0) {
+            count = 0
+        } else {
+            count -= amt
+            totalSelected -= amt
+        }
+
         plaque_text_count!!.text = Integer.toString(count)
     }
 
@@ -138,4 +149,8 @@ class Plaque : LinearLayout {
         get() = bottle.max
     val type: DrinkType
         get() = bottle.type
+
+    companion object {
+        var totalSelected = 0
+    }
 }

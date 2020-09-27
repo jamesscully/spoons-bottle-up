@@ -3,7 +3,6 @@ package com.scullyapps.spoonsbottleup.data
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
@@ -12,7 +11,6 @@ import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.Fridge
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.io.OutputStream
 import java.util.*
 
@@ -69,18 +67,13 @@ object BottleDatabase {
             return bottles
         }
 
-    fun updateListOrder(order: Int, id: String) {
+    fun setBottleListOrder(order: Int, id: String) {
         val cv = ContentValues()
             cv.put("ListOrder", order.toString())
 
-        val code = database.update("Bottles", cv, "ID = $id", null)
+        val affected = database.update("Bottles", cv, "ID = $id", null)
 
-        val result = database.rawQuery("SELECT * FROM Bottles WHERE ID=$id", null)
-
-
-
-        Log.d("BottlesDB", "$id Rows affected = ${code}")
-
+        Log.d("BottlesDB", "$id Rows affected = $affected")
     }
 
     fun getBottlesByFridge(fridgeID: String?): ArrayList<Bottle> {
@@ -105,6 +98,10 @@ object BottleDatabase {
 
         cursor.close()
         return bottles
+    }
+
+    fun SQLiteDatabase.forAll() {
+
     }
 
     val fridges: ArrayList<Fridge>
@@ -156,27 +153,7 @@ object BottleDatabase {
     }
 
 
-
-
     /* Fridge CRUD */
-
-    fun createFridge(fridge: Fridge) {
-        val cv = ContentValues()
-
-        cv.put("Name", fridge.name)
-
-        database.insert(FRIDGE_TABLE, "", cv)
-    }
-
-    fun updateFridge(fridge: Fridge) {
-        for(bottle in fridge.bottles) {
-            // update all bottles to match
-            val cv = ContentValues()
-                cv.put("FridgeID", fridge.name)
-                database.update(BOTTLE_TABLE, cv, "id=${bottle.id}", null)
-        }
-
-    }
 
     fun createFridge(fridge : String) {
         val cv = ContentValues().apply {
@@ -186,12 +163,17 @@ object BottleDatabase {
         database.insert(FRIDGE_TABLE, "", cv)
     }
 
-    fun deleteFridge(fridge : Fridge) {
-        deleteFridge(fridge.name)
+    fun updateFridge(fridge: Fridge) {
+        for(bottle in fridge.bottles) {
+            // update all bottles to match
+            val cv = ContentValues()
+            cv.put("FridgeID", fridge.name)
+            database.update(BOTTLE_TABLE, cv, "id=${bottle.id}", null)
+        }
+
     }
 
     fun deleteFridge(fridgeName : String) {
-
         val cv = ContentValues()
         cv.putNull("FridgeID")
 

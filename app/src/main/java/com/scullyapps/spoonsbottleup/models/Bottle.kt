@@ -25,11 +25,6 @@ data class Bottle(
     constructor() : this("Error", 0, 1)
 
     companion object {
-
-        fun fromJson() {
-
-        }
-
         fun fromCursor(cursor : Cursor) : Bottle {
             val id = cursor.getString(0)
             val name = cursor.getString(1)

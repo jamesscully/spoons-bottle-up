@@ -1,18 +1,27 @@
 package com.scullyapps.spoonsbottleup.activities
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Space
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.ui.Fridge
+import com.scullyapps.spoonsbottleup.ui.Plaque
 import kotlinx.android.synthetic.main.activity_count.*
 import kotlin.collections.ArrayList
 
 class CountActivity : AppCompatActivity() {
     private var bottlingUp = false
     private var fridges: ArrayList<Fridge> = ArrayList()
+
+    override fun onDestroy() {
+        Plaque.totalSelected = 0
+        super.onDestroy()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +54,36 @@ class CountActivity : AppCompatActivity() {
 
             // we're done here; invert flag
             bottlingUp = !bottlingUp
+        }
+
+        count_layout_main.setOnClickListener {
+            Log.d("CountActivity", "clicked")
+        }
+    }
+
+    override fun onBackPressed() {
+        if(Plaque.totalSelected > 0) {
+            val dialog = DataWarningDialog(this).apply {
+                setPositiveButton("Exit") { d, _  ->
+                    super.onBackPressed()
+                }
+            }
+            dialog.create().show()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    class DataWarningDialog(context: Context) : AlertDialog.Builder(context) {
+        init {
+            val builder = AlertDialog.Builder(context)
+
+            setTitle("Modified list")
+            setMessage("Are you sure you wish to discard this list?")
+            setCancelable(false)
+            builder.setNegativeButton("Stay") { d, i ->
+                d.cancel()
+            }
         }
     }
 }

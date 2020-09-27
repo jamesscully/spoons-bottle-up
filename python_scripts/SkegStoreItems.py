@@ -207,11 +207,11 @@ def addBottleToDB(bottle):
 		10000000413
 	]
 
-	if bottle.id in blacklist:
-		print("[IGNORE] {} \n".format(bottle.name))
-		return
-	else:
-		print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
+	# if bottle.id in blacklist:
+	# 	# print("[IGNORE] {} \n".format(bottle.name))
+	# 	return
+	# else:
+	# 	# print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
 
 	cursor = conn.cursor()
 	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount, MinimumAge, SizeML) VALUES (?,?,?,?,?,?,?)", (item.id, item.name, 0, 2, 32, item.minimumAge, item.getML()))
@@ -331,6 +331,29 @@ def presets():
 		cursor.execute("UPDATE Bottles SET MaxAmount = 6 WHERE ID = " + str(id))
 
 	conn.commit()
+
+	knownLikenessMaxes = {
+		"J2O": 12,
+		"Magners": 10,
+		"WKD": 14,
+		"Ice": 14,
+		"Efes": 5,
+		"Hooch": 12
+	}
+
+	for key in knownLikenessMaxes:
+		value = knownLikenessMaxes[key]
+
+		print("Setting " + key + " max to " + str(value))
+
+		print("UPDATE Bottles SET MaxAmount = {} WHERE Name LIKE '%{}%'".format(str(value), key))
+
+		rows = cursor.execute("UPDATE Bottles SET MaxAmount = {} WHERE Name LIKE '%{}%'".format(str(value), key))
+
+
+
+
+
 
 
 
