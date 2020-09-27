@@ -15,7 +15,8 @@
         android:layout_weight="1"
         android:gravity="left|center_vertical"
         android:text="Fridge Name"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_fridgevh_edit"

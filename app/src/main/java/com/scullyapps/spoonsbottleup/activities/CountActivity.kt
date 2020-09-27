@@ -55,13 +55,10 @@ class CountActivity : AppCompatActivity() {
             // we're done here; invert flag
             bottlingUp = !bottlingUp
         }
-
-        count_layout_main.setOnClickListener {
-            Log.d("CountActivity", "clicked")
-        }
     }
 
     override fun onBackPressed() {
+        // show a dialog if modified list (losing them is not fun!)
         if(Plaque.totalSelected > 0) {
             val dialog = DataWarningDialog(this).apply {
                 setPositiveButton("Exit") { d, _  ->
@@ -76,12 +73,10 @@ class CountActivity : AppCompatActivity() {
 
     class DataWarningDialog(context: Context) : AlertDialog.Builder(context) {
         init {
-            val builder = AlertDialog.Builder(context)
-
             setTitle("Modified list")
             setMessage("Are you sure you wish to discard this list?")
             setCancelable(false)
-            builder.setNegativeButton("Stay") { d, i ->
+            setNegativeButton("Stay") { d, i ->
                 d.cancel()
             }
         }
