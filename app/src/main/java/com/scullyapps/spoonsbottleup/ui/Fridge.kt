@@ -3,14 +3,9 @@ package com.scullyapps.spoonsbottleup.ui
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.models.Bottle
 import kotlinx.android.synthetic.main.widget_fridge.view.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 class Fridge(context: Context, var name: String) : LinearLayout(context) {
 

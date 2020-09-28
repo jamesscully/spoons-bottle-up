@@ -1,9 +1,7 @@
 package com.scullyapps.spoonsbottleup.fragments
 
 import android.os.Bundle
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
 import com.scullyapps.spoonsbottleup.R
 
 class GeneralSettingsFragment : PreferenceFragmentCompat() {

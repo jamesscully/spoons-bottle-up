@@ -14,7 +14,6 @@ import com.scullyapps.spoonsbottleup.ui.Fridge
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback
 import com.scullyapps.spoonsbottleup.ui.fridgeman.RecyclerListAdapter
 import kotlinx.android.synthetic.main.activity_fridge_management.*
-import kotlin.collections.ArrayList
 
 class FridgeManagementActivity : AppCompatActivity() {
 

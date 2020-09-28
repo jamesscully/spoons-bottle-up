@@ -1,7 +1,5 @@
 package com.scullyapps.spoonsbottleup.models
 
-import android.util.Log
-
 class Fridge(
         val id : Int,
         var name : String,

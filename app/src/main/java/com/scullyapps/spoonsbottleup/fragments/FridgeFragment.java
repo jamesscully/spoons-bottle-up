@@ -2,23 +2,22 @@ package com.scullyapps.spoonsbottleup.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.scullyapps.spoonsbottleup.R;
+import com.scullyapps.spoonsbottleup.adapters.FridgeRecyclerViewAdapter;
+import com.scullyapps.spoonsbottleup.data.BottleDatabase;
 import com.scullyapps.spoonsbottleup.models.Bottle;
 import com.scullyapps.spoonsbottleup.ui.Fridge;
-import com.scullyapps.spoonsbottleup.R;
-import com.scullyapps.spoonsbottleup.data.BottleDatabase;
-import com.scullyapps.spoonsbottleup.adapters.FridgeRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
