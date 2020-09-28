@@ -338,7 +338,27 @@ def presets():
 		"WKD": 14,
 		"Ice": 14,
 		"Efes": 5,
-		"Hooch": 12
+		"Hooch": 12,
+		"Strathmore sparkling": 12,
+		"Strathmore still": 18,
+		"Beck's blue": 6,
+		"Blossom hill": 10,
+		"Hardys Pinot Grigio": 15,
+		"Limonata": 6,
+		"Rossa": 6,
+		"Old Jamaica": 6,
+		"Adnams": 5,
+		"Hardys Ros": 10,
+		"Heineken 0.0": 6,
+		"Lavazza": 7,
+		"Dalston": 6,
+		"Gunna": 6,
+		"BrewDog Punk AF": 6,
+		"kombucha raspberry": 7,
+		"kombucha coconut": 7,
+		"Fentimans tonic water": 23
+		"Fentimans light tonic water": 12
+		"Fentimans elderflower": 6
 	}
 
 	for key in knownLikenessMaxes:

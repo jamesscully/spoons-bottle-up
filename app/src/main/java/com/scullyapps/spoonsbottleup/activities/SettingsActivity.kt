@@ -66,7 +66,7 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
         dialog.setTitle("Add a new fridge")
 
         dialog.setPositiveButton("Add") { _, _ ->
-            BottleDatabase.createFridge(editText.text.toString())
+            BottleDatabase.FridgeUtils.add(editText.text.toString())
         }
 
         dialog.create().show()

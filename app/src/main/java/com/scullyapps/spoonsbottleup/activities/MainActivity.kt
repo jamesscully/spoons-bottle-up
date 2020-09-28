@@ -21,8 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        // db.updateListOrder(0,0);
-
         setupButtons()
     }
 

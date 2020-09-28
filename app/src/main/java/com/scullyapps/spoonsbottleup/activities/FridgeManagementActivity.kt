@@ -33,7 +33,7 @@ class FridgeManagementActivity : AppCompatActivity() {
             // retrieve our
             val fridgeName = bundle.getString("name", "NONE")
             fridge = Fridge(this, fridgeName)
-            bottles = BottleDatabase.getBottlesByFridge(fridgeName)
+            bottles = BottleDatabase.FridgeUtils.getBottles(fridgeName)
             fridge.bottles = bottles
 
             toolbar.title = "Editing $fridgeName"
@@ -60,7 +60,7 @@ class FridgeManagementActivity : AppCompatActivity() {
 
             Log.d("SaveOrder", "Updating (${bottle.name}) ${bottle.id} to LO: $i")
 
-            BottleDatabase.setBottleListOrder(i, bottle.id)
+            BottleDatabase.BottleUtils.setListOrder(bottle.id, i)
         }
     }
 

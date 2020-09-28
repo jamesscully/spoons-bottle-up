@@ -4,7 +4,7 @@ import android.database.Cursor
 
 
 data class Bottle(
-        val id: String,
+        val id: String = "",
         var name: String,
         var type: DrinkType,
         var step: Int = 2,

@@ -34,7 +34,7 @@ class CountActivity : AppCompatActivity() {
         fridges = BottleDatabase.fridges
 
         // add default fridge to front
-        val defaultFridge = BottleDatabase.getDefaultFridge(this)
+        val defaultFridge = BottleDatabase.FridgeUtils.getDefault()
 
         if (defaultFridge.size > 0)
             fridges.add(defaultFridge)

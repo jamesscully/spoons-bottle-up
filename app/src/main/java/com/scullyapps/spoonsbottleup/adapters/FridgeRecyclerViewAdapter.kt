@@ -28,27 +28,23 @@ class FridgeRecyclerViewAdapter(private val mValues: List<Fridge>, private val m
             txtName.setTextSize(TypedValue.COMPLEX_UNIT_PX, txtName.textSize + 12)
             holder.disableButtons()
         }
-        holder.mView.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge) }
+        holder.view.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge) }
     }
 
     override fun getItemCount(): Int {
         return mValues.size
     }
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val txtName: TextView
-        val btnEdit: Button
-        val btnDel: Button
+    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        val txtName: TextView = view.findViewById(R.id.txt_fridgevh_name)
+        val btnEdit: Button = view.findViewById(R.id.btn_fridgevh_edit)
+        val btnDel: Button = view.findViewById(R.id.btn_fridgevh_add)
         var fridge: Fridge? = null
+
         fun disableButtons() {
             btnDel.visibility = View.INVISIBLE
             btnEdit.visibility = View.INVISIBLE
         }
 
-        init {
-            txtName = mView.findViewById(R.id.txt_fridgevh_name)
-            btnEdit = mView.findViewById(R.id.btn_fridgevh_edit)
-            btnDel = mView.findViewById(R.id.btn_fridgevh_add)
-        }
     }
 }

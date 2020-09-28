@@ -13,8 +13,11 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 import java.util.*
+import kotlin.collections.ArrayList
 
 object BottleDatabase {
+
+    private const val TAG = "BottleDatabase"
 
     private var helper : SQLiteOpenHelper
     private lateinit var database : SQLiteDatabase
@@ -30,7 +33,6 @@ object BottleDatabase {
 
 
     init {
-
         val dbVersion = 1
 
         context = App.getContext()
@@ -41,13 +43,142 @@ object BottleDatabase {
         }
 
         val dbPath = context.getDatabasePath(DB_NAME).path
+        
         // read proper DB file from file from databases/
-
         if(!File(dbPath).exists())
             copyDatabaseFromAssets()
 
         database = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE)
+    }
 
+    // Simple extension function to run code for each row
+    private fun Cursor.forEachRow(callback : (Cursor) -> Unit) {
+
+        // no rows = do nothing!
+        if(count <= 0) {
+            return
+        }
+
+        moveToFirst()
+        while(!isAfterLast) {
+            callback(this)
+            moveToNext()
+        }
+        close()
+    }
+
+    object BottleUtils {
+
+        const val ID = "ID"
+        const val NAME = "Name"
+        const val LIST_ORDER = "ListOrder"
+        const val STEP = "StepAmount"
+        const val MAX = "MaxAmount"
+        const val FRIDGE = "FridgeID"
+
+        fun add(bottle: Bottle) {
+            // default/new Bottle state should have empty ID
+            if(bottle.id.isNotEmpty()) {
+                Log.w(TAG, "Attempt to add bottle with non-empty ID, maybe update?")
+                return
+            }
+
+            val values = ContentValues().apply {
+                put(ID, bottle.id)
+                put(NAME, bottle.name)
+                put(LIST_ORDER, bottle.listOrder)
+                put(STEP, bottle.step)
+                put(MAX, bottle.max)
+                put(FRIDGE, bottle.fridgeName)
+            }
+
+            database.insert(BOTTLE_TABLE, null, values)
+        }
+
+
+        fun get(id : String) {
+            database.rawQuery("SELECT * FROM $BOTTLE_TABLE WHERE ID=$id", null)
+        }
+        
+
+        fun delete(id : String) {
+            database.delete(BOTTLE_TABLE, "$ID=$id", null)
+        }
+
+        fun update(id : String, bottle: Bottle) {
+            val cv = ContentValues().apply {
+                put(LIST_ORDER, bottle.listOrder)
+                put(NAME, bottle.name)
+                put(STEP, bottle.step)
+                put(MAX, bottle.max)
+                put(FRIDGE, bottle.fridgeName)
+            }
+
+            database.update(BOTTLE_TABLE, cv, "$ID=$id", null)
+        }
+        
+        fun setListOrder(id : String, order : Int) {
+            val cv = ContentValues()
+            cv.put("ListOrder", order.toString())
+
+            val affected = database.update(BOTTLE_TABLE, cv, "ID = $id", null)
+
+            Log.d("BottlesDB", "$id Rows affected = $affected")
+        }
+    }
+
+    object FridgeUtils {
+
+        val NAME = "Name"
+        val LIST_ORDER = "ListOrder"
+
+        fun add(name : String) {
+            val cv = ContentValues()
+                cv.put(NAME, name)
+
+            database.insert(FRIDGE_TABLE, null, cv)
+        }
+
+        fun get(name: String) {
+            val cursor = database.rawQuery("SELECT * FROM $BOTTLE_TABLE WHERE ${BottleUtils.FRIDGE} = $name", null)
+        }
+
+        fun delete(name: String) {
+        
+        }
+
+        fun update(fridge : Fridge) {
+            val values = ContentValues().apply {
+
+            }
+        }
+
+        fun getDefault() : Fridge {
+            return Fridge(context, "Default").apply {
+                getBottles()
+            }
+        }
+
+        fun getBottles(name: String = "") : ArrayList<Bottle> {
+            val bottles = ArrayList<Bottle>()
+
+            val SQL_NAME = "SELECT * FROM $BOTTLE_TABLE WHERE FridgeID='$name'"
+            val SQL_NULL = "SELECT * FROM $BOTTLE_TABLE WHERE FridgeID IS NULL"
+
+            val cursor: Cursor
+
+            cursor = if(name.isEmpty()) {
+                database.rawQuery(SQL_NULL, null)
+            } else {
+                database.rawQuery(SQL_NAME, null)
+            }
+
+            cursor.forEachRow {cur ->
+                bottles.add(Bottle.fromCursor(cur))
+            }
+
+            return bottles
+        }
     }
 
 
@@ -56,53 +187,13 @@ object BottleDatabase {
             val bottles: MutableList<Bottle> = ArrayList()
             val cursor = database.rawQuery(SQL_QUERY_ALLBOTTLES, null)
 
-            cursor.moveToFirst()
-
-            while (!cursor.isAfterLast) {
-                bottles.add(Bottle.fromCursor(cursor))
-                cursor.moveToNext()
+            cursor.forEachRow {cur ->
+                bottles.add(Bottle.fromCursor(cur))
             }
 
-            cursor.close()
             return bottles
         }
 
-    fun setBottleListOrder(order: Int, id: String) {
-        val cv = ContentValues()
-            cv.put("ListOrder", order.toString())
-
-        val affected = database.update("Bottles", cv, "ID = $id", null)
-
-        Log.d("BottlesDB", "$id Rows affected = $affected")
-    }
-
-    fun getBottlesByFridge(fridgeID: String?): ArrayList<Bottle> {
-        val bottles = ArrayList<Bottle>()
-        var SQL = ""
-
-        // if this fridge doesn't exist, load unlisted bottles
-        SQL = if (fridgeID == null)
-            "SELECT * FROM Bottles WHERE FridgeID IS NULL"
-        else
-            "$SQL_QUERY_BYFRIDGE$fridgeID' ORDER BY ListOrder"
-
-        val cursor = database.rawQuery(SQL, null)
-
-        Log.d("BottleDatabase ", "getBottlesByFridge: executing SQL $SQL")
-
-        cursor.moveToFirst()
-        while (!cursor.isAfterLast && cursor.count > 0) {
-            bottles.add(Bottle.fromCursor(cursor))
-            cursor.moveToNext()
-        }
-
-        cursor.close()
-        return bottles
-    }
-
-    fun SQLiteDatabase.forAll() {
-
-    }
 
     val fridges: ArrayList<Fridge>
         get() {
@@ -120,7 +211,7 @@ object BottleDatabase {
                 }
 
                 val newFridge = Fridge(context, name)
-                    newFridge.bottles = getBottlesByFridge(name)
+                    newFridge.bottles = FridgeUtils.getBottles(name)
 
                 fridges.add(0, newFridge)
 
@@ -130,59 +221,6 @@ object BottleDatabase {
             cursor.close()
             return fridges
         }
-
-    private fun getFridge(cursor: Cursor): Fridge {
-        var out: Fridge? = null
-        out = Fridge(context, cursor.getString(6))
-        out.bottles = getBottlesByFridge(cursor.getString(6))
-        return out
-    }
-
-    fun removeFromFridge(bottle: Bottle) {
-        val SQL = "UPDATE Bottles SET FridgeID='' WHERE Name='" + bottle.name + "'"
-        Log.d("DEBUG", "removeFromFridge: executing SQL: $SQL")
-        val cv = ContentValues()
-        cv.putNull("FridgeID")
-        database.update("Bottles", cv, "Name='" + bottle.name + "'", null)
-    }
-
-    fun getDefaultFridge(context: Context): Fridge {
-        val ret = Fridge(context, "Default")
-        ret.bottles = getBottlesByFridge(null)
-        return ret
-    }
-
-
-    /* Fridge CRUD */
-
-    fun createFridge(fridge : String) {
-        val cv = ContentValues().apply {
-            put(Fridge.SQL.NAME, fridge)
-        }
-
-        database.insert(FRIDGE_TABLE, "", cv)
-    }
-
-    fun updateFridge(fridge: Fridge) {
-        for(bottle in fridge.bottles) {
-            // update all bottles to match
-            val cv = ContentValues()
-            cv.put("FridgeID", fridge.name)
-            database.update(BOTTLE_TABLE, cv, "id=${bottle.id}", null)
-        }
-
-    }
-
-    fun deleteFridge(fridgeName : String) {
-        val cv = ContentValues()
-        cv.putNull("FridgeID")
-
-        // remove the fridge from our list
-        database.delete(FRIDGE_TABLE, "Name=$fridgeName", null)
-
-        // remove any bottles association with this fridge
-        database.update(BOTTLE_TABLE, cv, "FridgeID=$fridgeName", null)
-    }
 
     private fun copyDatabaseFromAssets() {
         // where to write to (database/ path)
