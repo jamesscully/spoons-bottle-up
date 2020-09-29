@@ -18,7 +18,7 @@ import com.scullyapps.spoonsbottleup.fragments.BottleListFragment.OnFragmentInte
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
 import com.scullyapps.spoonsbottleup.models.Bottle
-import com.scullyapps.spoonsbottleup.ui.Fridge
+import com.scullyapps.spoonsbottleup.ui.FridgeView
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnListFragmentInteractionListener {
@@ -48,7 +48,7 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
         Toast.makeText(this, "Item Pressed " + item.name, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onListFragmentInteraction(item: Fridge) {
+    override fun onListFragmentInteraction(item: FridgeView) {
         val i = Intent(this, FridgeManagementActivity::class.java)
         i.putExtra("name", item.name)
         startActivity(i)

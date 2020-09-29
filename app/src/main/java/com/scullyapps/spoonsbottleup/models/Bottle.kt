@@ -9,7 +9,7 @@ data class Bottle(
         var type: DrinkType,
         var step: Int = 2,
         var max: Int = 32,
-        var fridgeName: String = "Default Fridge",
+        var fridgeName: String? = "Default Fridge",
         var listOrder: Int = -1
 ) {
     private val TAG : String = "Bottle"
@@ -34,14 +34,5 @@ data class Bottle(
             val fridge = cursor.getString(5) ?: "Default"
             return Bottle(id, name, DrinkType.DUMMY, step, max, fridge, order)
         }
-    }
-
-    object SQL {
-        val ID = "ID"
-        val NAME = "Name"
-        val LIST_ORDER = "ListOrder"
-        val STEP = "StepAmount"
-        val MAX = "MaxAmount"
-        val FRIDGE = "FridgeID"
     }
 }

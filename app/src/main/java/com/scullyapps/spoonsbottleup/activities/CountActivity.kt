@@ -8,13 +8,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
-import com.scullyapps.spoonsbottleup.ui.Fridge
+import com.scullyapps.spoonsbottleup.ui.FridgeView
 import com.scullyapps.spoonsbottleup.ui.Plaque
 import kotlinx.android.synthetic.main.activity_count.*
 
 class CountActivity : AppCompatActivity() {
     private var bottlingUp = false
-    private var fridges: ArrayList<Fridge> = ArrayList()
+    private var fridges: ArrayList<FridgeView> = ArrayList()
 
     override fun onDestroy() {
         Plaque.totalSelected = 0
@@ -25,8 +25,8 @@ class CountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_count)
 
-        val actionBar = supportActionBar
-            actionBar?.hide()
+        // hide toolbar
+        supportActionBar?.hide()
 
         // get all fridges
         fridges = BottleDatabase.fridges
@@ -34,15 +34,16 @@ class CountActivity : AppCompatActivity() {
         // add default fridge to front
         val defaultFridge = BottleDatabase.FridgeUtils.getDefault()
 
-        if (defaultFridge.size > 0)
-            fridges.add(defaultFridge)
+        if (defaultFridge.bottles.isNotEmpty())
+            fridges.add(defaultFridge.toView(this))
 
         for (f in fridges) {
             count_layout_main.addView(f, 0)
         }
 
-        val padding = Space(this)
-            padding.visibility = View.INVISIBLE
+        val padding = Space(this).apply {
+            visibility = View.INVISIBLE
+        }
 
         count_layout_main.addView(padding)
 

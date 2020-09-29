@@ -8,7 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.scullyapps.spoonsbottleup.App
 import com.scullyapps.spoonsbottleup.models.Bottle
-import com.scullyapps.spoonsbottleup.ui.Fridge
+import com.scullyapps.spoonsbottleup.models.Fridge
+import com.scullyapps.spoonsbottleup.ui.FridgeView
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -53,7 +54,7 @@ object BottleDatabase {
     private fun Cursor.forEachRow(callback : (Cursor) -> Unit) {
 
         // no rows = do nothing!
-        if(count <= 0) {
+        if(count <= 0 || columnCount <= 0) {
             return
         }
 
@@ -82,7 +83,7 @@ object BottleDatabase {
             }
 
             val values = ContentValues().apply {
-                put(ID, bottle.id)
+//                put(ID, bottle.id)
                 put(NAME, bottle.name)
                 put(LIST_ORDER, bottle.listOrder)
                 put(STEP, bottle.step)
@@ -137,23 +138,46 @@ object BottleDatabase {
             database.insert(FRIDGE_TABLE, null, cv)
         }
 
-        fun get(name: String) {
-            val cursor = database.rawQuery("SELECT * FROM $BOTTLE_TABLE WHERE ${BottleUtils.FRIDGE} = $name", null)
+        fun get(name: String) : Fridge? {
+            var listOrder = 0
+
+            val cursor = database.rawQuery("SELECT * FROM $FRIDGE_TABLE WHERE $NAME = $name", null)
+
+            if(cursor.count <= 0) {
+                return null
+            }
+
+            listOrder = cursor.getInt(1)
+
+            return Fridge(name, getBottles(name), listOrder)
+
         }
 
         fun delete(name: String) {
-        
+            val values = ContentValues().apply {
+                put(NAME, name)
+            }
+
+            for(bottle in getBottles(name)) {
+                bottle.fridgeName = ""
+                BottleUtils.update(bottle.id, bottle)
+            }
         }
 
         fun update(fridge : Fridge) {
             val values = ContentValues().apply {
+                put(LIST_ORDER, fridge.listOrder)
+            }
 
+            for(bottle in fridge.bottles) {
+                bottle.fridgeName = fridge.name
+                BottleUtils.update(bottle.id, bottle)
             }
         }
 
         fun getDefault() : Fridge {
-            return Fridge(context, "Default").apply {
-                getBottles()
+            return Fridge("", emptyList()).apply {
+                this.bottles = getBottles()
             }
         }
 
@@ -193,30 +217,20 @@ object BottleDatabase {
         }
 
 
-    val fridges: ArrayList<Fridge>
+    val fridges: ArrayList<FridgeView>
         get() {
-            val fridges = ArrayList<Fridge>()
-
+            val fridges = ArrayList<FridgeView>()
             val cursor = database.rawQuery("SELECT DISTINCT FridgeID FROM Bottles b JOIN Fridges f ON b.FridgeID = f.Name ORDER BY f.ListOrder", null)
 
-            cursor.moveToFirst()
-            while (!cursor.isAfterLast && cursor.columnCount > 0) {
-                val name = cursor.getString(0)
+            cursor.forEachRow {cur ->
+                val name = cur.getString(0)
 
-                if (name == null) {
-                    cursor.moveToNext()
-                    continue
-                }
-
-                val newFridge = Fridge(context, name)
-                    newFridge.bottles = FridgeUtils.getBottles(name)
+                val newFridge = FridgeView(context, name)
+                newFridge.bottles = FridgeUtils.getBottles(name)
 
                 fridges.add(0, newFridge)
-
                 cursor.moveToNext()
             }
-
-            cursor.close()
             return fridges
         }
 

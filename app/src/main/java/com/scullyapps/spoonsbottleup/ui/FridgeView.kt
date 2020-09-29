@@ -7,7 +7,7 @@ import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.models.Bottle
 import kotlinx.android.synthetic.main.widget_fridge.view.*
 
-class Fridge(context: Context, var name: String) : LinearLayout(context) {
+class FridgeView(context: Context, var name: String) : LinearLayout(context) {
 
     var bottles: ArrayList<Bottle> = ArrayList()
         set(value) {
@@ -83,6 +83,7 @@ class Fridge(context: Context, var name: String) : LinearLayout(context) {
 
     private fun accentize() {
         var accent = false
+
         for (p in plaques) {
             if (p.visibility == VISIBLE) {
                 if (accent)
@@ -94,11 +95,4 @@ class Fridge(context: Context, var name: String) : LinearLayout(context) {
             }
         }
     }
-
-    object SQL {
-        val NAME = "Name"
-        val LIST_ORDER = "ListOrder"
-    }
-
-
 }

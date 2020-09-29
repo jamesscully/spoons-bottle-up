@@ -10,9 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
-import com.scullyapps.spoonsbottleup.ui.Fridge
+import com.scullyapps.spoonsbottleup.ui.FridgeView
 
-class FridgeRecyclerViewAdapter(private val mValues: List<Fridge>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<FridgeRecyclerViewAdapter.ViewHolder>() {
+class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<FridgeRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.widget_fridge_list, parent, false)
@@ -39,7 +39,7 @@ class FridgeRecyclerViewAdapter(private val mValues: List<Fridge>, private val m
         val txtName: TextView = view.findViewById(R.id.txt_fridgevh_name)
         val btnEdit: Button = view.findViewById(R.id.btn_fridgevh_edit)
         val btnDel: Button = view.findViewById(R.id.btn_fridgevh_add)
-        var fridge: Fridge? = null
+        var fridge: FridgeView? = null
 
         fun disableButtons() {
             btnDel.visibility = View.INVISIBLE

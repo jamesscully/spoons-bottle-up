@@ -17,7 +17,7 @@ import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.adapters.FridgeRecyclerViewAdapter;
 import com.scullyapps.spoonsbottleup.data.BottleDatabase;
 import com.scullyapps.spoonsbottleup.models.Bottle;
-import com.scullyapps.spoonsbottleup.ui.Fridge;
+import com.scullyapps.spoonsbottleup.ui.FridgeView;
 
 import java.util.ArrayList;
 
@@ -84,10 +84,10 @@ public class FridgeFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            ArrayList<Fridge> fridges = BottleDatabase.INSTANCE.getFridges();
+            ArrayList<FridgeView> fridges = BottleDatabase.INSTANCE.getFridges();
 
             // add the default fridge to the first/top of the list
-            Fridge defaultFridge = new Fridge(view.getContext(), "Default");
+            FridgeView defaultFridge = new FridgeView(view.getContext(), "Default");
 
             if(defaultFridge.getSize() > 0) {
                 fridges.add(0, defaultFridge);
@@ -129,7 +129,7 @@ public class FridgeFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Fridge item);
+        void onListFragmentInteraction(FridgeView item);
         void onListFragmentInteraction(Bottle item);
     }
 }
