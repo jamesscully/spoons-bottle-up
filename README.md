@@ -1,23 +1,23 @@
 
 
-# Bottle Up
-An application created for use in restocking fridges behind the bar. Predominantly used to save time writing each individual bottle-name and count on a piece of paper, which is easily lost.
+# Bottling Up Assistant
 
-## Features
+This has been a project for me over two years of seasonal employment at Wetherspoons. Its primary purpose is to speed up re-stocking of fridges, namely by removing the need to write down acronyms/names of products and amount needed on the back of a receipt with a pen, and guessing how much of it is needed. 
 
-* **Easy to count** - use +/- buttons or step (++/--) in a specified amount
-* **Inverted counting** - count how many bottles are present, get the amount needed
-* **Organizable fridge list** - drag and drop bottles if their order is changed
+As of the latest version, counting is done by incrementing/decrementing by one or how many of the product is in a row, or by subtracting how many are left against a known maximum capacity (long-pressing an item).
 
-## Installation
-You can either clone this repository and run the following in the root:
-``./gradlew assembleDebug``
+Initial data is pulled from the Wetherspoon app API, and processed with Python into a SQLite database for use in the app; the script can be found [here](python_scripts/SkegStoreItems.py). I've hidden the API endpoints from the repo for now, since they aren't public and involved some reverse engineering to get.
 
-You'll then find the compiled .apk at ``app/build/outputs/apk/debug/app-debug.apk``
 
-Note that this app is specified for The Red Lion, and is currently unmaintained due to other works.
 
-## Credits
 
-**The Red Lion, Skegness** - for having me :)
-**iPaulPro** - for demystifising drag/drop RecyclerViews
+
+
+<!-- Initially, each product name was hand-written into a database in-order then displayed in-app alongside an increment/decrement counter. 
+
+The current version does this, but also allows for counting in steps (e.g. three-rows of a product is +/- 3) and counting by using the difference between how many are left in the fridge against the known max. 
+
+It also pulls data from the Wetherspoon App API using Python into a SQLite database.
+ -->
+
+

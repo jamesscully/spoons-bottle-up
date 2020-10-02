@@ -1,8 +1,6 @@
 import requests
 import json
-
 import sqlite3
-
 import re
 
 # retrieve hidden API endpoints
@@ -369,14 +367,6 @@ def presets():
 		print("UPDATE Bottles SET MaxAmount = {} WHERE Name LIKE '%{}%'".format(str(value), key))
 
 		rows = cursor.execute("UPDATE Bottles SET MaxAmount = {} WHERE Name LIKE '%{}%'".format(str(value), key))
-
-
-
-
-
-
-
-
 
 presets()
 
