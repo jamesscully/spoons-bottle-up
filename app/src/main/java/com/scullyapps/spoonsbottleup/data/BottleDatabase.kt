@@ -222,8 +222,11 @@ object BottleDatabase {
             val fridges = ArrayList<FridgeView>()
             val cursor = database.rawQuery("SELECT DISTINCT FridgeID FROM Bottles b JOIN Fridges f ON b.FridgeID = f.Name ORDER BY f.ListOrder", null)
 
-            cursor.forEachRow {cur ->
-                val name = cur.getString(0)
+            cursor.moveToFirst()
+            while (!cursor.isAfterLast && cursor.columnCount > 0) {
+                val name = cursor.getString(0)
+
+                Log.d(TAG, "$name")
 
                 val newFridge = FridgeView(context, name)
                 newFridge.bottles = FridgeUtils.getBottles(name)
@@ -231,6 +234,7 @@ object BottleDatabase {
                 fridges.add(0, newFridge)
                 cursor.moveToNext()
             }
+
             return fridges
         }
 

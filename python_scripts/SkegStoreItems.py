@@ -131,7 +131,6 @@ def processSoftDrink():
 processSoftDrink()
 
 conn = sqlite3.connect('bottles.db')
-
 bottles_table_create = ''' 
 CREATE TABLE "Bottles" (
 	"ID"	INTEGER UNIQUE,
@@ -159,6 +158,7 @@ def createTable():
 		cursor = conn.cursor()
 		cursor.execute(bottles_table_create)
 		cursor.execute(fridges_table_create)
+		conn.row_factory = sqlite3.Row
 
 
 		# create our fridges at pub in order
@@ -202,17 +202,26 @@ def addBottleToDB(bottle):
 		10000000415,
 		10000000412,
 		10000001319,
-		10000000413
+		10000000413,
+		10000085759,
+		10000086214,
+		10000017351,
+		10000125488,
+		10000138946,
+		10000138930,
+		10000036569,
+		10000092182,
+		10000139964,
+		10000106400
 	]
+	if bottle.id in blacklist:
+		print("[IGNORE] {}".format(bottle.name))
+		return
 
-	# if bottle.id in blacklist:
-	# 	# print("[IGNORE] {} \n".format(bottle.name))
-	# 	return
-	# else:
-	# 	# print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
+		# print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
 
 	cursor = conn.cursor()
-	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount, MinimumAge, SizeML) VALUES (?,?,?,?,?,?,?)", (item.id, item.name, 0, 2, 32, item.minimumAge, item.getML()))
+	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount, MinimumAge, SizeML) VALUES (?,?,?,?,?,?,?)", (item.id, item.name, 0, 2, -1, item.minimumAge, item.getML()))
 	conn.commit()
 	cursor.close()
 
@@ -225,7 +234,6 @@ for item in alcohols:
 for item in soft_drinks:
 	addBottleToDB(item)
 	# item.print()
-
 
 
 def presets():
@@ -316,6 +324,83 @@ def presets():
 	### Standard can size is 330ml - these fit 5 on a row
 	# cursor.execute("UPDATE Bottles SET MaxAmount = 10 WHERE SizeML = 330 AND FridgeID = 'Front'")
 
+	conn.commit()
+
+	knownLikenessMaxes = {
+		"J2O": 12,
+		"Magners": 10,
+		"WKD": 14,
+		"Smirnoff Ice": 14,
+		"Efes": 5,
+		"Hooch": 12,
+		"Strathmore sparkling": 12,
+		"Strathmore still": 18,
+		"Beck’s Blue - Alcohol free": 6,
+		"Beck’s": 12,
+		"Budweiser": 10,
+		"Brut": 4,
+		"Blossom hill": 10,
+		"Hardys Pinot Grigio": 15,
+		"Limonata": 6,
+		"Rossa": 6,
+		"Old Jamaica": 6,
+		"Adnams": 5,
+		"Hardys Ros": 10,
+		"Heineken 0.0": 6,
+		"Lavazza": 7,
+		"Dalston": 6,
+		"Gunna": 6,
+		"BrewDog": 6,
+		"kombucha raspberry": 7,
+		"Remedy kombucha cherry plum": 7,
+		"coconut water": 7,
+		"Fentimans tonic water": 23,
+		"Fentimans light tonic water": 12,
+		"Fentimans elderflower": 6,
+		"Desperados": 12,
+		"Corona": 12,
+		"Sol": 12,
+		"R White’s raspberry lemonade": 12,
+		"cordial": 3,
+		"Orange juice": 3,
+		"Cranberry juice": 3,
+		"Apple juice": 3,
+		"Angry Orchard": 3,
+		"Bulmers No 17 cider": 6,
+		"Kopparberg Mixed Fruit cider": 6,
+		"Tyskie Gronie": 10,
+		"Baltika 7": 10,
+		"Oakham Alpha Inception - West Coast IPA": 6,
+		"Tsingtao": 5,
+		"Birra Moretti": 10,
+		"Newcastle Brown Ale": 10,
+		"Villa Maria Sauvignon Blanc": 4,
+		"Lagunitas IPA": 6,
+		"Krombacher Pils": 5,
+		"Hardys Shiraz": 6,
+		"Hardys Chardonnay": 10,
+		"Estrella Galicia": 12,
+		"Trivento Malbec": 10,
+		"Peroni": 20,
+		"Kopparberg": 6,
+	}
+
+	for key in knownLikenessMaxes:
+		value = knownLikenessMaxes[key]
+
+		# print("Setting " + key + " max to " + str(value))
+
+		# print("UPDATE Bottles SET MaxAmount = {} WHERE Name LIKE '%{}%'".format(str(value), key))
+
+		rows = cursor.execute("UPDATE Bottles SET MaxAmount = {} WHERE Name LIKE '%{}%'".format(str(value), key))
+
+		show_logs = True
+
+		if(rows.rowcount > 0 and show_logs):
+			print("[PASS {}] Set {} max to {}".format(rows.rowcount, key, str(value)))
+		else:
+			print("[FAIL #] Set {} max to {}".format(key, str(value)))
+
 
 	### Tonics Max / Step
 
@@ -328,45 +413,8 @@ def presets():
 	for id in tonic_flavours:
 		cursor.execute("UPDATE Bottles SET MaxAmount = 6 WHERE ID = " + str(id))
 
-	conn.commit()
-
-	knownLikenessMaxes = {
-		"J2O": 12,
-		"Magners": 10,
-		"WKD": 14,
-		"Ice": 14,
-		"Efes": 5,
-		"Hooch": 12,
-		"Strathmore sparkling": 12,
-		"Strathmore still": 18,
-		"Beck's blue": 6,
-		"Blossom hill": 10,
-		"Hardys Pinot Grigio": 15,
-		"Limonata": 6,
-		"Rossa": 6,
-		"Old Jamaica": 6,
-		"Adnams": 5,
-		"Hardys Ros": 10,
-		"Heineken 0.0": 6,
-		"Lavazza": 7,
-		"Dalston": 6,
-		"Gunna": 6,
-		"BrewDog Punk AF": 6,
-		"kombucha raspberry": 7,
-		"kombucha coconut": 7,
-		"Fentimans tonic water": 23
-		"Fentimans light tonic water": 12
-		"Fentimans elderflower": 6
-	}
-
-	for key in knownLikenessMaxes:
-		value = knownLikenessMaxes[key]
-
-		print("Setting " + key + " max to " + str(value))
-
-		print("UPDATE Bottles SET MaxAmount = {} WHERE Name LIKE '%{}%'".format(str(value), key))
-
-		rows = cursor.execute("UPDATE Bottles SET MaxAmount = {} WHERE Name LIKE '%{}%'".format(str(value), key))
+		conn.commit()
+	
 
 presets()
 

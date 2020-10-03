@@ -41,7 +41,10 @@ class Plaque : LinearLayout {
     private fun init() {
         LayoutInflater.from(context).inflate(R.layout.widget_plaque, this, true)
         plaque_text_name.text = bottle.name
-        plaque_text_max.text = String.format("/%3d", max)
+
+        if(max >= 0)
+            plaque_text_max.text = String.format("/%3d", max)
+
         setupButtons()
 
         setOnLongClickListener {
