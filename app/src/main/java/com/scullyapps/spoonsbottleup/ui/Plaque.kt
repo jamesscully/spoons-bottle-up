@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.models.DrinkType
@@ -50,6 +51,11 @@ class Plaque : LinearLayout {
         setOnLongClickListener {
             invert()
             true
+        }
+
+        // show bottle name on click
+        plaque_text_name.setOnClickListener {
+            Toast.makeText(context, bottle.name, Toast.LENGTH_SHORT).show()
         }
     }
 
