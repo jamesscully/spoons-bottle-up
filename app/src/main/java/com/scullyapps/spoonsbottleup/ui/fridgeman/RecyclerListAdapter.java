@@ -1,19 +1,24 @@
 package com.scullyapps.spoonsbottleup.ui.fridgeman;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.models.Bottle;
+import com.scullyapps.spoonsbottleup.ui.dialogs.EditBottleDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,6 +75,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
             }
         });
 
+
     }
 
     @Override
@@ -108,6 +114,8 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         public final TextView textView;
         public final TextView maxText;
         public final ImageView drag;
+        public final Button edit;
+
 
         private boolean expanded = false;
 
@@ -117,6 +125,24 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
             textView = itemView.findViewById(R.id.btlm_text);
             maxText = itemView.findViewById(R.id.btlm_text_max);
             drag = itemView.findViewById(R.id.btlm_dragview);
+            edit = itemView.findViewById(R.id.btlm_edit);
+
+            edit.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onClick(View view) {
+//                    AlertDialog.Builder dialog = new AlertDialog.Builder(itemView.getContext());
+//
+//                    dialog.setView(R.layout.dialog_edit_bottle);
+//                    dialog.setCancelable(true);
+//
+//                    dialog.create().show();
+
+                    EditBottleDialog dialog = new EditBottleDialog(itemView.getContext(), )
+
+
+                }
+            });
 
             // maxText.setVisibility(View.GONE);
 
