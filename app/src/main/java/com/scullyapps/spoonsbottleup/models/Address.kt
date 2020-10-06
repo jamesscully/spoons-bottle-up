@@ -1,7 +1,6 @@
 package com.scullyapps.spoonsbottleup.models
 
 
-import android.util.Log
 import org.json.JSONObject
 
 // encapsulate address details - can be used for maps potentially

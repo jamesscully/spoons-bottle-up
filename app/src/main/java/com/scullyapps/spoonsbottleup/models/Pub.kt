@@ -1,8 +1,6 @@
 package com.scullyapps.spoonsbottleup.models
 
 
-import android.util.Log
-import org.json.JSONArray
 import org.json.JSONObject
 
 // Holds information related to each pub

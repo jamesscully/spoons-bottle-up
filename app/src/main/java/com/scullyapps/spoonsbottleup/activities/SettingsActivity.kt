@@ -1,22 +1,24 @@
 package com.scullyapps.spoonsbottleup.activities
 
-import android.content.Context
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.adapters.SectionsPagerAdapter
+import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.fragments.BottleListFragment.OnFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
 import com.scullyapps.spoonsbottleup.models.Bottle
-import com.scullyapps.spoonsbottleup.ui.Fridge
+import com.scullyapps.spoonsbottleup.ui.FridgeView
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnListFragmentInteractionListener {
@@ -46,18 +48,36 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
         Toast.makeText(this, "Item Pressed " + item.name, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onListFragmentInteraction(item: Fridge) {
+    override fun onListFragmentInteraction(item: FridgeView) {
         val i = Intent(this, FridgeManagementActivity::class.java)
         i.putExtra("name", item.name)
         startActivity(i)
+    }
+
+    private fun addFridge() {
+        val dialog = AlertDialog.Builder(this)
+
+        val editText = EditText(this).apply {
+            inputType = InputType.TYPE_CLASS_TEXT
+        }
+
+        dialog.setView(editText)
+
+        dialog.setTitle("Add a new fridge")
+
+        dialog.setPositiveButton("Add") { _, _ ->
+            BottleDatabase.FridgeUtils.add(editText.text.toString())
+        }
+
+        dialog.create().show()
     }
 
     private fun setupListeners() {
         // menu options
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.action_add_bottle -> Toast.makeText(this, "Pressed adding fridge", Toast.LENGTH_LONG).show()
-                R.id.action_add_fridge -> Toast.makeText(this, "Pressed adding fridge", Toast.LENGTH_LONG).show()
+                R.id.action_add_bottle -> Toast.makeText(this, "Pressed adding bottle", Toast.LENGTH_LONG).show()
+                R.id.action_add_fridge -> addFridge()
             }
             false
         }

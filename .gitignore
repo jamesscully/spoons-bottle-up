@@ -94,3 +94,7 @@ app/.idea
 app/src/main/java/com/scullyapps/spoonsbottleup/data/API.kt
 
 python_scripts/API_URLs.py
+python_scripts/__pycache__/
+python_scripts/bottles.db
+
+*.old

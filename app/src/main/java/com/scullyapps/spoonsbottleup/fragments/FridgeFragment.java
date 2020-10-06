@@ -2,23 +2,22 @@ package com.scullyapps.spoonsbottleup.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.scullyapps.spoonsbottleup.models.Bottle;
-import com.scullyapps.spoonsbottleup.ui.Fridge;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.scullyapps.spoonsbottleup.R;
-import com.scullyapps.spoonsbottleup.data.BottleDatabase;
 import com.scullyapps.spoonsbottleup.adapters.FridgeRecyclerViewAdapter;
+import com.scullyapps.spoonsbottleup.data.BottleDatabase;
+import com.scullyapps.spoonsbottleup.models.Bottle;
+import com.scullyapps.spoonsbottleup.ui.FridgeView;
 
 import java.util.ArrayList;
 
@@ -48,6 +47,7 @@ public class FridgeFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public FridgeFragment() {
+
     }
 
     // TODO: Customize parameter initialization
@@ -84,12 +84,15 @@ public class FridgeFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-
-            ArrayList<Fridge> fridges = BottleDatabase.INSTANCE.getFridges();
+            ArrayList<FridgeView> fridges = BottleDatabase.INSTANCE.getFridges();
 
             // add the default fridge to the first/top of the list
-            Fridge def = new Fridge(view.getContext(), "Default");
-            fridges.add(0, def);
+            FridgeView defaultFridge = new FridgeView(view.getContext(), "Default");
+
+            if(defaultFridge.getSize() > 0) {
+                fridges.add(0, defaultFridge);
+            }
+
 
             recyclerView.setAdapter(new FridgeRecyclerViewAdapter(fridges, mListener));
         }
@@ -126,7 +129,7 @@ public class FridgeFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Fridge item);
+        void onListFragmentInteraction(FridgeView item);
         void onListFragmentInteraction(Bottle item);
     }
 }

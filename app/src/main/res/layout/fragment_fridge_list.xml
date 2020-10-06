@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".fragments.FridgeFragment"
-    tools:listitem="@layout/fragment_fridge" />
+    tools:listitem="@layout/widget_fridge_list" />
