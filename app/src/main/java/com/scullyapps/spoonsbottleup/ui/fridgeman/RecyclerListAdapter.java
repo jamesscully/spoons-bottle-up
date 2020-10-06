@@ -131,16 +131,12 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onClick(View view) {
-//                    AlertDialog.Builder dialog = new AlertDialog.Builder(itemView.getContext());
-//
-//                    dialog.setView(R.layout.dialog_edit_bottle);
-//                    dialog.setCancelable(true);
-//
-//                    dialog.create().show();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(itemView.getContext());
 
-                    EditBottleDialog dialog = new EditBottleDialog(itemView.getContext(), )
+                    dialog.setView(R.layout.dialog_edit_bottle);
+                    dialog.setCancelable(true);
 
-
+                    dialog.create().show();
                 }
             });
 

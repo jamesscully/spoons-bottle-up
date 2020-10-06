@@ -214,6 +214,7 @@ def addBottleToDB(bottle):
 		10000139964,
 		10000106400
 	]
+
 	if bottle.id in blacklist:
 		print("[IGNORE] {}".format(bottle.name))
 		return
@@ -366,10 +367,10 @@ def presets():
 		"Cranberry juice": 3,
 		"Apple juice": 3,
 		"Angry Orchard": 3,
-		"Bulmers No 17 cider": 6,
-		"Kopparberg Mixed Fruit cider": 6,
+		"Bulmers No 17 cider": 5,
+		"Kopparberg Mixed Fruit cider": 5,
 		"Tyskie Gronie": 10,
-		"Baltika 7": 10,
+		"Baltika 7": 8,
 		"Oakham Alpha Inception - West Coast IPA": 6,
 		"Tsingtao": 5,
 		"Birra Moretti": 10,
