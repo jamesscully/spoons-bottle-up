@@ -46,7 +46,7 @@ class FridgeManagementActivity : AppCompatActivity() {
         fridgeman_recycler.layoutManager = LinearLayoutManager(this)
 
         itemTouchHelper.attachToRecyclerView(fridgeman_recycler)
-        adapter.setIth(itemTouchHelper)
+        adapter.setTouchHelper(itemTouchHelper)
     }
 
     // since the adapter will map any changes to the order,

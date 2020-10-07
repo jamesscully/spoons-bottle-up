@@ -131,6 +131,17 @@ object BottleDatabase {
         val NAME = "Name"
         val LIST_ORDER = "ListOrder"
 
+        fun getNames() : ArrayList<String> {
+            val cursor = database.rawQuery("SELECT * FROM $FRIDGE_TABLE", null)
+            val names = ArrayList<String>()
+
+            cursor.forEachRow {cur ->
+                names.add(cur.getString(0))
+            }
+
+            return names
+        }
+
         fun add(name : String) {
             val cv = ContentValues()
                 cv.put(NAME, name)
