@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,10 +19,11 @@
             android:id="@+id/eb_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16px"
+            android:layout_marginBottom="16dp"
             android:text="Edit Bottle"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/eb_bottlename"
@@ -31,12 +33,13 @@
             android:text="ERROR"
             android:textAlignment="center"
             android:textSize="18sp"
+            android:visibility="gone"
             tools:text="(Bottle Name)" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="16px"
+            android:layout_marginBottom="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -44,42 +47,41 @@
                 android:id="@+id/eb_lblmax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Max" />
+                android:text="Max"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/eb_max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="3"
-                android:hint="0"
+                android:ems="5"
                 android:inputType="numberSigned" />
 
             <TextView
                 android:id="@+id/eb_lblstep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Step" />
+                android:text="Step"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/eb_step"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="3"
+                android:ems="5"
                 android:inputType="numberSigned" />
         </LinearLayout>
 
         <Spinner
             android:id="@+id/eb_fridge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16px" />
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/eb_submit"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
