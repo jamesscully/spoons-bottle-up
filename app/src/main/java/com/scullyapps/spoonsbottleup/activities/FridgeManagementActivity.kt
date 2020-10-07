@@ -12,7 +12,7 @@ import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback
-import com.scullyapps.spoonsbottleup.ui.fridgeman.RecyclerListAdapter
+import com.scullyapps.spoonsbottleup.adapters.BottleRecyclerAdapter
 import kotlinx.android.synthetic.main.activity_fridge_management.*
 
 class FridgeManagementActivity : AppCompatActivity() {
@@ -37,7 +37,7 @@ class FridgeManagementActivity : AppCompatActivity() {
 
             toolbar.title = "Editing $fridgeName"
         }
-        val adapter = RecyclerListAdapter(bottles)
+        val adapter = BottleRecyclerAdapter(bottles)
         val callback: ItemTouchHelper.Callback = ItemTouchCallback(adapter)
         val itemTouchHelper = ItemTouchHelper(callback)
 
@@ -52,7 +52,7 @@ class FridgeManagementActivity : AppCompatActivity() {
     // since the adapter will map any changes to the order,
     // we can just write the current order of items back to the db
     private fun saveOrder() {
-        val adapter = fridgeman_recycler.adapter as RecyclerListAdapter
+        val adapter = fridgeman_recycler.adapter as BottleRecyclerAdapter
 
         for(i in 0 until adapter.items.size) {
             val bottle = adapter.items[i]
@@ -64,7 +64,7 @@ class FridgeManagementActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val adapter = fridgeman_recycler.adapter as RecyclerListAdapter
+        val adapter = fridgeman_recycler.adapter as BottleRecyclerAdapter
 
         // if no changes made, then we can safely exit
         if (!adapter.modified) {

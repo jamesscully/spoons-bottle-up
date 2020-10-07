@@ -1,4 +1,4 @@
-package com.scullyapps.spoonsbottleup.ui.fridgeman
+package com.scullyapps.spoonsbottleup.adapters
 
 import android.graphics.Color
 import android.util.Log
@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.dialogs.EditBottleDialog
+import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchHelperAdapter
+import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchHelperViewHolder
 import java.util.*
 
-class RecyclerListAdapter(bottles: ArrayList<Bottle>) : RecyclerView.Adapter<RecyclerListAdapter.ViewHolder>(), ItemTouchHelperAdapter {
+class BottleRecyclerAdapter(bottles: ArrayList<Bottle>) : RecyclerView.Adapter<BottleRecyclerAdapter.ViewHolder>(), ItemTouchHelperAdapter {
     val items: MutableList<Bottle> = ArrayList()
     private var toRemove: MutableList<Bottle> = ArrayList()
     private var touchHelper: ItemTouchHelper? = null
