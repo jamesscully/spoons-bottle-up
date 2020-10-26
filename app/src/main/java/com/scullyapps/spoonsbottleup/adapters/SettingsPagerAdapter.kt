@@ -10,11 +10,7 @@ import com.scullyapps.spoonsbottleup.fragments.BottleListFragment
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment
 import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
-class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager?) : FragmentPagerAdapter(fm!!) {
+class SettingsPagerAdapter(private val mContext: Context, fm: FragmentManager?) : FragmentPagerAdapter(fm!!) {
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).

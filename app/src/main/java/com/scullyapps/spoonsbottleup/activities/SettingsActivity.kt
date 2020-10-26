@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.scullyapps.spoonsbottleup.R
-import com.scullyapps.spoonsbottleup.adapters.SectionsPagerAdapter
+import com.scullyapps.spoonsbottleup.adapters.SettingsPagerAdapter
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.fragments.BottleListFragment.OnFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
@@ -29,7 +29,7 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        val sectionsPagerAdapter = SettingsPagerAdapter(this, supportFragmentManager)
             toolbar = findViewById(R.id.toolbar_settings)
 
         view_pager.adapter = sectionsPagerAdapter

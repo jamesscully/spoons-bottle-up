@@ -16,16 +16,11 @@ import org.junit.runner.RunWith
 import org.junit.Assert.*
 
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * @see [Testing documentation](http://d.android.com/tools/testing)
- */
 @RunWith(AndroidJUnit4::class)
 class DatabaseTests {
 
     companion object {
-        const val TAG = "UnitTest"
+        const val TAG = "DatabaseTests"
     }
 
     @Before
@@ -57,7 +52,6 @@ class DatabaseTests {
 
     @Test
     fun testListOrderConsistency() {
-
         val fridges = BottleDatabase.FridgeUtils.getAll()
 
         // clear all fridges
@@ -110,4 +104,6 @@ class DatabaseTests {
             assertEquals(b.fridgeName, "TestFridge")
         }
     }
+
+
 }
