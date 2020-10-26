@@ -88,8 +88,8 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
                 CURRENT_TAB = tab.position
                 when (CURRENT_TAB) {
                     0 -> {}
-                    1 -> toolbar.inflateMenu(R.menu.menu_settings_bottles)
-                    2 -> toolbar.inflateMenu(R.menu.menu_settings_fridges)
+//                    1 -> toolbar.inflateMenu(R.menu.menu_settings_bottles)
+                    1 -> toolbar.inflateMenu(R.menu.menu_settings_fridges)
                 }
             }
 

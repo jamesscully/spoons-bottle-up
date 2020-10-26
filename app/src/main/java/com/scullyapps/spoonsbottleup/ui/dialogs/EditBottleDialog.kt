@@ -22,14 +22,12 @@ class EditBottleDialog(context: Context, bottle: Bottle) : AlertDialog.Builder(c
     init {
         val inflater = LayoutInflater.from(context).inflate(R.layout.dialog_edit_bottle, null)
 
-        val header = inflater.eb_header
         val name   = inflater.eb_bottlename
         val max    = inflater.eb_max
         val step   = inflater.eb_step
         val fridge = inflater.eb_fridge
-        val submit = inflater.eb_submit
 
-        header.text = "Editing ${bottle.name}"
+        setTitle("Editing ${bottle.name}")
 
         name.text = bottle.name
         max.setText("${bottle.max}")

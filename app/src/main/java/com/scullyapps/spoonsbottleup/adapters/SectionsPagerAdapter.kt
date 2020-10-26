@@ -20,8 +20,7 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager?) 
         // Return a PlaceholderFragment (defined as a static inner class below).
         when (position) {
             0 -> return GeneralSettingsFragment()
-            1 -> return BottleListFragment()
-            2 -> return FridgeFragment()
+            1 -> return FridgeFragment()
         }
         return GeneralSettingsFragment()
     }
@@ -31,11 +30,11 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager?) 
     }
 
     override fun getCount(): Int {
-        return 3
+        return 2
     }
 
     companion object {
         @StringRes
-        private val TAB_TITLES = intArrayOf(R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3)
+        private val TAB_TITLES = intArrayOf(R.string.tab_text_1, R.string.tab_text_3)
     }
 }

@@ -18,11 +18,11 @@ object BottleDatabase {
 
     private const val TAG = "BottleDatabase"
 
-    private var helper : SQLiteOpenHelper
+    private lateinit var helper : SQLiteOpenHelper
     private lateinit var database : SQLiteDatabase
-    private var context : Context
+    private lateinit var context : Context
 
-    private const val DB_NAME = "Bottles.db"
+                  var DB_NAME = "Bottles.db"
     private const val BOTTLE_TABLE = "Bottles"
     private const val FRIDGE_TABLE = "Fridges"
 
@@ -32,6 +32,14 @@ object BottleDatabase {
 
 
     init {
+        init()
+    }
+
+    fun getPath() : String {
+        return context.getDatabasePath(DB_NAME).path
+    }
+
+    fun init() {
         val dbVersion = 1
 
         context = App.getContext()
@@ -41,13 +49,12 @@ object BottleDatabase {
             override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) { }
         }
 
-        val dbPath = context.getDatabasePath(DB_NAME).path
-        
+
         // read proper DB file from file from databases/
-        if(!File(dbPath).exists())
+        if(!File(getPath()).exists())
             copyDatabaseFromAssets()
 
-        database = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE)
+        database = SQLiteDatabase.openDatabase(getPath(), null, SQLiteDatabase.OPEN_READWRITE)
     }
 
     // Simple extension function to run code for each row
@@ -173,6 +180,8 @@ object BottleDatabase {
                 bottle.fridgeName = ""
                 BottleUtils.update(bottle.id, bottle)
             }
+
+            database.delete(FRIDGE_TABLE, "Name = '$name'", null)
         }
 
         fun update(fridge : Fridge) {
@@ -249,12 +258,13 @@ object BottleDatabase {
             return fridges
         }
 
+
     private fun copyDatabaseFromAssets() {
         // where to write to (database/ path)
         val dbFile = context.getDatabasePath(DB_NAME)
 
         // from our assets folder
-        val input  = context.assets.open(DB_NAME)
+        val input  = context.assets.open("Bottles.db")
         val output: OutputStream = FileOutputStream(dbFile)
 
         // kb buffer
