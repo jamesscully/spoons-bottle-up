@@ -6,11 +6,15 @@ import com.scullyapps.spoonsbottleup.ui.FridgeView
 class Fridge(
         var name: String,
         var bottles: List<Bottle>,
-        val listOrder: Int = 0
+        var listOrder: Int = 0
 ) {
     private val TAG : String = "Fridge"
 
     fun toView(context: Context) : FridgeView {
         return FridgeView(context, this.name)
+    }
+
+    operator fun component1() {
+        TODO("Not yet implemented")
     }
 }

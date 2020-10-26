@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import androidx.core.database.getIntOrNull
 import com.scullyapps.spoonsbottleup.App
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.models.Fridge
@@ -149,9 +150,26 @@ object BottleDatabase {
             return names
         }
 
+        fun getHighestListOrder() : Int? {
+            val cursor = database.rawQuery("SELECT MAX(ListOrder) FROM $FRIDGE_TABLE", null)
+            cursor.moveToFirst()
+
+            return cursor.getIntOrNull(0)
+        }
+
         fun add(name : String) {
+            var listOrder = getHighestListOrder()
+
+            // return 0 if no fridges exist
+            if(listOrder == null) {
+                listOrder = 0
+            } else {
+                listOrder++
+            }
+
             val cv = ContentValues()
                 cv.put(NAME, name)
+                cv.put(LIST_ORDER, listOrder)
 
             database.insert(FRIDGE_TABLE, null, cv)
         }
@@ -159,26 +177,59 @@ object BottleDatabase {
         fun get(name: String) : Fridge? {
             var listOrder = 0
 
-            val cursor = database.rawQuery("SELECT * FROM $FRIDGE_TABLE WHERE $NAME = $name", null)
+            val cursor = database.rawQuery("SELECT * FROM $FRIDGE_TABLE WHERE $NAME = '$name'", null)
 
             if(cursor.count <= 0) {
                 return null
             }
 
-            listOrder = cursor.getInt(1)
+            cursor.moveToFirst()
+
+            listOrder = cursor.getIntOrNull(1) ?: 0
 
             return Fridge(name, getBottles(name), listOrder)
 
         }
 
-        fun delete(name: String) {
-            val values = ContentValues().apply {
-                put(NAME, name)
+        fun getAll() : List<Fridge> {
+            val cursor = database.rawQuery("SELECT * FROM $FRIDGE_TABLE", null)
+            val fridges = ArrayList<Fridge>()
+
+            cursor.forEachRow {cur ->
+                val name = cur.getString(0)
+                val listOrder = cur.getInt(1)
+                fridges.add(Fridge(
+                        name,
+                        getBottles(name),
+                        listOrder
+                ))
             }
 
+            return fridges
+        }
+
+        fun delete(name: String) {
+
+            // no need for non-existent fridge
+            val fridgeDelete = get(name) ?: return
+
+
+            // update all bottles with blank/null names
             for(bottle in getBottles(name)) {
                 bottle.fridgeName = ""
                 BottleUtils.update(bottle.id, bottle)
+            }
+
+
+            // get fridges with a higher list order than us
+            val toModify = getAll().filter {f ->
+                f.listOrder > fridgeDelete.listOrder
+            }
+
+            // decrement order to ensure consistency
+            toModify.forEach {fridge ->
+                fridge.listOrder -= 1
+                update(fridge)
             }
 
             database.delete(FRIDGE_TABLE, "Name = '$name'", null)
@@ -259,7 +310,8 @@ object BottleDatabase {
         }
 
 
-    private fun copyDatabaseFromAssets() {
+    // This should only be used either when the db doesn't exist, or in a unit test
+    fun copyDatabaseFromAssets() {
         // where to write to (database/ path)
         val dbFile = context.getDatabasePath(DB_NAME)
 
