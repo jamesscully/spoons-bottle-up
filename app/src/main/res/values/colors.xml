@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#424B73</color>
+    <color name="countInvertedColour">#880E4F</color>
     <color name="colorPrimaryDark">#313856</color>
     <color name="colorAccent">#4F60AE</color>
 

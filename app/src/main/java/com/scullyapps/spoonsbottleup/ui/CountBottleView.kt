@@ -53,6 +53,11 @@ class CountBottleView : LinearLayout {
             true
         }
 
+        plaque_text_name.setOnLongClickListener {
+            invert()
+            true
+        }
+
         // show bottle name on click
         plaque_text_name.setOnClickListener {
             Toast.makeText(context, bottle.name, Toast.LENGTH_SHORT).show()
@@ -100,7 +105,7 @@ class CountBottleView : LinearLayout {
     fun invert() {
         if (!inverted) {
             // use super class to temporarily modify color
-            super.setBackgroundResource(R.color.colorPrimary)
+            super.setBackgroundResource(R.color.countInvertedColour)
             plaque_text_name.setTextColor(Color.WHITE)
             plaque_text_count.setTextColor(Color.WHITE)
             plaque_text_max.visibility = INVISIBLE
