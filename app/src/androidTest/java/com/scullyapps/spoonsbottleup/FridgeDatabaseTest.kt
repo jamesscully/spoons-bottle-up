@@ -17,7 +17,7 @@ import org.junit.Assert.*
 
 
 @RunWith(AndroidJUnit4::class)
-class DatabaseTests {
+class FridgeDatabaseTest {
 
     companion object {
         const val TAG = "DatabaseTests"

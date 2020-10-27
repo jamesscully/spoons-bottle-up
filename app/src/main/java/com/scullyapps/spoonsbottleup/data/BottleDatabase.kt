@@ -85,13 +85,13 @@ object BottleDatabase {
 
         fun add(bottle: Bottle) {
             // default/new Bottle state should have empty ID
-            if(bottle.id.isNotEmpty()) {
-                Log.w(TAG, "Attempt to add bottle with non-empty ID, maybe update?")
-                return
-            }
+//            if(bottle.id.isNotEmpty()) {
+//                Log.w(TAG, "Attempt to add bottle with non-empty ID, maybe update?")
+//                return
+//            }
 
             val values = ContentValues().apply {
-//                put(ID, bottle.id)
+                put(ID, bottle.id)
                 put(NAME, bottle.name)
                 put(LIST_ORDER, bottle.listOrder)
                 put(STEP, bottle.step)
@@ -103,8 +103,17 @@ object BottleDatabase {
         }
 
 
-        fun get(id : String) {
-            database.rawQuery("SELECT * FROM $BOTTLE_TABLE WHERE ID=$id", null)
+        fun get(id : String) : Bottle? {
+            val cursor = database.rawQuery("SELECT * FROM $BOTTLE_TABLE WHERE ID='$id'", null)
+
+            cursor.moveToFirst()
+
+            if(cursor.count == 0) {
+                Log.w(TAG, "BottleUtils.get(): Could not find bottle with ID $id ", )
+                return null
+            }
+
+            return Bottle.fromCursor(cursor)
         }
         
 
