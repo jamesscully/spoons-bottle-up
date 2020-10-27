@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Space
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.scullyapps.spoonsbottleup.R
@@ -25,11 +26,15 @@ class CountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_count)
 
+        val model : CountActivityViewModel by viewModels()
+
         // hide toolbar
         supportActionBar?.hide()
 
-        // get all fridges
-        fridges = BottleDatabase.fridges
+        // get all fridges as views
+        fridges = BottleDatabase.fridges.map {fridge ->
+            fridge.toView(this)
+        } as ArrayList<FridgeView>
 
         // add default fridge to front
         val defaultFridge = BottleDatabase.FridgeUtils.getDefault()

@@ -17,6 +17,7 @@ import com.scullyapps.spoonsbottleup.R;
 import com.scullyapps.spoonsbottleup.adapters.FridgeRecyclerViewAdapter;
 import com.scullyapps.spoonsbottleup.data.BottleDatabase;
 import com.scullyapps.spoonsbottleup.models.Bottle;
+import com.scullyapps.spoonsbottleup.models.Fridge;
 import com.scullyapps.spoonsbottleup.ui.FridgeView;
 
 import java.util.ArrayList;
@@ -84,17 +85,25 @@ public class FridgeFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            ArrayList<FridgeView> fridges = BottleDatabase.INSTANCE.getFridges();
+            ArrayList<Fridge> fridges = BottleDatabase.INSTANCE.getFridges();
+
+            ArrayList<FridgeView> fridgeViews = new ArrayList<>();
+
+            for(Fridge f : fridges) {
+                fridgeViews.add(
+                        f.toView(context)
+                );
+            }
 
             // add the default fridge to the first/top of the list
-            FridgeView defaultFridge = new FridgeView(view.getContext(), "Default");
+            FridgeView defaultFridge = new FridgeView(view.getContext(), BottleDatabase.FridgeUtils.INSTANCE.getDefault());
 
             if(defaultFridge.getSize() > 0) {
-                fridges.add(0, defaultFridge);
+                fridgeViews.add(0, defaultFridge);
             }
 
 
-            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(fridges, mListener));
+            recyclerView.setAdapter(new FridgeRecyclerViewAdapter(fridgeViews, mListener));
         }
         return view;
     }

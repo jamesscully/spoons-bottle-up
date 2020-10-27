@@ -11,7 +11,7 @@ class Fridge(
     private val TAG : String = "Fridge"
 
     fun toView(context: Context) : FridgeView {
-        return FridgeView(context, this.name)
+        return FridgeView(context, this)
     }
 
     operator fun component1() {

@@ -5,18 +5,13 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.models.Bottle
+import com.scullyapps.spoonsbottleup.models.Fridge
 import kotlinx.android.synthetic.main.widget_fridge.view.*
 
-class FridgeView(context: Context, var name: String) : LinearLayout(context) {
+class FridgeView(context: Context, var fridge: Fridge) : LinearLayout(context) {
 
     var bottles: ArrayList<Bottle> = ArrayList()
-        set(value) {
-            value.forEach {bottle ->
-                addBottle(bottle)
-                accentize()
-            }
-            field = value
-        }
+        get() = fridge.bottles as ArrayList<Bottle>
 
     private val countBottleViews: ArrayList<CountBottleView>
         get() {
@@ -36,11 +31,16 @@ class FridgeView(context: Context, var name: String) : LinearLayout(context) {
 
     init {
         LayoutInflater.from(context).inflate(R.layout.widget_fridge, this, true)
-        txt_fridgename.text = name
+        txt_fridgename.text = fridge.name
+
+        for(bottle in bottles) {
+            addBottle(bottle)
+        }
+
+        accentize()
     }
 
     fun addBottle(bottle: Bottle) {
-        bottles.add(bottle)
         layout_widget_fridge.addView(CountBottleView(context, bottle))
     }
 

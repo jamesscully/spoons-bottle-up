@@ -13,6 +13,7 @@ import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback
 import com.scullyapps.spoonsbottleup.adapters.BottleRecyclerAdapter
+import com.scullyapps.spoonsbottleup.models.Fridge
 import kotlinx.android.synthetic.main.activity_fridge_management.*
 
 class FridgeManagementActivity : AppCompatActivity() {
@@ -25,18 +26,19 @@ class FridgeManagementActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fridge_management)
 
         val bundle = intent.extras
-        val fridge: FridgeView
+        val fridge: Fridge
         val toolbar = findViewById<Toolbar>(R.id.toolbar_fridgeman)
 
         if (bundle != null) {
-            // retrieve our
+            // retrieve our fridge
             val fridgeName = bundle.getString("name", "NONE")
-            fridge = FridgeView(this, fridgeName)
-            bottles = BottleDatabase.FridgeUtils.getBottles(fridgeName)
-            fridge.bottles = bottles
+
+            fridge = BottleDatabase.FridgeUtils.get(fridgeName)!!
+            bottles = fridge.bottles as ArrayList<Bottle>
 
             toolbar.title = "Editing $fridgeName"
         }
+
         val adapter = BottleRecyclerAdapter(bottles)
         val callback: ItemTouchHelper.Callback = ItemTouchCallback(adapter)
         val itemTouchHelper = ItemTouchHelper(callback)

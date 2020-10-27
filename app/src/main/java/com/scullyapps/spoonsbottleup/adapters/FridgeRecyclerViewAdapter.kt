@@ -20,14 +20,16 @@ class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private v
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.fridge = mValues[position]
         val txtName = holder.txtName
-        txtName.text = mValues[position].name
-        if (holder.fridge!!.name == "Default") {
+        holder.fridge = mValues[position]
+        txtName.text = mValues[position].fridge.name
+
+        if (holder.fridge!!.fridge.name == "Default") {
             txtName.setTypeface(null, Typeface.BOLD)
             txtName.setTextSize(TypedValue.COMPLEX_UNIT_PX, txtName.textSize + 12)
             holder.disableButtons()
         }
+
         holder.view.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge) }
     }
 
@@ -45,6 +47,5 @@ class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private v
             btnDel.visibility = View.INVISIBLE
             btnEdit.visibility = View.INVISIBLE
         }
-
     }
 }

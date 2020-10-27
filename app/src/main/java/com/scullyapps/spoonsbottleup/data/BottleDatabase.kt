@@ -299,19 +299,22 @@ object BottleDatabase {
         }
 
 
-    val fridges: ArrayList<FridgeView>
+    val fridges: ArrayList<Fridge>
         get() {
-            val fridges = ArrayList<FridgeView>()
+            val fridges = ArrayList<Fridge>()
             val cursor = database.rawQuery("SELECT DISTINCT FridgeID FROM Bottles b JOIN Fridges f ON b.FridgeID = f.Name ORDER BY f.ListOrder", null)
 
             cursor.moveToFirst()
             while (!cursor.isAfterLast && cursor.columnCount > 0) {
                 val name = cursor.getString(0)
+                val bottles = FridgeUtils.getBottles(name)
+                val listOrder = FridgeUtils.get(name)?.listOrder ?: 0
 
-                Log.d(TAG, "$name")
-
-                val newFridge = FridgeView(context, name)
-                newFridge.bottles = FridgeUtils.getBottles(name)
+                val newFridge = Fridge(
+                        name,
+                        bottles,
+                        listOrder
+                )
 
                 fridges.add(0, newFridge)
                 cursor.moveToNext()

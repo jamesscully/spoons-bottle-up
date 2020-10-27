@@ -50,7 +50,7 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
 
     override fun onListFragmentInteraction(item: FridgeView) {
         val i = Intent(this, FridgeManagementActivity::class.java)
-        i.putExtra("name", item.name)
+        i.putExtra("name", item.fridge.name)
         startActivity(i)
     }
 
