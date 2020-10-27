@@ -18,14 +18,16 @@ class FridgeView(context: Context, var name: String) : LinearLayout(context) {
             field = value
         }
 
-    private val plaques: ArrayList<Plaque>
+    private val countBottleViews: ArrayList<CountBottleView>
         get() {
-            val ret = ArrayList<Plaque>()
+            val ret = ArrayList<CountBottleView>()
+
             for (i in 0 until layout_widget_fridge.childCount) {
-                if (layout_widget_fridge.getChildAt(i) is Plaque) {
-                    ret.add(layout_widget_fridge.getChildAt(i) as Plaque)
+                if (layout_widget_fridge.getChildAt(i) is CountBottleView) {
+                    ret.add(layout_widget_fridge.getChildAt(i) as CountBottleView)
                 }
             }
+
             return ret
         }
 
@@ -39,7 +41,7 @@ class FridgeView(context: Context, var name: String) : LinearLayout(context) {
 
     fun addBottle(bottle: Bottle) {
         bottles.add(bottle)
-        layout_widget_fridge.addView(Plaque(context, bottle))
+        layout_widget_fridge.addView(CountBottleView(context, bottle))
     }
 
     fun bottleUp(hide: Boolean) {
@@ -49,7 +51,7 @@ class FridgeView(context: Context, var name: String) : LinearLayout(context) {
         // if we're not in bottling up, then show everything
         if (!hide) {
             this.visibility = VISIBLE
-            for (p in plaques) {
+            for (p in countBottleViews) {
                 p.visibility = VISIBLE
                 p.setInputMode(true)
             }
@@ -57,7 +59,7 @@ class FridgeView(context: Context, var name: String) : LinearLayout(context) {
         }
 
         // if we are, hide only those with amt = 0
-        for (p in plaques) {
+        for (p in countBottleViews) {
             val amt = p.getCount()
 
             if (amt == 0) {
@@ -84,7 +86,7 @@ class FridgeView(context: Context, var name: String) : LinearLayout(context) {
     private fun accentize() {
         var accent = false
 
-        for (p in plaques) {
+        for (p in countBottleViews) {
             if (p.visibility == VISIBLE) {
                 if (accent)
                     p.setBackgroundResource(R.color.plaqueBackgroundAcc)

@@ -261,11 +261,13 @@ object BottleDatabase {
             }
         }
 
-        fun getBottles(name: String = "") : ArrayList<Bottle> {
+        fun getBottles(name: String = "", ascending: Boolean = true) : ArrayList<Bottle> {
             val bottles = ArrayList<Bottle>()
 
-            val SQL_NAME = "SELECT * FROM $BOTTLE_TABLE WHERE FridgeID='$name'"
-            val SQL_NULL = "SELECT * FROM $BOTTLE_TABLE WHERE FridgeID IS NULL"
+            val sortAs = if (ascending) "ASC" else "DESC"
+
+            val SQL_NAME = "SELECT * FROM $BOTTLE_TABLE WHERE FridgeID='$name' ORDER BY ListOrder $sortAs"
+            val SQL_NULL = "SELECT * FROM $BOTTLE_TABLE WHERE FridgeID IS NULL ORDER BY ListOrder $sortAs"
 
             val cursor: Cursor
 

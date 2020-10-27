@@ -13,7 +13,7 @@ import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.models.DrinkType
 import kotlinx.android.synthetic.main.widget_plaque.view.*
 
-class Plaque : LinearLayout {
+class CountBottleView : LinearLayout {
 
     private var count = 0
 

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.ui.FridgeView
-import com.scullyapps.spoonsbottleup.ui.Plaque
+import com.scullyapps.spoonsbottleup.ui.CountBottleView
 import kotlinx.android.synthetic.main.activity_count.*
 
 class CountActivity : AppCompatActivity() {
@@ -17,7 +17,7 @@ class CountActivity : AppCompatActivity() {
     private var fridges: ArrayList<FridgeView> = ArrayList()
 
     override fun onDestroy() {
-        Plaque.totalSelected = 0
+        CountBottleView.totalSelected = 0
         super.onDestroy()
     }
 
@@ -58,7 +58,7 @@ class CountActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         // show a dialog if modified list (losing them is not fun!)
-        if(Plaque.totalSelected > 0) {
+        if(CountBottleView.totalSelected > 0) {
             val dialog = DataWarningDialog(this).apply {
                 setPositiveButton("Exit") { d, _  ->
                     super.onBackPressed()
