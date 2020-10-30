@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.scullyapps.spoonsbottleup.R
-import com.scullyapps.spoonsbottleup.fragments.BottleListFragment
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment
 import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
 

@@ -3,7 +3,6 @@ package com.scullyapps.spoonsbottleup.ui.dialogs
 
 import android.content.Context
 import android.content.DialogInterface
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 
 class DataWarningDialog(

@@ -10,7 +10,6 @@ import androidx.core.database.getIntOrNull
 import com.scullyapps.spoonsbottleup.App
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.models.Fridge
-import com.scullyapps.spoonsbottleup.ui.FridgeView
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream

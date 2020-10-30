@@ -3,11 +3,8 @@ package com.scullyapps.spoonsbottleup.ui.dialogs
 
 import android.app.AlertDialog
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.SpinnerAdapter
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.models.Bottle

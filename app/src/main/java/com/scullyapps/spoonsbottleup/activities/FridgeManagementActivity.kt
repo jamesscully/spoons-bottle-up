@@ -8,12 +8,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scullyapps.spoonsbottleup.R
+import com.scullyapps.spoonsbottleup.adapters.BottleRecyclerAdapter
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.models.Bottle
-import com.scullyapps.spoonsbottleup.ui.FridgeView
-import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback
-import com.scullyapps.spoonsbottleup.adapters.BottleRecyclerAdapter
 import com.scullyapps.spoonsbottleup.models.Fridge
+import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback
 import kotlinx.android.synthetic.main.activity_fridge_management.*
 
 class FridgeManagementActivity : AppCompatActivity() {
