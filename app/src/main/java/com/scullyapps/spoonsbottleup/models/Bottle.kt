@@ -8,7 +8,7 @@ data class Bottle(
         var name: String,
         var type: DrinkType,
         var step: Int = 2,
-        var max: Int = 32,
+        var max: Int = -1,
         var fridgeName: String? = "Default Fridge",
         var listOrder: Int = -1
 ) {
@@ -16,13 +16,13 @@ data class Bottle(
 
     var custom : Boolean = false
 
-    constructor(name : String, step : Int = 2, max : Int = 32, fName : String = "Default")
+    constructor(name : String, step : Int = 2, max : Int = -1, fName : String = "Default")
             : this("", name, DrinkType.CUSTOM, step, max, fName)
     {
         custom = true
     }
 
-    constructor() : this("Error", 0, 1)
+    constructor() : this("Error", 0, -1)
 
     companion object {
         fun fromCursor(cursor : Cursor) : Bottle {

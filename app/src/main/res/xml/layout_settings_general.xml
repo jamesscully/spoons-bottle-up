@@ -2,9 +2,13 @@
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreference
-        app:key="floatbtn"
-        app:title="Enable floating bottle up button"
-        app:summary=""/>
+    <PreferenceCategory app:title="General">
+        <Preference
+            app:key="resetDatabase"
+            app:title="Reset database"
+            app:summary="Resets the apps content to base settings"/>
+    </PreferenceCategory>
+
+
 
 </PreferenceScreen>

@@ -1,6 +1,7 @@
 package com.scullyapps.spoonsbottleup.activities
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.Space
@@ -11,6 +12,7 @@ import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import com.scullyapps.spoonsbottleup.ui.CountBottleView
+import com.scullyapps.spoonsbottleup.ui.dialogs.DataWarningDialog
 import kotlinx.android.synthetic.main.activity_count.*
 
 class CountActivity : AppCompatActivity() {
@@ -64,25 +66,12 @@ class CountActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // show a dialog if modified list (losing them is not fun!)
         if(CountBottleView.totalSelected > 0) {
-            val dialog = DataWarningDialog(this).apply {
-                setPositiveButton("Exit") { d, _  ->
-                    super.onBackPressed()
-                }
+            val dialog = DataWarningDialog(this, "Modified list", "Are you sure you wish to discard this list?") { _, _ ->
+                super.onBackPressed()
             }
             dialog.create().show()
         } else {
             super.onBackPressed()
-        }
-    }
-
-    class DataWarningDialog(context: Context) : AlertDialog.Builder(context) {
-        init {
-            setTitle("Modified list")
-            setMessage("Are you sure you wish to discard this list?")
-            setCancelable(false)
-            setNegativeButton("Stay") { d, i ->
-                d.cancel()
-            }
         }
     }
 }
