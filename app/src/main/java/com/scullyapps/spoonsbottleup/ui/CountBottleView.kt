@@ -78,9 +78,14 @@ class CountBottleView : LinearLayout {
         if (amt <= 0) {
             count++
             totalSelected++
+        } else if (count + amt > max) {
+            if (max < 0) {
+                count += amt
+                totalSelected += amt
+            } else {
+                count = max
+            }
         }
-        else if (count + amt > max)
-            count = max
         else  {
             count += amt
             totalSelected += amt
