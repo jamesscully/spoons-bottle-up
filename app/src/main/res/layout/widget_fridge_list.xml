@@ -31,7 +31,7 @@
         android:foregroundGravity="center" />
 
     <Button
-        android:id="@+id/btn_fridgevh_add"
+        android:id="@+id/btn_fridgevh_del"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -40,5 +40,6 @@
         android:layout_weight="0"
         android:background="@drawable/button_bottleup"
         android:foreground="@drawable/ic_delete"
-        android:foregroundGravity="center" />
+        android:foregroundGravity="center"
+        android:visibility="gone" />
 </LinearLayout>

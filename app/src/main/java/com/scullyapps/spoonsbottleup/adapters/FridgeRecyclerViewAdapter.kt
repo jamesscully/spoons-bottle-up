@@ -30,7 +30,7 @@ class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private v
             holder.disableButtons()
         }
 
-        holder.view.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge) }
+        holder.btnEdit.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge) }
     }
 
     override fun getItemCount(): Int {
@@ -40,7 +40,7 @@ class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private v
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val txtName: TextView = view.findViewById(R.id.txt_fridgevh_name)
         val btnEdit: Button = view.findViewById(R.id.btn_fridgevh_edit)
-        val btnDel: Button = view.findViewById(R.id.btn_fridgevh_add)
+        val btnDel: Button = view.findViewById(R.id.btn_fridgevh_del)
         var fridge: FridgeView? = null
 
         fun disableButtons() {

@@ -62,7 +62,7 @@ class FridgeView(context: Context, var fridge: Fridge) : LinearLayout(context) {
         for (p in countBottleViews) {
             val amt = p.getCount()
 
-            if (amt == 0) {
+            if (amt == 0 && !p.inverted) {
                 p.visibility = GONE
             } else {
                 // if we're here, then we've had a plaque with count > 0
