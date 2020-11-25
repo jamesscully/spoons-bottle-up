@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.models.DrinkType
@@ -77,18 +78,22 @@ class CountBottleView : LinearLayout {
         // if for some reason we're incrementing <= 0, just add 1
         if (amt <= 0) {
             count++
-            totalSelected++
+            addToTotal(1)
         } else if (count + amt > max) {
+            // if we're above the max, but the max is 0,
+            // then let the user input as many as they want
+            // (in the case of missing data)
             if (max < 0) {
                 count += amt
-                totalSelected += amt
+                addToTotal(amt)
             } else {
+                // else, set to max
                 count = max
             }
         }
         else  {
             count += amt
-            totalSelected += amt
+            addToTotal(amt)
         }
 
         plaque_text_count!!.text = Integer.toString(count)
@@ -101,7 +106,7 @@ class CountBottleView : LinearLayout {
             count = 0
         } else {
             count -= amt
-            totalSelected -= amt
+            addToTotal(-amt)
         }
 
         plaque_text_count!!.text = Integer.toString(count)
@@ -166,6 +171,13 @@ class CountBottleView : LinearLayout {
         get() = bottle.type
 
     companion object {
-        var totalSelected = 0
+        var totalSelected = MutableLiveData(0)
+
+        fun addToTotal(amt : Int) {
+            // value should never be null, but 0 if somehow not
+            val value = totalSelected.value ?: 0
+
+            totalSelected.postValue(value + amt)
+        }
     }
 }

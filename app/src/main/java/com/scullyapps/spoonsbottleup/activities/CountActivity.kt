@@ -1,10 +1,13 @@
 package com.scullyapps.spoonsbottleup.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Space
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.observe
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.ui.CountBottleView
@@ -17,15 +20,14 @@ class CountActivity : AppCompatActivity() {
     private var fridges: ArrayList<FridgeView> = ArrayList()
 
     override fun onDestroy() {
-        CountBottleView.totalSelected = 0
+        // reset total selected when we leave activity
+        CountBottleView.totalSelected.postValue(0)
         super.onDestroy()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_count)
-
-        val model : CountActivityViewModel by viewModels()
 
         // hide toolbar
         supportActionBar?.hide()
@@ -41,10 +43,12 @@ class CountActivity : AppCompatActivity() {
         if (defaultFridge.bottles.isNotEmpty())
             fridges.add(defaultFridge.toView(this))
 
+        // add all fridges with their bottles to the front (these are sorted prior)
         for (f in fridges) {
             count_layout_main.addView(f, 0)
         }
 
+        // this adds space at the bottom of the list
         val padding = Space(this).apply {
             visibility = View.INVISIBLE
         }
@@ -58,11 +62,27 @@ class CountActivity : AppCompatActivity() {
             // we're done here; invert flag
             bottlingUp = !bottlingUp
         }
+
+        CountBottleView.totalSelected.observe(this) { count ->
+            if(count > 0) {
+                showControls()
+            } else {
+                hideControls()
+            }
+        }
+    }
+
+    private fun showControls() {
+        count_button_bottleup.visibility = View.VISIBLE
+    }
+
+    private fun hideControls() {
+        count_button_bottleup.visibility = View.GONE
     }
 
     override fun onBackPressed() {
         // show a dialog if modified list (losing them is not fun!)
-        if(CountBottleView.totalSelected > 0) {
+        if(CountBottleView.totalSelected.value!! > 0) {
             val dialog = DataWarningDialog(this, "Modified list", "Are you sure you wish to discard this list?") { _, _ ->
                 super.onBackPressed()
             }
