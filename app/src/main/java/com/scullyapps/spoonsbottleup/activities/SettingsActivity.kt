@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import kotlinx.android.synthetic.main.activity_settings.*
+import kotlin.math.log
 
 class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnListFragmentInteractionListener {
     private var CURRENT_TAB = 0
@@ -44,13 +46,13 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
     }
 
     override fun onFragmentInteraction(uri: Uri) {}
-    override fun onListFragmentInteraction(item: Bottle) {
-        Toast.makeText(this, "Item Pressed " + item.name, Toast.LENGTH_SHORT).show()
+    override fun onListFragmentInteraction(item: Bottle?) {
+        Toast.makeText(this, "Item Pressed " + item?.name, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onListFragmentInteraction(item: FridgeView) {
+    override fun onListFragmentInteraction(item: FridgeView?) {
         val i = Intent(this, FridgeManagementActivity::class.java)
-        i.putExtra("name", item.fridge.name)
+        i.putExtra("name", item?.fridge?.name)
         startActivity(i)
     }
 
@@ -88,7 +90,6 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
                 CURRENT_TAB = tab.position
                 when (CURRENT_TAB) {
                     0 -> {}
-//                    1 -> toolbar.inflateMenu(R.menu.menu_settings_bottles)
                     1 -> toolbar.inflateMenu(R.menu.menu_settings_fridges)
                 }
             }
@@ -101,4 +102,7 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
     }
+
+
+
 }

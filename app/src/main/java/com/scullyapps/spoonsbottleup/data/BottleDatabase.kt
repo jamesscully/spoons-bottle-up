@@ -168,6 +168,8 @@ object BottleDatabase {
         fun add(name : String) {
             var listOrder = getHighestListOrder()
 
+            Log.d(TAG, "Adding fridge $name")
+
             // return 0 if no fridges exist
             if(listOrder == null) {
                 listOrder = 0

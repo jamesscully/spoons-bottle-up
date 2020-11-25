@@ -20,9 +20,16 @@ class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private v
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val txtName = holder.txtName
+        val txtAmt  = holder.txtAmt
+
+        val bottlesAmount = mValues[position].fridge.bottles.size
+
         holder.fridge = mValues[position]
+
         txtName.text = mValues[position].fridge.name
+        txtAmt.text = "Bottles: ${bottlesAmount}"
 
         if (holder.fridge!!.fridge.name == "Default") {
             txtName.setTypeface(null, Typeface.BOLD)
@@ -39,8 +46,10 @@ class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private v
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val txtName: TextView = view.findViewById(R.id.txt_fridgevh_name)
+        val txtAmt : TextView = view.findViewById(R.id.txt_fridgevh_amount)
         val btnEdit: Button = view.findViewById(R.id.btn_fridgevh_edit)
         val btnDel: Button = view.findViewById(R.id.btn_fridgevh_del)
+
         var fridge: FridgeView? = null
 
         fun disableButtons() {
