@@ -183,7 +183,7 @@ object BottleDatabase {
         }
 
         fun get(name: String) : Fridge? {
-            var listOrder = 0
+            var listOrder : Int
 
             val cursor = database.rawQuery("SELECT * FROM $FRIDGE_TABLE WHERE $NAME = '$name'", null)
 

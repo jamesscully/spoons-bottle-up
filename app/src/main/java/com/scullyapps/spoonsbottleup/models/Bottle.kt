@@ -2,11 +2,9 @@ package com.scullyapps.spoonsbottleup.models
 
 import android.database.Cursor
 
-
 data class Bottle(
         val id: String = "",
         var name: String,
-        var type: DrinkType,
         var step: Int = 2,
         var max: Int = -1,
         var fridgeName: String? = "Default Fridge",
@@ -16,7 +14,7 @@ data class Bottle(
     var custom : Boolean = false
 
     constructor(name : String, step : Int = 2, max : Int = -1, fName : String = "Default")
-            : this("", name, DrinkType.CUSTOM, step, max, fName)
+            : this("", name, step, max, fName)
     {
         custom = true
     }
@@ -31,7 +29,7 @@ data class Bottle(
             val step = cursor.getInt(3)
             val max = cursor.getInt(4)
             val fridge = cursor.getString(5) ?: "Default"
-            return Bottle(id, name, DrinkType.DUMMY, step, max, fridge, order)
+            return Bottle(id, name, step, max, fridge, order)
         }
     }
 }

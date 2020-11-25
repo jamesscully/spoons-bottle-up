@@ -7,7 +7,6 @@ import com.scullyapps.spoonsbottleup.data.BottleDatabase.DB_NAME
 import com.scullyapps.spoonsbottleup.data.BottleDatabase.copyDatabaseFromAssets
 import com.scullyapps.spoonsbottleup.data.BottleDatabase.init
 import com.scullyapps.spoonsbottleup.models.Bottle
-import com.scullyapps.spoonsbottleup.models.DrinkType
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -18,8 +17,8 @@ import org.junit.runner.RunWith
 class BottleDatabaseTest {
     private val TAG: String = "BottleDatabaseTest"
 
-    private var bottleA = Bottle("1234", "BottleA", DrinkType.ALE)
-    private var bottleB = Bottle("12341234", "BottleB", DrinkType.ALE)
+    private var bottleA = Bottle("1234", "BottleA")
+    private var bottleB = Bottle("12341234", "BottleB")
 
 
     @Before
@@ -28,8 +27,8 @@ class BottleDatabaseTest {
         init()
         copyDatabaseFromAssets()
 
-        bottleA = Bottle("1234", "BottleA", DrinkType.ALE)
-        bottleB = Bottle("12341234", "BottleB", DrinkType.WINE)
+        bottleA = Bottle("1234", "BottleA")
+        bottleB = Bottle("12341234", "BottleB")
 
         BottleDatabase.BottleUtils.add(bottleA)
         BottleDatabase.BottleUtils.add(bottleB)

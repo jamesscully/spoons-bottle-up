@@ -21,6 +21,5 @@ class BottleDisplay : ConstraintLayout {
 
         bottle_display_text_name.text = bottle.name
         bottle_display_text_fridge.text = "Max: $bottle.max"
-        bottle_display_text_type.text = bottle.type.name
     }
 }

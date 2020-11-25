@@ -15,7 +15,7 @@ class DataWarningDialog(
         setTitle(title)
         setMessage(message)
         setCancelable(false)
-        setNegativeButton(negativeButton) { d, i ->
+        setNegativeButton(negativeButton) { d, _ ->
             d.cancel()
         }
         setPositiveButton(positiveButton, callback)

@@ -19,7 +19,7 @@ import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchHelperAdapter
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchHelperViewHolder
 import java.util.*
 
-class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, val fridgeName : String) : RecyclerView.Adapter<BottleRecyclerAdapter.ViewHolder>(), ItemTouchHelperAdapter {
+class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, private val fridgeName : String) : RecyclerView.Adapter<BottleRecyclerAdapter.ViewHolder>(), ItemTouchHelperAdapter {
     val items: MutableList<Bottle> = ArrayList()
     private var toRemove: MutableList<Bottle> = ArrayList()
     private var touchHelper: ItemTouchHelper? = null
@@ -38,7 +38,7 @@ class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, val fridgeName : String)
         holder.textView.text = bottle.name
         holder.maxText.text = String.format("Max: %d", items[position].max)
 
-        holder.drag.setOnTouchListener(OnTouchListener {v, event ->
+        holder.drag.setOnTouchListener(OnTouchListener {_, event ->
             if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                 if (touchHelper == null) return@OnTouchListener false
                 touchHelper!!.startDrag(holder)
