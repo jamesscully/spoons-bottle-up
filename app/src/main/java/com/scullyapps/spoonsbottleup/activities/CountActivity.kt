@@ -1,12 +1,9 @@
 package com.scullyapps.spoonsbottleup.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Space
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.observe
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase

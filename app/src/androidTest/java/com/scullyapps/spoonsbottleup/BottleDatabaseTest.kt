@@ -8,13 +8,11 @@ import com.scullyapps.spoonsbottleup.data.BottleDatabase.copyDatabaseFromAssets
 import com.scullyapps.spoonsbottleup.data.BottleDatabase.init
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.models.DrinkType
-import org.junit.After
-import org.junit.AfterClass
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 class BottleDatabaseTest {

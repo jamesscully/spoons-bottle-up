@@ -8,7 +8,6 @@ class Fridge(
         var bottles: List<Bottle>,
         var listOrder: Int = 0
 ) {
-    private val TAG : String = "Fridge"
 
     fun toView(context: Context) : FridgeView {
         return FridgeView(context, this)

@@ -29,7 +29,7 @@ class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private v
         holder.fridge = mValues[position]
 
         txtName.text = mValues[position].fridge.name
-        txtAmt.text = "Bottles: ${bottlesAmount}"
+        txtAmt.text = "Bottles: $bottlesAmount"
 
         if (holder.fridge!!.fridge.name == "Default") {
             txtName.setTypeface(null, Typeface.BOLD)

@@ -1,7 +1,6 @@
 package com.scullyapps.spoonsbottleup.ui
 
 import android.content.Context
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.scullyapps.spoonsbottleup.R
@@ -13,16 +12,6 @@ class BottleDisplay : ConstraintLayout {
 
 
     constructor(context: Context, bottle: Bottle) : super(context) {
-        this.bottle = bottle
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, bottle: Bottle) : super(context, attrs) {
-        this.bottle = bottle
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, bottle: Bottle) : super(context, attrs, defStyleAttr) {
         this.bottle = bottle
         init()
     }

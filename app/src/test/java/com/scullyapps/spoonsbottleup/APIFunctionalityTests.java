@@ -7,7 +7,9 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class APIFunctionalityTests {
 
@@ -25,7 +27,7 @@ public class APIFunctionalityTests {
 
         assertEquals("Skegness", map.get(405).getAddress().getTown());
         assertEquals("The Tim Bobbin", map.get(1103).getName());
-        assertEquals(true, map.get(7262).getAirport());
+        assertTrue(map.get(7262).getAirport());
 
     }
 }

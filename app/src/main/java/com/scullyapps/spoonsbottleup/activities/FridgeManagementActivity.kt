@@ -36,18 +36,18 @@ class FridgeManagementActivity : AppCompatActivity() {
             bottles = fridge.bottles as ArrayList<Bottle>
 
             toolbar.title = "Editing $fridgeName"
+
+            val adapter = BottleRecyclerAdapter(bottles, fridge.name)
+            val callback: ItemTouchHelper.Callback = ItemTouchCallback(adapter)
+            val itemTouchHelper = ItemTouchHelper(callback)
+
+            fridgeman_recycler.setHasFixedSize(true)
+            fridgeman_recycler.adapter = adapter
+            fridgeman_recycler.layoutManager = LinearLayoutManager(this)
+
+            itemTouchHelper.attachToRecyclerView(fridgeman_recycler)
+            adapter.setTouchHelper(itemTouchHelper)
         }
-
-        val adapter = BottleRecyclerAdapter(bottles)
-        val callback: ItemTouchHelper.Callback = ItemTouchCallback(adapter)
-        val itemTouchHelper = ItemTouchHelper(callback)
-
-        fridgeman_recycler.setHasFixedSize(true)
-        fridgeman_recycler.adapter = adapter
-        fridgeman_recycler.layoutManager = LinearLayoutManager(this)
-
-        itemTouchHelper.attachToRecyclerView(fridgeman_recycler)
-        adapter.setTouchHelper(itemTouchHelper)
     }
 
     // since the adapter will map any changes to the order,

@@ -19,13 +19,12 @@ import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchHelperAdapter
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchHelperViewHolder
 import java.util.*
 
-class BottleRecyclerAdapter(bottles: ArrayList<Bottle>) : RecyclerView.Adapter<BottleRecyclerAdapter.ViewHolder>(), ItemTouchHelperAdapter {
+class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, val fridgeName : String) : RecyclerView.Adapter<BottleRecyclerAdapter.ViewHolder>(), ItemTouchHelperAdapter {
     val items: MutableList<Bottle> = ArrayList()
     private var toRemove: MutableList<Bottle> = ArrayList()
     private var touchHelper: ItemTouchHelper? = null
     var modified = false
 
-    val fridgeName : String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.widget_bottle_management, parent, false)
@@ -106,11 +105,7 @@ class BottleRecyclerAdapter(bottles: ArrayList<Bottle>) : RecyclerView.Adapter<B
 
         init {
             itemView.setOnClickListener {
-                if (expanded) {
-                    maxText.visibility = View.GONE
-                } else {
-                    maxText.visibility = View.VISIBLE
-                }
+                maxText.visibility = if (expanded) View.GONE else View.VISIBLE
                 expanded = !expanded
             }
         }
@@ -118,6 +113,5 @@ class BottleRecyclerAdapter(bottles: ArrayList<Bottle>) : RecyclerView.Adapter<B
 
     init {
         items.addAll(bottles)
-        fridgeName = items[0].fridgeName.toString()
     }
 }

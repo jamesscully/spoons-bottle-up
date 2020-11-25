@@ -1,19 +1,15 @@
 package com.scullyapps.spoonsbottleup
 
 import android.util.Log
-import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.data.BottleDatabase.DB_NAME
 import com.scullyapps.spoonsbottleup.data.BottleDatabase.copyDatabaseFromAssets
 import com.scullyapps.spoonsbottleup.data.BottleDatabase.init
-import org.junit.After
-import org.junit.AfterClass
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 
 @RunWith(AndroidJUnit4::class)
@@ -67,7 +63,7 @@ class FridgeDatabaseTest {
 
         println("testListOrderConsistency: HighestOrder after add ${BottleDatabase.FridgeUtils.getHighestListOrder()}")
 
-        var test1 = BottleDatabase.FridgeUtils.get("Test1")
+        val test1 = BottleDatabase.FridgeUtils.get("Test1")
         var test2 = BottleDatabase.FridgeUtils.get("Test2")
         var test3 = BottleDatabase.FridgeUtils.get("Test3")
 

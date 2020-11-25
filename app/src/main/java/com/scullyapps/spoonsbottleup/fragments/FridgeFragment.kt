@@ -77,12 +77,5 @@ class FridgeFragment : Fragment() {
     companion object {
         private const val ARG_COLUMN_COUNT = "column-count"
 
-        fun newInstance(columnCount: Int): FridgeFragment {
-            val fragment = FridgeFragment()
-            val args = Bundle()
-            args.putInt(ARG_COLUMN_COUNT, columnCount)
-            fragment.arguments = args
-            return fragment
-        }
     }
 }

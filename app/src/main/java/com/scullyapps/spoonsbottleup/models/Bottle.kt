@@ -12,7 +12,6 @@ data class Bottle(
         var fridgeName: String? = "Default Fridge",
         var listOrder: Int = -1
 ) {
-    private val TAG : String = "Bottle"
 
     var custom : Boolean = false
 

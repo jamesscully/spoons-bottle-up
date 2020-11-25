@@ -26,9 +26,7 @@ object BottleDatabase {
     private const val BOTTLE_TABLE = "Bottles"
     private const val FRIDGE_TABLE = "Fridges"
 
-    private const val SQL_QUERY_ALLNAMES = "SELECT Name FROM $BOTTLE_TABLE"
     private const val SQL_QUERY_ALLBOTTLES = "SELECT * FROM $BOTTLE_TABLE ORDER BY ListOrder DESC"
-    private const val SQL_QUERY_BYFRIDGE = "SELECT * FROM Bottles WHERE FridgeID = '"
 
 
     init {
@@ -144,8 +142,8 @@ object BottleDatabase {
 
     object FridgeUtils {
 
-        val NAME = "Name"
-        val LIST_ORDER = "ListOrder"
+        const val NAME = "Name"
+        const val LIST_ORDER = "ListOrder"
 
         fun getNames() : ArrayList<String> {
             val cursor = database.rawQuery("SELECT * FROM $FRIDGE_TABLE", null)

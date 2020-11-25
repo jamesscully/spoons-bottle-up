@@ -15,7 +15,6 @@ data class Pub(
         val closed : Boolean,
         val address : Address = Address()
 ) {
-    private val TAG : String = "Pub"
 
     constructor(jsonObject: JSONObject) : this(
         jsonObject.getString("name"),

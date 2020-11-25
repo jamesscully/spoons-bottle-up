@@ -14,7 +14,6 @@ data class Address(
         val closed : Boolean,
         val menuLocation : String
 ) {
-    private val TAG: String = "Address"
 
     constructor() : this (0.0, 0.0, "Default Country", "Default County", "Default Town", "Default Postcode", true, "Default")
 

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,6 @@ import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import kotlinx.android.synthetic.main.activity_settings.*
-import kotlin.math.log
 
 class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnListFragmentInteractionListener {
     private var CURRENT_TAB = 0
@@ -51,9 +49,11 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
     }
 
     override fun onListFragmentInteraction(item: FridgeView?) {
-        val i = Intent(this, FridgeManagementActivity::class.java)
-        i.putExtra("name", item?.fridge?.name)
-        startActivity(i)
+        val intent = Intent(this, FridgeManagementActivity::class.java).apply {
+            putExtra("name", item?.fridge?.name)
+        }
+
+        startActivity(intent)
     }
 
     private fun addFridge() {

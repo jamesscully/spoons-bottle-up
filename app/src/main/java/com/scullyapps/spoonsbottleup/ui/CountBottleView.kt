@@ -2,7 +2,6 @@ package com.scullyapps.spoonsbottleup.ui
 
 import android.content.Context
 import android.graphics.Color
-import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.models.Bottle
-import com.scullyapps.spoonsbottleup.models.DrinkType
 import kotlinx.android.synthetic.main.widget_plaque.view.*
 
 class CountBottleView : LinearLayout {
@@ -26,16 +24,6 @@ class CountBottleView : LinearLayout {
     var normalBgId = 0
 
     constructor(context: Context, bottle: Bottle) : super(context) {
-        this.bottle = bottle
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, bottle: Bottle) : super(context, attrs) {
-        this.bottle = bottle
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, bottle: Bottle) : super(context, attrs, defStyleAttr) {
         this.bottle = bottle
         init()
     }
@@ -96,7 +84,7 @@ class CountBottleView : LinearLayout {
             addToTotal(amt)
         }
 
-        plaque_text_count!!.text = Integer.toString(count)
+        plaque_text_count!!.text = count.toString()
     }
 
     private fun decrement(amt: Int) {
@@ -109,7 +97,7 @@ class CountBottleView : LinearLayout {
             addToTotal(-amt)
         }
 
-        plaque_text_count!!.text = Integer.toString(count)
+        plaque_text_count!!.text = count.toString()
     }
 
     fun invert() {
@@ -159,7 +147,7 @@ class CountBottleView : LinearLayout {
     }
 
     fun setCount(count: Int) {
-        plaque_text_count!!.text = Integer.toString(count)
+        plaque_text_count!!.text = count.toString()
         this.count = count
     }
 
@@ -167,8 +155,6 @@ class CountBottleView : LinearLayout {
         get() = bottle.name
     val max: Int
         get() = bottle.max
-    val type: DrinkType
-        get() = bottle.type
 
     companion object {
         var totalSelected = MutableLiveData(0)

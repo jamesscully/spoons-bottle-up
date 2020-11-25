@@ -11,7 +11,6 @@ import com.scullyapps.spoonsbottleup.models.Bottle
 import kotlinx.android.synthetic.main.dialog_edit_bottle.view.*
 
 class EditBottleDialog(context: Context, bottle: Bottle) : AlertDialog.Builder(context) {
-    private val TAG: String = "EditBottleDialog"
 
     // used to handle changes outside of this dialog, when we've submitted info
     var onSubmitted : ((Bottle) -> Unit) = {}
