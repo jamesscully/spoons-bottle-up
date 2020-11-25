@@ -4,6 +4,8 @@
     <string name="tab_text_1">General</string>
     <string name="tab_text_3">Fridges</string>
 
+    <string name="fridge_management_no_data">No bottles were found for %s fridge. Try adding some?</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_setup">SetupActivity</string>
     <!-- Strings used for fragments for navigation -->

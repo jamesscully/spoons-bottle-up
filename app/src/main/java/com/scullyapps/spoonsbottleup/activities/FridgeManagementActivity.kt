@@ -2,6 +2,7 @@ package com.scullyapps.spoonsbottleup.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -47,6 +48,14 @@ class FridgeManagementActivity : AppCompatActivity() {
 
             itemTouchHelper.attachToRecyclerView(fridgeman_recycler)
             adapter.setTouchHelper(itemTouchHelper)
+
+            fridgeman_nodata_text.text = getString(R.string.fridge_management_no_data, fridge.name)
+
+            if(bottles.isEmpty()) {
+                fridgeman_nodata.visibility = View.VISIBLE
+            } else {
+                fridgeman_nodata.visibility = View.GONE
+            }
         }
     }
 

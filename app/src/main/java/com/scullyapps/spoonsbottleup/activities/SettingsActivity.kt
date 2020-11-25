@@ -14,14 +14,13 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.adapters.SettingsPagerAdapter
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
-import com.scullyapps.spoonsbottleup.fragments.BottleListFragment.OnFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import kotlinx.android.synthetic.main.activity_settings.*
 
-class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnListFragmentInteractionListener {
+class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener {
     private var CURRENT_TAB = 0
     lateinit var toolbar: Toolbar
 
@@ -43,7 +42,6 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
                 .commit()
     }
 
-    override fun onFragmentInteraction(uri: Uri) {}
     override fun onListFragmentInteraction(item: Bottle?) {
         Toast.makeText(this, "Item Pressed " + item?.name, Toast.LENGTH_SHORT).show()
     }
@@ -78,7 +76,6 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, OnL
         // menu options
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.action_add_bottle -> Toast.makeText(this, "Pressed adding bottle", Toast.LENGTH_LONG).show()
                 R.id.action_add_fridge -> addFridge()
             }
             false

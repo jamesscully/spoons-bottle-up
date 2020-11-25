@@ -31,6 +31,11 @@ class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, private val fridgeName :
         return ViewHolder(view)
     }
 
+
+    init {
+        items.addAll(bottles)
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val bottle : Bottle = items[position]
@@ -102,16 +107,6 @@ class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, private val fridgeName :
         override fun onItemClear() {
             itemView.setBackgroundColor(-0xf0f10)
         }
-
-        init {
-            itemView.setOnClickListener {
-                maxText.visibility = if (expanded) View.GONE else View.VISIBLE
-                expanded = !expanded
-            }
-        }
     }
 
-    init {
-        items.addAll(bottles)
-    }
 }
