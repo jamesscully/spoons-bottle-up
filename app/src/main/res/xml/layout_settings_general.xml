@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="General">
         <Preference
             app:key="resetDatabase"
-            app:title="Reset database"
-            app:summary="Resets the apps content to base settings"/>
+            app:summary="Resets the apps content to base settings"
+            app:title="Reset database" />
     </PreferenceCategory>
 
 

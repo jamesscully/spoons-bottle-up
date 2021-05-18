@@ -13,8 +13,6 @@ class GeneralSettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.layout_settings_general, rootKey)
-
-
     }
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
