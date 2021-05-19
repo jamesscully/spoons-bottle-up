@@ -1,5 +1,6 @@
 package com.scullyapps.spoonsbottleup.data
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -14,12 +15,15 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 
-object BottleDatabase {
+ object BottleDatabase {
 
     private const val TAG = "BottleDatabase"
 
     private lateinit var helper : SQLiteOpenHelper
     private lateinit var database : SQLiteDatabase
+
+    // todo fix this, it is very bad; but we are using applicationContext not an activity context
+    @SuppressLint("StaticFieldLeak")
     private lateinit var context : Context
 
                   var DB_NAME = "Bottles.db"
@@ -40,7 +44,7 @@ object BottleDatabase {
     fun init() {
         val dbVersion = 1
 
-        context = App.getContext()
+        context = App.getContext();
 
         helper = object : SQLiteOpenHelper(context, null, null, dbVersion) {
             override fun onCreate(p0: SQLiteDatabase?) { }
