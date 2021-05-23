@@ -86,15 +86,15 @@ def processAlcohol():
 
 	sub_menu = drinks_category['subMenu']
 
-	whitelist_groups = [
-		'Craft | Draught, cans and bottles',
-		'Cider | Draught and bottles',
-		'Wheat beer | Bottles',
-		'Low & alcohol free',
-		'Prosecco & sparkling',
-        'New for the summer',
-		'Wine',
-	]
+	# whitelist_groups = [
+	# 	'Craft | Draught, cans and bottles',
+	# 	'Cider | Draught and bottles',
+	# 	'Wheat beer | Bottles',
+	# 	'Low & alcohol free',
+	# 	'Prosecco & sparkling',
+    #     'New for the summer',
+	# 	'Wine',
+	# ]
 
 	# subMenu
 	# 	- 0 (category)
@@ -104,12 +104,23 @@ def processAlcohol():
 	#					- bottle!
 
 	for category in sub_menu:
-		if category['headerText'] in whitelist_groups:
-			print("Scraping category: " + category['headerText'])
-			for group in category['productGroups']:
-				# add each categories products into one
-				for product in group['products']:
+		for group in category['productGroups']:
+			# add each categories products into one
+			for product in group['products']:
+
+				if product['minimumAge'] == 18:
+
+					try:
+						portion = product['defaultPortionName']
+
+						if portion == "Can" or re.match('^.*(B|b)ottle', portion):
+							print("Found product: " + product['displayName'] + ", portion: " + portion)
+					except KeyError:
+						pass
+						
 					alcohols.append(Bottle(product))
+					
+
 
 
 processAlcohol()
