@@ -36,6 +36,8 @@ class Bottle:
 		self.isAlcohol = self.minimumAge >= 18
 		self.milliliters = self.getML()
 
+		self.eposName = parent['eposName']
+
 	def print(self):
 		print("{} - {}".format(self.name, self.minimumAge))
 
@@ -86,16 +88,6 @@ def processAlcohol():
 
 	sub_menu = drinks_category['subMenu']
 
-	# whitelist_groups = [
-	# 	'Craft | Draught, cans and bottles',
-	# 	'Cider | Draught and bottles',
-	# 	'Wheat beer | Bottles',
-	# 	'Low & alcohol free',
-	# 	'Prosecco & sparkling',
-    #     'New for the summer',
-	# 	'Wine',
-	# ]
-
 	# subMenu
 	# 	- 0 (category)
 	#		- productGroups (groups)
@@ -110,15 +102,16 @@ def processAlcohol():
 
 				if product['minimumAge'] == 18:
 
+					# as of v4 of the API we can filter based upon portionnames, which are Can/Bottles 
 					try:
 						portion = product['defaultPortionName']
-
 						if portion == "Can" or re.match('^.*(B|b)ottle', portion):
 							print("Found product: " + product['displayName'] + ", portion: " + portion)
+							alcohols.append(Bottle(product))
 					except KeyError:
 						pass
 						
-					alcohols.append(Bottle(product))
+					
 					
 
 
@@ -151,6 +144,7 @@ CREATE TABLE "Bottles" (
 	"FridgeID"	TEXT,
 	"MinimumAge" INTEGER,
 	"SizeML" INTEGER,
+	"EposName" TEXT,
 	PRIMARY KEY("ID")
 ) '''
 
@@ -181,7 +175,6 @@ def createTable():
 			i += 1
 
 		conn.commit()
-		
 
 	except sqlite3.OperationalError as e:
 		print(e)
@@ -232,7 +225,7 @@ def addBottleToDB(bottle):
 		# print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
 
 	cursor = conn.cursor()
-	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount, MinimumAge, SizeML) VALUES (?,?,?,?,?,?,?)", (item.id, item.name, 0, 2, -1, item.minimumAge, item.getML()))
+	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount, MinimumAge, SizeML, EposName) VALUES (?,?,?,?,?,?,?,?)", (item.id, item.name, 0, 2, -1, item.minimumAge, item.getML(), item.eposName))
 	conn.commit()
 	cursor.close()
 
@@ -240,11 +233,10 @@ def addBottleToDB(bottle):
 	
 for item in alcohols:
 	addBottleToDB(item)
-	# item.print()
 
 for item in soft_drinks:
 	addBottleToDB(item)
-	# item.print()
+
 
 
 def presets():
@@ -254,23 +246,19 @@ def presets():
 
 	cursor = conn.cursor()
 
-	### Alcohol
+	### Move all Alcohol / minimum age of 18 bottles to Alcohol fridge
 
 	cursor.execute("UPDATE Bottles SET FridgeID = ? WHERE MinimumAge >= ?", ("Alcohol", 18))
 
-
-
-	### Tonics
+	### Assign Tonic FridgeID to neccessary bottles 
 
 	# For Britvic tonics / juices
 	cursor.execute("UPDATE Bottles SET FridgeID = 'Tonic' WHERE Name LIKE '%britvic%'")
-
-
 	# For Fentimans
 	cursor.execute("UPDATE Bottles SET FridgeID = 'Tonic' WHERE Name LIKE '%fentimans%'")
 
 
-	### Cordials
+	### Assign Cordial FridgeID to cordials
 	cursor.execute("UPDATE Bottles SET FridgeID = 'Cordial' WHERE Name LIKE '%cordial%'")
 
 
@@ -330,10 +318,6 @@ def presets():
 		# 568
 		# 640
 		# 660
-
-
-	### Standard can size is 330ml - these fit 5 on a row
-	# cursor.execute("UPDATE Bottles SET MaxAmount = 10 WHERE SizeML = 330 AND FridgeID = 'Front'")
 
 	conn.commit()
 
