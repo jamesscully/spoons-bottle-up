@@ -1,5 +1,8 @@
 # Bottling Up Assistant
 
+
+
+
 ### Summary
 This has been a project for me over two years of seasonal employment at Wetherspoons. Its primary purpose is to speed up re-stocking of fridges, namely by removing the need to write down acronyms/names of products and amount needed on the back of a receipt with a pen, and guessing how much of it is needed. 
 
@@ -14,6 +17,7 @@ Initial data is pulled from the Wetherspoon app API, and processed with Python i
 - Organize product order by drag and dropping in Settings -> Fridges
 
 
+
 ### Installation
 
 As of writing this, the app is not on the playstore, so you can install it by cloning and building in Android Studio.
@@ -23,11 +27,6 @@ As of writing this, the app is not on the playstore, so you can install it by cl
 
 2. Open in Android Studio
 3. Build and run!
-
-
-
-
-
 
 
 

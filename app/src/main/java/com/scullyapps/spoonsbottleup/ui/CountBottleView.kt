@@ -68,6 +68,8 @@ class CountBottleView : LinearLayout {
             count++
             addToTotal(1)
         } else if (count + amt > max) {
+
+
             // if we're above the max, but the max is 0,
             // then let the user input as many as they want
             // (in the case of missing data)

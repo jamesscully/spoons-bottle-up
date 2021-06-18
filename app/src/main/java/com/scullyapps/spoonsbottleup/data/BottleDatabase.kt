@@ -22,10 +22,6 @@ import java.io.OutputStream
     private lateinit var helper : SQLiteOpenHelper
     private lateinit var database : SQLiteDatabase
 
-    // todo fix this, it is very bad; but we are using applicationContext not an activity context
-    @SuppressLint("StaticFieldLeak")
-    private lateinit var context : Context
-
                   var DB_NAME = "Bottles.db"
     private const val BOTTLE_TABLE = "Bottles"
     private const val FRIDGE_TABLE = "Fridges"
@@ -38,15 +34,13 @@ import java.io.OutputStream
     }
 
     fun getPath() : String {
-        return context.getDatabasePath(DB_NAME).path
+        return App.getContext().getDatabasePath(DB_NAME).path
     }
 
     fun init() {
         val dbVersion = 1
 
-        context = App.getContext();
-
-        helper = object : SQLiteOpenHelper(context, null, null, dbVersion) {
+        helper = object : SQLiteOpenHelper(App.getContext(), null, null, dbVersion) {
             override fun onCreate(p0: SQLiteDatabase?) { }
             override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) { }
         }
@@ -54,7 +48,7 @@ import java.io.OutputStream
 
         // read proper DB file from file from databases/
         if(!File(getPath()).exists())
-            copyDatabaseFromAssets()
+            copyDatabaseFromAssets(App.getContext())
 
         database = SQLiteDatabase.openDatabase(getPath(), null, SQLiteDatabase.OPEN_READWRITE)
     }
@@ -328,12 +322,12 @@ import java.io.OutputStream
 
 
     // This should only be used either when the db doesn't exist, or in a unit test
-    fun copyDatabaseFromAssets() {
+    fun copyDatabaseFromAssets(context: Context) {
         // where to write to (database/ path)
-        val dbFile = context.getDatabasePath(DB_NAME)
+        val dbFile = App.getContext().getDatabasePath(DB_NAME)
 
         // from our assets folder
-        val input  = context.assets.open("Bottles.db")
+        val input  = App.getContext().assets.open("Bottles.db")
         val output: OutputStream = FileOutputStream(dbFile)
 
         // kb buffer
