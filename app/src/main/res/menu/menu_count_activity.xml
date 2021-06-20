@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_toggle_max_lock"
+        android:icon="@drawable/ic_lock"
+        android:title="Lock/unlock maxes"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_save_list"
+        android:icon="@drawable/ic_save"
+        android:title="Save bottle list"
+        app:showAsAction="always" />
+</menu>

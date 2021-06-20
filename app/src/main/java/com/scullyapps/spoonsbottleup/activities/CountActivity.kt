@@ -1,6 +1,8 @@
 package com.scullyapps.spoonsbottleup.activities
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.widget.Space
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import com.scullyapps.spoonsbottleup.ui.CountBottleView
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import com.scullyapps.spoonsbottleup.ui.dialogs.DataWarningDialog
 import kotlinx.android.synthetic.main.activity_count.*
+import kotlinx.android.synthetic.main.activity_setup.*
 
 class CountActivity : AppCompatActivity() {
     private var bottlingUp = false
@@ -22,12 +25,19 @@ class CountActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (menu != null) {
+            menuInflater.inflate(R.menu.menu_count_activity, menu)
+        }
+
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_count)
 
-        // hide toolbar
-        supportActionBar?.hide()
+        supportActionBar?.title = "Overview"
 
         // get all fridges as views
         fridges = BottleDatabase.fridges.map {fridge ->
