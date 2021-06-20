@@ -1,6 +1,5 @@
 package com.scullyapps.spoonsbottleup.data
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -15,7 +14,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 
- object BottleDatabase {
+object BottleDatabase {
 
     private const val TAG = "BottleDatabase"
 

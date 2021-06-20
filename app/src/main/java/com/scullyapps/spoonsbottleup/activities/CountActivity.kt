@@ -2,7 +2,6 @@ package com.scullyapps.spoonsbottleup.activities
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Space
@@ -14,7 +13,6 @@ import com.scullyapps.spoonsbottleup.ui.CountBottleView
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import com.scullyapps.spoonsbottleup.ui.dialogs.DataWarningDialog
 import kotlinx.android.synthetic.main.activity_count.*
-import kotlinx.android.synthetic.main.activity_setup.*
 
 class CountActivity : AppCompatActivity() {
     private var bottlingUp = false

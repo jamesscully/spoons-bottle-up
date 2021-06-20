@@ -12,8 +12,4 @@ class Fridge(
     fun toView(context: Context) : FridgeView {
         return FridgeView(context, this)
     }
-
-    operator fun component1() {
-        TODO("Not yet implemented")
-    }
 }

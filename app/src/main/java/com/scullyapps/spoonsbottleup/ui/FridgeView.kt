@@ -86,14 +86,12 @@ class FridgeView(context: Context, var fridge: Fridge) : LinearLayout(context) {
     }
 
     fun showMaxes(locked : Boolean) {
-
         var visibility = View.VISIBLE
 
-        if(!locked) {
+        if(!locked)
             visibility = View.INVISIBLE
-        }
 
-        for(view in countBottleViews) {
+        countBottleViews.forEach { view ->
             view.plaque_text_max.visibility = visibility
         }
     }
