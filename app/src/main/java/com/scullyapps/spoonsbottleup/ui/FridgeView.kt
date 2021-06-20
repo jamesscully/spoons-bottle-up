@@ -2,11 +2,13 @@ package com.scullyapps.spoonsbottleup.ui
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.models.Fridge
 import kotlinx.android.synthetic.main.widget_fridge.view.*
+import kotlinx.android.synthetic.main.widget_plaque.view.*
 
 class FridgeView(context: Context, var fridge: Fridge) : LinearLayout(context) {
 
@@ -37,10 +39,10 @@ class FridgeView(context: Context, var fridge: Fridge) : LinearLayout(context) {
             addBottle(bottle)
         }
 
-        accentize()
+        showAccent()
     }
 
-    fun addBottle(bottle: Bottle) {
+    private fun addBottle(bottle: Bottle) {
         layout_widget_fridge.addView(CountBottleView(context, bottle))
     }
 
@@ -59,19 +61,19 @@ class FridgeView(context: Context, var fridge: Fridge) : LinearLayout(context) {
         }
 
         // if we are, hide only those with amt = 0
-        for (p in countBottleViews) {
-            val amt = p.getCount()
+        for (view in countBottleViews) {
+            val amt = view.getCount()
 
-            if (amt == 0 && !p.inverted) {
-                p.visibility = GONE
+            if (amt == 0 && !view.inverted) {
+                view.visibility = GONE
             } else {
                 // if we're here, then we've had a plaque with count > 0
-                if (p.inverted) {
-                    p.setCount(p.max - p.getCount())
-                    p.invert(false)
+                if (view.inverted) {
+                    view.setCount(view.max - view.getCount())
+                    view.invert(false)
                 }
 
-                p.setInputMode(false)
+                view.setInputMode(false)
                 modified = true
             }
         }
@@ -80,10 +82,24 @@ class FridgeView(context: Context, var fridge: Fridge) : LinearLayout(context) {
             // hide all this; hides fridge headers if not needed
             this.visibility = GONE
         }
-        accentize()
+        showAccent()
     }
 
-    private fun accentize() {
+    fun showMaxes(locked : Boolean) {
+
+        var visibility = View.VISIBLE
+
+        if(!locked) {
+            visibility = View.INVISIBLE
+        }
+
+        for(view in countBottleViews) {
+            view.plaque_text_max.visibility = visibility
+        }
+    }
+
+
+    private fun showAccent() {
         var accent = false
 
         for (p in countBottleViews) {

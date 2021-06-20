@@ -68,12 +68,10 @@ class CountBottleView : LinearLayout {
             count++
             addToTotal(1)
         } else if (count + amt > max) {
-
-
-            // if we're above the max, but the max is 0,
+            // if we're above the max, but the max is 0 or we have unlocked maxes,
             // then let the user input as many as they want
             // (in the case of missing data)
-            if (max < 0) {
+            if (max < 0 || !lockMaxes) {
                 count += amt
                 addToTotal(amt)
             } else {
@@ -160,6 +158,8 @@ class CountBottleView : LinearLayout {
 
     companion object {
         var totalSelected = MutableLiveData(0)
+
+        var lockMaxes : Boolean = true
 
         fun addToTotal(amt : Int) {
             // value should never be null, but 0 if somehow not

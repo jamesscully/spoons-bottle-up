@@ -3,6 +3,7 @@ package com.scullyapps.spoonsbottleup.activities
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Space
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,8 @@ class CountActivity : AppCompatActivity() {
     private var bottlingUp = false
     private var fridges: ArrayList<FridgeView> = ArrayList()
 
+    private var showMaxes: Boolean = true
+
     override fun onDestroy() {
         // reset total selected when we leave activity
         CountBottleView.totalSelected.postValue(0)
@@ -26,11 +29,35 @@ class CountActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (menu != null) {
-            menuInflater.inflate(R.menu.menu_count_activity, menu)
-        }
-
+        menuInflater.inflate(R.menu.menu_count_activity, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_save_list -> {
+
+            }
+
+            R.id.action_toggle_max_lock -> {
+                // are we locked to maxes?
+                val locked : Boolean = CountBottleView.lockMaxes
+                // propagate locked info to views, inverting our current value
+                CountBottleView.lockMaxes = !locked
+
+                // update menu button icon
+                if(locked)
+                    item.setIcon(R.drawable.ic_lock)
+                else
+                    item.setIcon(R.drawable.ic_unlock)
+
+                // hide maxes if we've unlocked
+                fridges.forEach { fridgeView ->
+                    fridgeView.showMaxes(locked)
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
