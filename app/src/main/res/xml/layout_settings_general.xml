@@ -7,8 +7,31 @@
             app:key="resetDatabase"
             app:summary="Resets the apps content to base settings"
             app:title="Reset database" />
+        <Preference
+            app:enabled="false"
+            app:key="setting_downloadJamesDatabase"
+            app:summary="Downloads a copy of an updated database"
+            app:title="Download beta database" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="Counting">
 
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="setting_showMaxAmount"
+            android:title="Show max amounts" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="setting_showMaxAmount"
+            android:key="setting_lockOnMaxAmount"
+            android:summary="Prevents going above maximum value"
+            android:title="Lock on max amount" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="setting_showMaxAmount"
+            android:key="setting_allowInvertCounting"
+            android:summary="Toggles the use of invert counting"
+            android:title="Allow invert counting" />
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

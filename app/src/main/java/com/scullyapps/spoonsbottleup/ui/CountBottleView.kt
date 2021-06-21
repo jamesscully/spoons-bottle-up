@@ -32,20 +32,22 @@ class CountBottleView : LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.widget_plaque, this, true)
         plaque_text_name.text = bottle.name
 
-        if(max >= 0)
+        // only show if it has a max value, and we're showing maxes
+        if(max >= 0 && showMaxes)
             plaque_text_max.text = String.format("/%3d", max)
 
         setupButtons()
 
-        setOnLongClickListener {
-            invert()
+
+        val invertListener = View.OnLongClickListener { _: View? ->
+            if(allowInvert && count <= max && max >= 0)
+                invert()
             true
         }
 
-        plaque_text_name.setOnLongClickListener {
-            invert()
-            true
-        }
+        // set both our text and body to respond to long presses
+        setOnLongClickListener(invertListener)
+        plaque_text_name.setOnLongClickListener(invertListener)
 
         // show bottle name on click
         plaque_text_name.setOnClickListener {
@@ -71,7 +73,7 @@ class CountBottleView : LinearLayout {
             // if we're above the max, but the max is 0 or we have unlocked maxes,
             // then let the user input as many as they want
             // (in the case of missing data)
-            if (max < 0 || !lockMaxes) {
+            if ((max <= 0 || !lockMaxes) || !showMaxes) {
                 count += amt
                 addToTotal(amt)
             } else {
@@ -159,6 +161,8 @@ class CountBottleView : LinearLayout {
     companion object {
         var totalSelected = MutableLiveData(0)
 
+        var allowInvert : Boolean = true
+        var showMaxes : Boolean = true
         var lockMaxes : Boolean = true
 
         fun addToTotal(amt : Int) {
