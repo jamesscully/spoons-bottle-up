@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Space
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import com.scullyapps.spoonsbottleup.R
@@ -38,20 +39,18 @@ class CountActivity : AppCompatActivity() {
             }
 
             R.id.action_toggle_max_lock -> {
-                // are we locked to maxes?
-                val locked : Boolean = CountBottleView.lockMaxes
                 // propagate locked info to views, inverting our current value
-                CountBottleView.lockMaxes = !locked
+                CountBottleView.lockMaxes = !CountBottleView.lockMaxes
 
                 // update menu button icon
-                if(locked)
+                if(CountBottleView.lockMaxes)
                     item.setIcon(R.drawable.ic_lock)
                 else
                     item.setIcon(R.drawable.ic_unlock)
 
                 // hide maxes if we've unlocked
                 fridges.forEach { fridgeView ->
-                    fridgeView.showMaxes(locked)
+                    fridgeView.showMaxes(CountBottleView.lockMaxes)
                 }
             }
         }
