@@ -1,7 +1,9 @@
 
 
 # Bottling Up Assistant
-[![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE) [![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
+
 ### Summary
 An Android application developed over the course of three years of seasonal employment at JD Wetherspoon, used to speed up the process of restocking needed products at the end of the night. This is primarily done by using a list of viable products, generated from an API reverse engineered from the Wetherspoons Order and Pay app. 
 
@@ -27,14 +29,3 @@ Cloning this repository may include experimental or non-functional changes; but 
 `$ git clone https://github.com/jamesscully/spoons-bottle-up`
 2. Open in Android Studio
 3. Build and run!
-
-
-
-<!-- Initially, each product name was hand-written into a database in-order then displayed in-app alongside an increment/decrement counter. 
-
-The current version does this, but also allows for counting in steps (e.g. three-rows of a product is +/- 3) and counting by using the difference between how many are left in the fridge against the known max. 
-
-It also pulls data from the Wetherspoon App API using Python into a SQLite database.
- -->
-
-
