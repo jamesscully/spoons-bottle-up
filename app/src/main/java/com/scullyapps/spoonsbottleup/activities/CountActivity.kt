@@ -19,8 +19,6 @@ class CountActivity : AppCompatActivity() {
     private var bottlingUp = false
     private var fridges: ArrayList<FridgeView> = ArrayList()
 
-    private var showMaxes: Boolean = true
-
     override fun onDestroy() {
         // reset total selected when we leave activity
         CountBottleView.totalSelected.postValue(0)

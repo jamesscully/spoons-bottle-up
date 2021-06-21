@@ -1,30 +1,30 @@
+
+
 # Bottling Up Assistant
-
-
-
-
+[![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
 ### Summary
-This has been a project for me over two years of seasonal employment at Wetherspoons. Its primary purpose is to speed up re-stocking of fridges, namely by removing the need to write down acronyms/names of products and amount needed on the back of a receipt with a pen, and guessing how much of it is needed. 
+An Android application developed over the course of three years of seasonal employment at JD Wetherspoon, used to speed up the process of restocking needed products at the end of the night. This is primarily done by using a list of viable products, generated from an API reverse engineered from the Wetherspoons Order and Pay app. 
 
-As of the latest version, counting is done by incrementing/decrementing by one or how many of the product is in a row, or by subtracting how many are left against a known maximum capacity (long-pressing an item).
-
-Initial data is pulled from the Wetherspoon app API, and processed with Python into a SQLite database for use in the app; the script can be found [here](python_scripts/SkegStoreItems.py). I've hidden the API endpoints from the repo for now, since they aren't public and involved some reverse engineering to get.
-
+The Python script used to generate a list of viable products can be found [here](python_scripts/SkegStoreItems.py), although unrunnable as the API endpoint is not public; an example SQLite DB can be found in the [Android assets folder](app\src\main\assets), which will allow you to clone and build. 
 
 ### Features
-- Count each product in order, by incrementing or by row count
+- Simple 'tally counter' design
 - Count each product by using difference between max and amount left
-- Organize product order by drag and dropping in Settings -> Fridges
-
-
+- Update fridge names, bottle information (max amount, steps, list order) via settings
 
 ### Installation
+#### Google Play Store
+You can find this application on the Google Play Store, which is used as a stable channel to share with colleagues.
 
-As of writing this, the app is not on the playstore, so you can install it by cloning and building in Android Studio.
+- [Bottling Up Assistant (Store)](https://play.google.com/store/apps/details?id=com.scullyapps.spoonsbottleup)
+
+
+#### Cloning
+
+Cloning this repository may include experimental or non-functional changes; but is done as usual!
 
 1. Clone the repository:
 `$ git clone https://github.com/jamesscully/spoons-bottle-up`
-
 2. Open in Android Studio
 3. Build and run!
 
