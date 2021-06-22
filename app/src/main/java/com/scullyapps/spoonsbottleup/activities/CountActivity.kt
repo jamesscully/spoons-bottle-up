@@ -88,6 +88,12 @@ class CountActivity : AppCompatActivity() {
             for (f in fridges)
                 f.bottleUp(!bottlingUp)
 
+            if(bottlingUp) {
+                count_button_bottleup.setText(R.string.bottle_up_button_text)
+            } else {
+                count_button_bottleup.text = "Go back"
+            }
+
             // we're done here; invert flag
             bottlingUp = !bottlingUp
         }
