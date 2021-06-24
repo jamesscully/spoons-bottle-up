@@ -1,6 +1,7 @@
 package com.scullyapps.spoonsbottleup
 
 import android.util.Log
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.data.BottleDatabase.DB_NAME
@@ -23,7 +24,7 @@ class FridgeDatabaseTest {
     fun setup() {
         DB_NAME = "TestDB.db"
         init()
-        copyDatabaseFromAssets()
+        copyDatabaseFromAssets(InstrumentationRegistry.getInstrumentation().targetContext)
     }
 
     @Test
