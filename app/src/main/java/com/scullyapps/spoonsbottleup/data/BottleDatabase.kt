@@ -1,7 +1,6 @@
 package com.scullyapps.spoonsbottleup.data
 
 import android.content.ContentValues
-import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -47,7 +46,7 @@ object BottleDatabase {
 
         // read proper DB file from file from databases/
         if(!File(getPath()).exists())
-            copyDatabaseFromAssets(App.getContext())
+            copyDatabaseFromAssets()
 
         database = SQLiteDatabase.openDatabase(getPath(), null, SQLiteDatabase.OPEN_READWRITE)
     }
@@ -321,7 +320,7 @@ object BottleDatabase {
 
 
     // This should only be used either when the db doesn't exist, or in a unit test
-    fun copyDatabaseFromAssets(context: Context) {
+    fun copyDatabaseFromAssets() {
         // where to write to (database/ path)
         val dbFile = App.getContext().getDatabasePath(DB_NAME)
 
