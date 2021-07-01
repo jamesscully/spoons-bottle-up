@@ -38,6 +38,7 @@ class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private v
         }
 
         holder.btnEdit.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge) }
+        holder.btnDel.setOnLongClickListener {  }
     }
 
     override fun getItemCount(): Int {

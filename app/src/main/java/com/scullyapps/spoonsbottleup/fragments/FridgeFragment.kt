@@ -2,6 +2,7 @@ package com.scullyapps.spoonsbottleup.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -76,6 +77,5 @@ class FridgeFragment : Fragment() {
 
     companion object {
         private const val ARG_COLUMN_COUNT = "column-count"
-
     }
 }

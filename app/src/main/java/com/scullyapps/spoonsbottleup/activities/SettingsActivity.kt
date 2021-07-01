@@ -35,6 +35,7 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
         tabs.setupWithViewPager(view_pager)
 
         setupListeners()
+
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.view_pager, GeneralSettingsFragment())
