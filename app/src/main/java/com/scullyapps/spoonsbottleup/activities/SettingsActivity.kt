@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.adapters.SettingsPagerAdapter
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
+import com.scullyapps.spoonsbottleup.fragments.FridgeFragment
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
 import com.scullyapps.spoonsbottleup.models.Bottle
@@ -21,14 +22,16 @@ import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener {
     private var CURRENT_TAB = 0
+
     lateinit var toolbar: Toolbar
+    lateinit var sectionsPagerAdapter : SettingsPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val sectionsPagerAdapter = SettingsPagerAdapter(this, supportFragmentManager)
-            toolbar = findViewById(R.id.toolbar_settings)
+        sectionsPagerAdapter = SettingsPagerAdapter(this, supportFragmentManager)
+        toolbar = findViewById(R.id.toolbar_settings)
 
         view_pager.adapter = sectionsPagerAdapter
 
@@ -55,6 +58,7 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
     }
 
     private fun addFridge() {
+
         val dialog = AlertDialog.Builder(this)
 
         val editText = EditText(this).apply {
@@ -62,11 +66,17 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
         }
 
         dialog.setView(editText)
-
         dialog.setTitle("Add a new fridge")
 
         dialog.setPositiveButton("Add") { _, _ ->
             BottleDatabase.FridgeUtils.add(editText.text.toString())
+
+            val key = SettingsPagerAdapter.KEY_FRIDGE_FRAGMENT
+            if(sectionsPagerAdapter.hasFragment(key)) {
+                var fridgeFragment : FridgeFragment = sectionsPagerAdapter.getFragment(key) as FridgeFragment
+
+                fridgeFragment.refreshRecyclerView(this.applicationContext)
+            }
         }
 
         dialog.create().show()

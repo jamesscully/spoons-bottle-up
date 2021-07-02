@@ -14,7 +14,6 @@
             app:title="Download beta database" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Counting">
-
         <SwitchPreference
             android:defaultValue="true"
             android:key="setting_showMaxAmount"
