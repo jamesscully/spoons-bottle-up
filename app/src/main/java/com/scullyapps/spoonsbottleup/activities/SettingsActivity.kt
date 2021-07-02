@@ -49,12 +49,45 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
         Toast.makeText(this, "Item Pressed " + item?.name, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onListFragmentInteraction(item: FridgeView?) {
-        val intent = Intent(this, FridgeManagementActivity::class.java).apply {
-            putExtra("name", item?.fridge?.name)
-        }
+    override fun onListFragmentInteraction(item: FridgeView?, action: FridgeFragment.InteractionAction) {
 
-        startActivity(intent)
+        // do nothing if item null
+        if(item == null)
+            return
+
+        when (action) {
+            // Delete from database, update recycler
+            FridgeFragment.InteractionAction.DELETE -> {
+
+                val builder = AlertDialog.Builder(this).apply {
+                    setTitle("Delete fridge")
+                    setMessage("Are you sure you wish to delete fridge: " + item.fridge.name + "?")
+                    setPositiveButton("Delete") {_, _ ->
+                        BottleDatabase.FridgeUtils.delete(item.fridge.name)
+                        getFridgeFragment()?.refreshRecyclerView(this@SettingsActivity)
+                    }
+                }.create().show()
+            }
+
+            // Open fridge edit activity
+            FridgeFragment.InteractionAction.EDIT -> {
+                val intent = Intent(this, FridgeManagementActivity::class.java).apply {
+                    putExtra("name", item?.fridge?.name)
+                }
+
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun getFridgeFragment() : FridgeFragment? {
+        val key = SettingsPagerAdapter.KEY_FRIDGE_FRAGMENT
+
+        return if(sectionsPagerAdapter.hasFragment(key)) {
+            sectionsPagerAdapter.getFragment(key) as FridgeFragment
+        } else {
+            null
+        }
     }
 
     private fun addFridge() {
@@ -71,12 +104,7 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
         dialog.setPositiveButton("Add") { _, _ ->
             BottleDatabase.FridgeUtils.add(editText.text.toString())
 
-            val key = SettingsPagerAdapter.KEY_FRIDGE_FRAGMENT
-            if(sectionsPagerAdapter.hasFragment(key)) {
-                var fridgeFragment : FridgeFragment = sectionsPagerAdapter.getFragment(key) as FridgeFragment
-
-                fridgeFragment.refreshRecyclerView(this.applicationContext)
-            }
+            getFridgeFragment()?.refreshRecyclerView(this.applicationContext)
         }
 
         dialog.create().show()

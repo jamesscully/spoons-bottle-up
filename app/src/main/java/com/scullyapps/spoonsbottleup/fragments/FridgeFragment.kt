@@ -2,7 +2,6 @@ package com.scullyapps.spoonsbottleup.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -86,9 +85,13 @@ class FridgeFragment : Fragment() {
         mListener = null
     }
 
+    enum class InteractionAction {
+        EDIT, DELETE
+    }
+
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: FridgeView?)
+        fun onListFragmentInteraction(item: FridgeView?, action: InteractionAction)
         fun onListFragmentInteraction(item: Bottle?)
     }
 

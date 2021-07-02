@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.scullyapps.spoonsbottleup.R
+import com.scullyapps.spoonsbottleup.fragments.FridgeFragment
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 
@@ -42,8 +43,8 @@ class FridgeRecyclerViewAdapter(private var mValues: List<FridgeView>, private v
             holder.disableButtons()
         }
 
-        holder.btnEdit.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge) }
-//        holder.btnDel.setOnLongClickListener {  }
+        holder.btnEdit.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge, FridgeFragment.InteractionAction.EDIT) }
+        holder.btnDel.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge, FridgeFragment.InteractionAction.DELETE) }
     }
 
     override fun getItemCount(): Int {
