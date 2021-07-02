@@ -91,23 +91,20 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
     }
 
     private fun addFridge() {
+        AlertDialog.Builder(this).apply {
+            val editText = EditText(this@SettingsActivity).apply {
+                inputType = InputType.TYPE_CLASS_TEXT
+            }
 
-        val dialog = AlertDialog.Builder(this)
+            setView(editText)
+            setTitle("Add a new fridge")
 
-        val editText = EditText(this).apply {
-            inputType = InputType.TYPE_CLASS_TEXT
-        }
+            setPositiveButton("Add") { _, _ ->
+                BottleDatabase.FridgeUtils.add(editText.text.toString())
+                getFridgeFragment()?.refreshRecyclerView(this@SettingsActivity)
+            }
 
-        dialog.setView(editText)
-        dialog.setTitle("Add a new fridge")
-
-        dialog.setPositiveButton("Add") { _, _ ->
-            BottleDatabase.FridgeUtils.add(editText.text.toString())
-
-            getFridgeFragment()?.refreshRecyclerView(this.applicationContext)
-        }
-
-        dialog.create().show()
+        }.create().show()
     }
 
     private fun setupListeners() {
