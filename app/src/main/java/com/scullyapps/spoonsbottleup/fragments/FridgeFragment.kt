@@ -15,6 +15,9 @@ import java.util.*
 class FridgeFragment : Fragment() {
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
+
+    private var recyclerView : RecyclerView? = null
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_settings_fridges, menu)
@@ -33,25 +36,31 @@ class FridgeFragment : Fragment() {
 
         // Set the adapter
         if (view is RecyclerView) {
-            val context = view.getContext()
-            val fridges = BottleDatabase.FridgeUtils.getAll()
+            recyclerView = view
 
-            val fridgeViews = ArrayList<FridgeView>()
-
-            fridges.forEach {fridge ->
-                fridgeViews.add(fridge.toView(context))
-            }
-
-            // add the default fridge to the first/top of the list
-            val defaultFridge = BottleDatabase.FridgeUtils.getDefault().toView(context)
-
-            if (defaultFridge.size > 0) {
-                fridgeViews.add(0, defaultFridge)
-            }
+            val fridgeViews = getAllFridgeViews(view.context)
 
             view.adapter = FridgeRecyclerViewAdapter(fridgeViews, mListener)
         }
         return view
+    }
+
+    fun getAllFridgeViews(context: Context) : List<FridgeView> {
+        val fridges = BottleDatabase.FridgeUtils.getAll()
+        val fridgeViews = ArrayList<FridgeView>()
+
+        fridges.forEach {fridge ->
+            fridgeViews.add(fridge.toView(context))
+        }
+
+        // add the default fridge to the first/top of the list
+        val defaultFridge = BottleDatabase.FridgeUtils.getDefault().toView(context)
+
+        if (defaultFridge.size > 0) {
+            fridgeViews.add(0, defaultFridge)
+        }
+
+        return fridgeViews
     }
 
     override fun onAttach(context: Context) {
@@ -63,19 +72,30 @@ class FridgeFragment : Fragment() {
         }
     }
 
+    fun refreshRecyclerView(context: Context) {
+        if(recyclerView != null) {
+            val adapter = recyclerView?.adapter as FridgeRecyclerViewAdapter
+            adapter.setDataSet(getAllFridgeViews(context))
+        }
+    }
+
     override fun onDetach() {
         super.onDetach()
+        recyclerView = null
         mListener = null
+    }
+
+    enum class InteractionAction {
+        EDIT, DELETE
     }
 
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: FridgeView?)
+        fun onListFragmentInteraction(item: FridgeView?, action: InteractionAction)
         fun onListFragmentInteraction(item: Bottle?)
     }
 
     companion object {
         private const val ARG_COLUMN_COUNT = "column-count"
-
     }
 }

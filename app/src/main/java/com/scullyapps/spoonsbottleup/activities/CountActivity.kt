@@ -1,6 +1,8 @@
 package com.scullyapps.spoonsbottleup.activities
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -8,6 +10,7 @@ import android.widget.Space
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
+import androidx.preference.PreferenceManager
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.ui.CountBottleView
@@ -55,11 +58,36 @@ class CountActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun setupSettings() {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val allowMaxes = preferences.getBoolean("setting_showMaxAmount", true)
+
+        var lockOnMax = false
+        var allowInvertCounting = false
+
+        // since these depend on allowMaxes, we'll set the users prefs only if allowMaxes is true
+        if(allowMaxes) {
+            lockOnMax = preferences.getBoolean("setting_lockOnMaxAmount", true)
+            allowInvertCounting = preferences.getBoolean("setting_allowInvertCounting", true)
+        }
+
+        Log.i("SharedPrefs", "Allowing max amounts? $allowMaxes")
+        Log.i("SharedPrefs", "Allowing locking on max? $lockOnMax")
+        Log.i("SharedPrefs", "Allowing invert counting? $allowInvertCounting")
+
+        CountBottleView.allowInvert = allowInvertCounting
+        CountBottleView.lockMaxes = lockOnMax
+        CountBottleView.showMaxes = allowMaxes
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_count)
 
         supportActionBar?.title = "Overview"
+
+        setupSettings()
 
         // get all fridges as views
         fridges = BottleDatabase.fridges.map {fridge ->

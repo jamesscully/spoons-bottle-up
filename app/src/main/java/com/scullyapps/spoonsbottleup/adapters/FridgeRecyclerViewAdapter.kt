@@ -9,14 +9,20 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.scullyapps.spoonsbottleup.R
+import com.scullyapps.spoonsbottleup.fragments.FridgeFragment
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 
-class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<FridgeRecyclerViewAdapter.ViewHolder>() {
+class FridgeRecyclerViewAdapter(private var mValues: List<FridgeView>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<FridgeRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.widget_fridge_list, parent, false)
         return ViewHolder(view)
+    }
+
+    public fun setDataSet(data : List<FridgeView>) {
+        this.mValues = data
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -37,7 +43,8 @@ class FridgeRecyclerViewAdapter(private val mValues: List<FridgeView>, private v
             holder.disableButtons()
         }
 
-        holder.btnEdit.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge) }
+        holder.btnEdit.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge, FridgeFragment.InteractionAction.EDIT) }
+        holder.btnDel.setOnClickListener { mListener?.onListFragmentInteraction(holder.fridge, FridgeFragment.InteractionAction.DELETE) }
     }
 
     override fun getItemCount(): Int {

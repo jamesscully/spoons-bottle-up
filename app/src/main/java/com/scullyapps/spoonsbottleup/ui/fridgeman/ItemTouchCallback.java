@@ -1,5 +1,8 @@
 package com.scullyapps.spoonsbottleup.ui.fridgeman;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +29,15 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
         final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
         final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
         return makeMovementFlags(dragFlags, swipeFlags);
+    }
+
+    @Override
+    public int interpolateOutOfBoundsScroll(@NonNull RecyclerView recyclerView, int viewSize, int viewSizeOutOfBounds, int totalSize, long msSinceStartScroll) {
+        final int direction = (int) Math.signum(viewSizeOutOfBounds);
+
+        Log.d("ScrollPos", "Scrolling... vs: " + viewSize + " vsOob: " + viewSizeOutOfBounds + " msSinceScroll: " + msSinceStartScroll);
+
+        return 15 * direction;
     }
 
     @Override

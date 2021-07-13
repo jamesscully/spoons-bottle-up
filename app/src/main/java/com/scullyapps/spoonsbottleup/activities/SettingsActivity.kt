@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.adapters.SettingsPagerAdapter
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
+import com.scullyapps.spoonsbottleup.fragments.FridgeFragment
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
 import com.scullyapps.spoonsbottleup.models.Bottle
@@ -21,20 +22,23 @@ import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener {
     private var CURRENT_TAB = 0
+
     lateinit var toolbar: Toolbar
+    lateinit var sectionsPagerAdapter : SettingsPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val sectionsPagerAdapter = SettingsPagerAdapter(this, supportFragmentManager)
-            toolbar = findViewById(R.id.toolbar_settings)
+        sectionsPagerAdapter = SettingsPagerAdapter(this, supportFragmentManager)
+        toolbar = findViewById(R.id.toolbar_settings)
 
         view_pager.adapter = sectionsPagerAdapter
 
         tabs.setupWithViewPager(view_pager)
 
         setupListeners()
+
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.view_pager, GeneralSettingsFragment())
@@ -45,30 +49,62 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
         Toast.makeText(this, "Item Pressed " + item?.name, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onListFragmentInteraction(item: FridgeView?) {
-        val intent = Intent(this, FridgeManagementActivity::class.java).apply {
-            putExtra("name", item?.fridge?.name)
-        }
+    override fun onListFragmentInteraction(item: FridgeView?, action: FridgeFragment.InteractionAction) {
 
-        startActivity(intent)
+        // do nothing if item null
+        if(item == null)
+            return
+
+        when (action) {
+            // Delete from database, update recycler
+            FridgeFragment.InteractionAction.DELETE -> {
+
+                val builder = AlertDialog.Builder(this).apply {
+                    setTitle("Delete fridge")
+                    setMessage("Are you sure you wish to delete fridge: " + item.fridge.name + "?")
+                    setPositiveButton("Delete") {_, _ ->
+                        BottleDatabase.FridgeUtils.delete(item.fridge.name)
+                        getFridgeFragment()?.refreshRecyclerView(this@SettingsActivity)
+                    }
+                }.create().show()
+            }
+
+            // Open fridge edit activity
+            FridgeFragment.InteractionAction.EDIT -> {
+                val intent = Intent(this, FridgeManagementActivity::class.java).apply {
+                    putExtra("name", item?.fridge?.name)
+                }
+
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun getFridgeFragment() : FridgeFragment? {
+        val key = SettingsPagerAdapter.KEY_FRIDGE_FRAGMENT
+
+        return if(sectionsPagerAdapter.hasFragment(key)) {
+            sectionsPagerAdapter.getFragment(key) as FridgeFragment
+        } else {
+            null
+        }
     }
 
     private fun addFridge() {
-        val dialog = AlertDialog.Builder(this)
+        AlertDialog.Builder(this).apply {
+            val editText = EditText(this@SettingsActivity).apply {
+                inputType = InputType.TYPE_CLASS_TEXT
+            }
 
-        val editText = EditText(this).apply {
-            inputType = InputType.TYPE_CLASS_TEXT
-        }
+            setView(editText)
+            setTitle("Add a new fridge")
 
-        dialog.setView(editText)
+            setPositiveButton("Add") { _, _ ->
+                BottleDatabase.FridgeUtils.add(editText.text.toString())
+                getFridgeFragment()?.refreshRecyclerView(this@SettingsActivity)
+            }
 
-        dialog.setTitle("Add a new fridge")
-
-        dialog.setPositiveButton("Add") { _, _ ->
-            BottleDatabase.FridgeUtils.add(editText.text.toString())
-        }
-
-        dialog.create().show()
+        }.create().show()
     }
 
     private fun setupListeners() {

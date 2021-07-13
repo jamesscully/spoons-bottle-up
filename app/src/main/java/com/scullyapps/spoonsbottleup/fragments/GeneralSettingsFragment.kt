@@ -3,12 +3,11 @@ package com.scullyapps.spoonsbottleup.fragments
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.scullyapps.spoonsbottleup.App
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.ui.dialogs.DataWarningDialog
 
-class GeneralSettingsFragment : PreferenceFragmentCompat() {
+class  GeneralSettingsFragment : PreferenceFragmentCompat() {
 
     val RESET_DATABASE = "resetDatabase"
 
@@ -28,7 +27,7 @@ class GeneralSettingsFragment : PreferenceFragmentCompat() {
                 "Revert"
                 )
                 {
-                    _, _ -> BottleDatabase.copyDatabaseFromAssets(App.getContext())
+                    _, _ -> BottleDatabase.copyDatabaseFromAssets()
                 }
 
                 dialog.show()
