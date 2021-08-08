@@ -2,9 +2,12 @@ import requests
 import json
 import sqlite3
 import re
+import os
 
 from KnownBottleMaxesDict import KnownBottleMaxes
 from Bottle import Bottle
+from IDWhitelist import IDWhiteList
+from IDBlacklist import IDBlackList
 
 # retrieve hidden API endpoints
 import API_URLs 
@@ -15,6 +18,13 @@ menuList = requests.get(url = API_URLs.MenuListURL)
 data = menuList.json()
 
 ##########################
+
+
+if os.path.exists("bottles.db"):
+	os.remove("bottles.db")
+else:
+	print("No pre-generated database found.")
+
 
 # Load all sub-categories (i.e. drinks, food)
 menus = data['menus']
@@ -54,30 +64,36 @@ def findAllCansAndBottles():
 			for product in group['products']:
 				try:
 					eposName = product['eposName']
-					print("Product " + product['displayName'] + " has an eposName of " + eposName)
+					# print("Product " + product['displayName'] + " has an eposName of " + eposName)
 
 				except KeyError:
-					print("Product has no ePos name")
+					# print("Product has no ePos name")
+					pass
+
+				portion = ""
 
 				try:
 					# we can use the api's portion size, which will report Can/Bottle or xxxML Bottle; 
 					# thus giving us only stuff that can be in a fridge
 					portion = product['defaultPortionName']
 
-					# if we have match for can or bottle
-					if portion == "Can" or re.match('^.*(B|b)ottle', portion):
-						# print("Found product: " + product['displayName'] + ", can/bottle: " + portion)
-
-						# add to appropriate array
-						if product['minimumAge'] >= 18:
-							alcohols.append(Bottle(product))
-						else:
-							soft_drinks.append(Bottle(product))
-					
-				# some products dont have a portion size, avoid breaking everything!
+					# some products dont have a portion size, avoid breaking everything!
 				except KeyError:
-					print("Ignoring product, no portion size!: " + product['displayName'])
-					pass
+					print("- No portion size for: " + product['displayName'])
+					
+				
+				# if we have match for can or bottle
+				if portion == "Can" or re.match('^.*(B|b)ottle', portion) or re.match('^.*(G|g)lass', portion) or product['productId'] in IDWhiteList:
+					print("+ Found product: " + product['displayName'] + ", can/bottle: " + portion)
+
+					# add to appropriate array
+					if product['minimumAge'] >= 18:
+						alcohols.append(Bottle(product))
+					else:
+						soft_drinks.append(Bottle(product))
+					
+				
+				
 						
 findAllCansAndBottles()
 
@@ -143,41 +159,9 @@ createTable()
 
 def addBottleToDB(bottle):
 
-	# convert this to hashmap
-	blacklist = [
-		10000078579, 
-		10000078572, 
-		10000080891, 
-		10000078584, 
-		10000078567, 
-		10000129914,
-		10000125487,
-		10000063231,
-		10000052367,
-		10000063480,
-		10000080630,
-		10000000310,
-		10000007990,
-		10000000415,
-		10000000412,
-		10000001319,
-		10000000413,
-		10000085759,
-		10000086214,
-		10000017351,
-		10000125488,
-		10000138946,
-		10000138930,
-		10000036569,
-		10000092182,
-		10000139964,
-		10000106400
-	]
-
-	if bottle.id in blacklist:
-		print("[IGNORE] {}".format(bottle.name))
+	if bottle.id in IDBlackList:
+		print("[IGNORE] {}, id: {}".format(bottle.name, bottle.id))
 		return
-
 		# print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
 
 	cursor = conn.cursor()
