@@ -99,24 +99,23 @@ findAllCansAndBottles()
 
 conn = sqlite3.connect('bottles.db')
 bottles_table_create = ''' 
-CREATE TABLE "Bottles" (
-	"ID"	INTEGER UNIQUE,
-	"Name"	TEXT UNIQUE,
-	"ListOrder"	INTEGER,
-	"StepAmount"	INTEGER,
-	"MaxAmount"	INTEGER,
-	"FridgeID"	TEXT,
-	"MinimumAge" INTEGER,
-	"SizeML" INTEGER,
-	PRIMARY KEY("ID")
-) '''
+	CREATE TABLE IF NOT EXISTS "Bottles" (
+		`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+		`Name` TEXT NOT NULL, `StepAmount` INTEGER NOT NULL, 
+		`MaxAmount` INTEGER NOT NULL, 
+		`FridgeID` TEXT, 
+		`ListOrder` INTEGER NOT NULL, 
+		`MinimumAge` INTEGER NOT NULL, 
+		`SizeML` INTEGER NOT NULL
+		)
+'''
 
 fridges_table_create = '''
-	CREATE TABLE "Fridges" (
-	"Name"	TEXT NOT NULL UNIQUE,
-	"ListOrder"	INTEGER UNIQUE,
-	PRIMARY KEY("Name")
-	)
+	CREATE TABLE IF NOT EXISTS "Fridges" (
+		`name` TEXT NOT NULL, 
+		`ListOrder` INTEGER NOT NULL, 
+		PRIMARY KEY(`name`)
+		)
 '''
 
 epos_table_create = '''

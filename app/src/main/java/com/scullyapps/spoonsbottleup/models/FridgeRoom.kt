@@ -7,7 +7,10 @@ import androidx.room.Query
 
 @Entity(tableName = "Fridges")
 data class FridgeRoom(
-        @PrimaryKey(autoGenerate = true)
+        @PrimaryKey
+        val id: Int,
+
+        @ColumnInfo(name = "Name")
         var name: String,
 
         @ColumnInfo(name = "ListOrder")

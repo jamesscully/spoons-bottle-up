@@ -8,10 +8,12 @@ import androidx.room.RoomDatabase
 import com.scullyapps.spoonsbottleup.models.BottleRoom
 import com.scullyapps.spoonsbottleup.models.BottleRoomDao
 import com.scullyapps.spoonsbottleup.models.FridgeRoom
+import com.scullyapps.spoonsbottleup.models.FridgeRoomDao
 
-@Database(entities = [BottleRoom::class, FridgeRoom::class], version = 1, exportSchema = false)
+@Database(entities = [BottleRoom::class, FridgeRoom::class], version = 1, exportSchema = true)
 abstract class BottleRoomDatabase : RoomDatabase() {
     abstract val bottleRoomDao: BottleRoomDao
+    abstract val fridgeRoomDao: FridgeRoomDao
 
     companion object {
         private var INSTANCE: BottleRoomDatabase? = null
