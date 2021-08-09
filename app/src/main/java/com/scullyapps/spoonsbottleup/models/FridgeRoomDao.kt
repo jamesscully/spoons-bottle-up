@@ -12,6 +12,4 @@ interface FridgeRoomDao {
 
     @Update
     fun update(fridge: Fridge)
-
-
 }

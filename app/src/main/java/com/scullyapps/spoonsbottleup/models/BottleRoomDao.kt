@@ -14,5 +14,8 @@ interface BottleRoomDao {
     fun query(key: Long) : BottleRoom?
 
     @Query("SELECT * FROM Bottles WHERE Name = :name LIMIT 1")
-    fun query(name: String)
+    fun queryByName(name: String) : BottleRoom?
+
+    @Query("SELECT * FROM Bottles WHERE Name = :fridgeName")
+    fun queryByFridge(fridgeName: String) : ArrayList<Fridge>
 }

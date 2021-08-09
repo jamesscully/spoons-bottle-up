@@ -3,13 +3,14 @@ package com.scullyapps.spoonsbottleup.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Query
 
 @Entity(tableName = "Fridges")
 data class FridgeRoom(
-        @PrimaryKey
+        @PrimaryKey(autoGenerate = true)
         var name: String,
-//        var bottles: List<Bottle>,
-        @ColumnInfo(name = "ListOrder")
-        var listOrder: Int = 0) {
 
+        @ColumnInfo(name = "ListOrder")
+        var listOrder: Int
+        ) {
 }
