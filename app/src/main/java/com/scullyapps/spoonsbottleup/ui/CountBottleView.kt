@@ -154,6 +154,14 @@ class CountBottleView : LinearLayout {
         this.count = count
     }
 
+    fun showMaxes(show : Boolean) {
+        if(show) {
+            plaque_text_max.visibility = VISIBLE
+        } else {
+            plaque_text_max.visibility = GONE
+        }
+    }
+
     val name: String
         get() = bottle.name
     val max: Int

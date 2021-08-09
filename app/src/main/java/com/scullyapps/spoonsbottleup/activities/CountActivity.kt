@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Space
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.allViews
@@ -34,37 +35,26 @@ class CountActivity : AppCompatActivity() {
         setupSettings()
 
         val database = BottleRoomDatabase.getInstance(this)
-        val ctx = this;
 
         fridges = database.fridgeRoomDao.getAll()
 
-        for(fridge in fridges) {
-            var bottles: List<BottleRoom> = emptyList()
+        fridges.forEach { fridge ->
 
-            bottles = database.bottleRoomDao.queryByFridge(fridge.name)
+            var bottles: List<BottleRoom> = database.bottleRoomDao.queryByFridge(fridge.name)
 
             if(bottles.isNotEmpty()) {
-                count_layout_main.addView(FridgeHeaderView(ctx, fridge.name))
+                // add header previous to CountBottleViews
+                count_layout_main.addView(FridgeHeaderView(this, fridge.name))
 
+                // load each bottles countview into the recycler
                 bottles.forEach { bottle ->
-                    count_layout_main.addView(CountBottleView(ctx, bottle))
+                    count_layout_main.addView(
+                            CountBottleView(this, bottle)
+                    )
                 }
 
-            } else {
-                Log.w(TAG, "X Bottles list was empty!")
-            }
+            } else { Log.w(TAG, "X Bottles list was empty!") }
         }
-
-
-
-
-        // add default fridge to front
-        // todo
-
-//        // add all fridges with their bottles to the front (these are sorted prior)
-//        for (f in fridges) {
-////            count_layout_main.addView(f, 0)
-//        }
 
         // this adds space at the bottom of the list
         val padding = Space(this).apply {
@@ -73,12 +63,18 @@ class CountActivity : AppCompatActivity() {
 
         count_layout_main.addView(padding, count_layout_main.childCount - 1)
 
+        // since all views should now be loaded - we can display accents (for legibility)
+        accentizeCountViews()
+
         count_button_bottleup.setOnClickListener {
 
-            forAllCountViews { view ->
+            forAllCountViews { view, _ ->
                 if(!bottlingUp) {
-                    if(view.getCount() <= 0) {
+                    if(view.getCount() <= 0 && !view.inverted) {
                         view.visibility = View.GONE
+                    } else if (view.inverted) {
+                        view.setCount(view.max - view.getCount())
+                        view.invert(false)
                     }
                 } else {
                     view.visibility = View.VISIBLE
@@ -93,22 +89,35 @@ class CountActivity : AppCompatActivity() {
 
             // we're done here; invert flag
             bottlingUp = !bottlingUp
+
+            // accentize again if we've entered/exited bottling up mode
+            accentizeCountViews()
         }
 
+        // we only want to show the button if our total selected (amongst views) is > 0
         CountBottleView.totalSelected.observe(this) { count ->
-            if(count > 0) {
-                showControls()
+            showControls(count > 0)
+        }
+    }
+
+    private fun accentizeCountViews() {
+        forAllCountViews { view, index ->
+            if(index % 2 == 0) {
+                view.setBackgroundResource(R.color.plaqueBackgroundAcc)
             } else {
-                hideControls()
+                view.setBackgroundResource(R.color.plaqueBackground)
             }
         }
     }
 
     // Runs f() for each CountBottleView in the RecyclerView
-    private fun forAllCountViews(f: (CountBottleView) -> (Unit)) {
+    private fun forAllCountViews(f: (CountBottleView, Int) -> (Unit)) {
+        var index = 0
         for(view in count_layout_main.allViews) {
             if (view is CountBottleView) {
-                f(view)
+                f(view, index)
+
+                index++
             }
         }
     }
@@ -140,9 +149,9 @@ class CountActivity : AppCompatActivity() {
                 else
                     item.setIcon(R.drawable.ic_unlock)
 
-                // hide maxes if we've unlocked
-                fridges.forEach { fridgeView ->
-//                    fridgeView.showMaxes(CountBottleView.lockMaxes)
+                // hide maxes on lock / unlock
+                forAllCountViews { countBottleView, i ->
+                    countBottleView.showMaxes(CountBottleView.lockMaxes)
                 }
             }
         }
@@ -172,12 +181,11 @@ class CountActivity : AppCompatActivity() {
         CountBottleView.showMaxes = allowMaxes
     }
 
-    private fun showControls() {
-        count_button_bottleup.visibility = View.VISIBLE
-    }
-
-    private fun hideControls() {
-        count_button_bottleup.visibility = View.GONE
+    private fun showControls(show : Boolean) {
+        if(show)
+            count_button_bottleup.visibility = View.VISIBLE
+        else
+            count_button_bottleup.visibility = View.GONE
     }
 
     override fun onBackPressed() {
