@@ -1,31 +1,23 @@
 package com.scullyapps.spoonsbottleup.activities
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Space
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.allViews
-import androidx.core.view.iterator
 import androidx.lifecycle.observe
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.RecyclerView
 import com.scullyapps.spoonsbottleup.R
-import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.data.BottleRoomDatabase
 import com.scullyapps.spoonsbottleup.models.BottleRoom
 import com.scullyapps.spoonsbottleup.models.FridgeRoom
 import com.scullyapps.spoonsbottleup.ui.CountBottleView
 import com.scullyapps.spoonsbottleup.ui.FridgeHeaderView
-import com.scullyapps.spoonsbottleup.ui.FridgeView
 import com.scullyapps.spoonsbottleup.ui.dialogs.DataWarningDialog
 import kotlinx.android.synthetic.main.activity_count.*
-import kotlinx.coroutines.launch
 
 class CountActivity : AppCompatActivity() {
     private var bottlingUp = false
@@ -79,24 +71,19 @@ class CountActivity : AppCompatActivity() {
             visibility = View.INVISIBLE
         }
 
-        count_layout_main.addView(padding)
+        count_layout_main.addView(padding, count_layout_main.childCount - 1)
 
         count_button_bottleup.setOnClickListener {
 
-            for(view in count_layout_main.allViews) {
-                if(view is CountBottleView) {
-                    val countBottleView = view as CountBottleView
-
-                    if(countBottleView.getCount() <= 0) {
-                        countBottleView.visibility = View.GONE
-                    } else {
-                        countBottleView.visibility = View.VISIBLE
+            forAllCountViews { view ->
+                if(!bottlingUp) {
+                    if(view.getCount() <= 0) {
+                        view.visibility = View.GONE
                     }
+                } else {
+                    view.visibility = View.VISIBLE
                 }
             }
-
-//            for (f in fridges)
-//                f.bottleUp(!bottlingUp)
 
             if(bottlingUp) {
                 count_button_bottleup.setText(R.string.bottle_up_button_text)
@@ -113,6 +100,15 @@ class CountActivity : AppCompatActivity() {
                 showControls()
             } else {
                 hideControls()
+            }
+        }
+    }
+
+    // Runs f() for each CountBottleView in the RecyclerView
+    private fun forAllCountViews(f: (CountBottleView) -> (Unit)) {
+        for(view in count_layout_main.allViews) {
+            if (view is CountBottleView) {
+                f(view)
             }
         }
     }
