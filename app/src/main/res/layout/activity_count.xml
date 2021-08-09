@@ -19,12 +19,7 @@
             android:id="@+id/count_layout_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="64dp" />
-        </LinearLayout>
+            android:orientation="vertical"/>
     </ScrollView>
 
     <Button

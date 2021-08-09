@@ -58,10 +58,13 @@ class CountActivity : AppCompatActivity() {
 
         // this adds space at the bottom of the list
         val padding = Space(this).apply {
-            visibility = View.INVISIBLE
+            visibility = View.VISIBLE
+
+            // set minimum height so that space is consistent
+            minimumHeight = 250
         }
 
-        count_layout_main.addView(padding, count_layout_main.childCount - 1)
+        count_layout_main.addView(padding)
 
         // since all views should now be loaded - we can display accents (for legibility)
         accentizeCountViews()
