@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.scullyapps.spoonsbottleup.R
-import com.scullyapps.spoonsbottleup.models.Bottle
 import kotlinx.android.synthetic.main.widget_bottle_list.view.*
 
 class BottleDisplay : ConstraintLayout {

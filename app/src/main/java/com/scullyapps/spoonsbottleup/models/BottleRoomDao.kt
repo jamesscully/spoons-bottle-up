@@ -5,20 +5,20 @@ import androidx.room.*
 @Dao
 interface BottleRoomDao {
     @Insert
-    fun insert(bottle: BottleRoom)
+    fun insert(bottle: Bottle)
 
     @Update
-    fun update(bottle: BottleRoom)
+    fun update(bottle: Bottle)
 
     @Query("SELECT * FROM Bottles")
-    fun getAll() : List<BottleRoom>?
+    fun getAll() : List<Bottle>?
 
     @Query("SELECT * FROM Bottles WHERE id = :key")
-    fun query(key: Long) : BottleRoom?
+    fun query(key: Long) : Bottle?
 
     @Query("SELECT * FROM Bottles WHERE Name = :name LIMIT 1")
-    fun queryByName(name: String) : BottleRoom?
+    fun queryByName(name: String) : Bottle?
 
     @Query("SELECT * FROM Bottles WHERE FridgeID = :fridgeName ORDER BY ListOrder ASC")
-    fun queryByFridge(fridgeName: String) : List<BottleRoom>
+    fun queryByFridge(fridgeName: String) : List<Bottle>
 }

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_fridge_management.*
 
 class FridgeManagementActivity : AppCompatActivity() {
 
-    var bottles: ArrayList<Bottle> = ArrayList()
+    var bottles: List<Bottle> = emptyList()
     var toRemove: MutableList<Bottle> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +33,15 @@ class FridgeManagementActivity : AppCompatActivity() {
             // retrieve our fridge
             val fridgeName = bundle.getString("name", "NONE")
 
-            fridge = BottleDatabase.FridgeUtils.get(fridgeName)!!
-            bottles = fridge.bottles as ArrayList<Bottle>
+            val database = BottleDatabase.getInstance(this)
+
+            fridge = database.fridgeRoomDao.query(fridgeName)
+
+            bottles = database.bottleRoomDao.queryByFridge(fridge.name)
 
             toolbar.title = "Editing $fridgeName"
 
-            val adapter = BottleRecyclerAdapter(bottles, fridge.name)
+            val adapter = BottleRecyclerAdapter(bottles as ArrayList<Bottle>, fridge.name)
             val callback: ItemTouchHelper.Callback = ItemTouchCallback(adapter)
             val itemTouchHelper = ItemTouchHelper(callback)
 

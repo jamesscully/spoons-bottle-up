@@ -1,15 +1,16 @@
 package com.scullyapps.spoonsbottleup.models
 
-import android.content.Context
-import com.scullyapps.spoonsbottleup.ui.FridgeView
+import androidx.room.*
 
-class Fridge(
+@Entity(tableName = "Fridges")
+data class Fridge(
+        @PrimaryKey(autoGenerate = true)
+        var id: Int,
+
+        @ColumnInfo(name = "Name")
         var name: String,
-        var bottles: List<Bottle>,
-        var listOrder: Int = 0
-) {
 
-    fun toView(context: Context) : FridgeView {
-        return FridgeView(context, this)
-    }
+        @ColumnInfo(name = "ListOrder")
+        var listOrder: Int,
+        ) {
 }

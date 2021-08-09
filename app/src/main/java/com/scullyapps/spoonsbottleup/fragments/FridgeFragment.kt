@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.adapters.FridgeRecyclerViewAdapter
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
-import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import java.util.*
 

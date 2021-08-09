@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
-import com.scullyapps.spoonsbottleup.models.Bottle
 import kotlinx.android.synthetic.main.dialog_edit_bottle.view.*
 
 class EditBottleDialog(context: Context, bottle: Bottle) : AlertDialog.Builder(context) {

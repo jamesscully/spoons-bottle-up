@@ -1,35 +1,31 @@
 package com.scullyapps.spoonsbottleup.models
 
-import android.database.Cursor
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "Bottles")
 data class Bottle(
-        val id: String = "",
+        @PrimaryKey(autoGenerate = true)
+        val id: Int,
+        @ColumnInfo(name = "Name")
         var name: String,
+        @ColumnInfo(name = "StepAmount")
         var step: Int = 2,
+        @ColumnInfo(name = "MaxAmount")
         var max: Int = -1,
+        @ColumnInfo(name = "FridgeID")
         var fridgeName: String? = "Default Fridge",
-        var listOrder: Int = -1
+        @ColumnInfo(name = "ListOrder")
+        var listOrder: Int = -1,
+
+        @ColumnInfo(name="MinimumAge")
+        var minimumAge: Int,
+        @ColumnInfo(name = "SizeML" )
+        var sizeMl: Int = 0
+
 ) {
-
-    var custom : Boolean = false
-
-    constructor(name : String, step : Int = 2, max : Int = -1, fName : String = "Default")
-            : this("", name, step, max, fName)
-    {
-        custom = true
-    }
-
-    constructor() : this("Error", 0, -1)
-
-    companion object {
-        fun fromCursor(cursor : Cursor) : Bottle {
-            val id = cursor.getString(0)
-            val name = cursor.getString(1)
-            val order = cursor.getInt(2)
-            val step = cursor.getInt(3)
-            val max = cursor.getInt(4)
-            val fridge = cursor.getString(5) ?: "Default"
-            return Bottle(id, name, step, max, fridge, order)
+        override fun toString(): String {
+                return "[$id] $name belongs to $fridgeName with $max amount"
         }
-    }
 }

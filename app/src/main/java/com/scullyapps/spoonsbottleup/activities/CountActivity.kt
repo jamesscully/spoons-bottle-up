@@ -5,16 +5,15 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Space
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.allViews
 import androidx.lifecycle.observe
 import androidx.preference.PreferenceManager
 import com.scullyapps.spoonsbottleup.R
-import com.scullyapps.spoonsbottleup.data.BottleRoomDatabase
-import com.scullyapps.spoonsbottleup.models.BottleRoom
-import com.scullyapps.spoonsbottleup.models.FridgeRoom
+import com.scullyapps.spoonsbottleup.data.BottleDatabase
+import com.scullyapps.spoonsbottleup.models.Bottle
+import com.scullyapps.spoonsbottleup.models.Fridge
 import com.scullyapps.spoonsbottleup.ui.CountBottleView
 import com.scullyapps.spoonsbottleup.ui.FridgeHeaderView
 import com.scullyapps.spoonsbottleup.ui.dialogs.DataWarningDialog
@@ -22,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_count.*
 
 class CountActivity : AppCompatActivity() {
     private var bottlingUp = false
-    private var fridges: List<FridgeRoom> = emptyList()
+    private var fridges: List<Fridge> = emptyList()
 
     private val TAG = "CountActivity"
 
@@ -34,13 +33,13 @@ class CountActivity : AppCompatActivity() {
 
         setupSettings()
 
-        val database = BottleRoomDatabase.getInstance(this)
+        val database = BottleDatabase.getInstance(this)
 
         fridges = database.fridgeRoomDao.getAll()
 
         fridges.forEach { fridge ->
 
-            var bottles: List<BottleRoom> = database.bottleRoomDao.queryByFridge(fridge.name)
+            var bottles: List<Bottle> = database.bottleRoomDao.queryByFridge(fridge.name)
 
             if(bottles.isNotEmpty()) {
                 // add header previous to CountBottleViews
