@@ -28,6 +28,7 @@ abstract class BottleRoomDatabase : RoomDatabase() {
                             BottleRoomDatabase::class.java,
                             "BottleDatabase.db")
                             .createFromAsset("Bottles.db")
+                            .allowMainThreadQueries()
                             .build()
 
                     INSTANCE = instance

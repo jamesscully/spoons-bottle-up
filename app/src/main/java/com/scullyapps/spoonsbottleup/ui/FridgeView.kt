@@ -43,7 +43,7 @@ class FridgeView(context: Context, var fridge: Fridge) : LinearLayout(context) {
     }
 
     private fun addBottle(bottle: Bottle) {
-        layout_widget_fridge.addView(CountBottleView(context, bottle))
+//        layout_widget_fridge.addView(CountBottleView(context, bottle))
     }
 
     fun bottleUp(hide: Boolean) {

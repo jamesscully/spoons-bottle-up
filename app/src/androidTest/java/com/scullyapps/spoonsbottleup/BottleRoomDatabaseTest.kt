@@ -5,11 +5,9 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.scullyapps.spoonsbottleup.data.BottleRoomDatabase
-import com.scullyapps.spoonsbottleup.models.BottleRoom
-import com.scullyapps.spoonsbottleup.models.BottleRoomDao
-import com.scullyapps.spoonsbottleup.models.FridgeRoom
-import com.scullyapps.spoonsbottleup.models.FridgeRoomDao
+import com.scullyapps.spoonsbottleup.models.*
 import junit.framework.Assert.assertTrue
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
@@ -54,13 +52,29 @@ class BottleRoomDatabaseTest {
         val fridge2 = FridgeRoom(2,"Test2", 4)
         val fridge3 = FridgeRoom(3,"Test3", 98)
 
-        fridgesDao.insert(fridge1)
-        fridgesDao.insert(fridge2)
-        fridgesDao.insert(fridge3)
+        val bottle1 = BottleRoom(5, "Testers", 2, -1, "Test1", -1, 18, 0)
 
-        assertTrue(fridgesDao.query("Test1").listOrder == 5)
-        assertTrue(fridgesDao.query("Test2").listOrder == 4)
-        assertTrue(fridgesDao.query("Test3").listOrder == 98)
+        var output : List<BottleRoom>
+
+        runBlocking {
+            bottlesDao.insert(bottle1)
+
+            fridgesDao.insert(fridge1)
+            fridgesDao.insert(fridge2)
+            fridgesDao.insert(fridge3)
+
+            output = bottlesDao.queryByFridge("Test1")
+        }
+
+        System.out.println(output)
+
+        runBlocking {
+            assertTrue(fridgesDao.query("Test1").listOrder == 5)
+            assertTrue(fridgesDao.query("Test2").listOrder == 4)
+            assertTrue(fridgesDao.query("Test3").listOrder == 98)
+
+            assertTrue(bottlesDao.queryByFridge("Test1")[0] == bottle1)
+        }
     }
 
     @Test
@@ -69,7 +83,9 @@ class BottleRoomDatabaseTest {
         val fridge2 = FridgeRoom(2,"Test2", 4)
         val fridge3 = FridgeRoom(3,"Test3", 98)
 
-        fridgesDao.insert(fridge1, fridge2, fridge3)
+        runBlocking {
+            fridgesDao.insert(fridge1, fridge2, fridge3)
+        }
 
         fridge1.listOrder = 1
         fridge2.listOrder = 2
@@ -77,10 +93,12 @@ class BottleRoomDatabaseTest {
 
         fridge3.name = "Hehe"
 
-        fridgesDao.update(fridge1, fridge2, fridge3)
+        runBlocking {
+            fridgesDao.update(fridge1, fridge2, fridge3)
 
-        assertTrue(fridgesDao.query("Test1").listOrder == 1)
-        assertTrue(fridgesDao.query("Test2").listOrder == 2)
-        assertTrue(fridgesDao.query("Hehe").listOrder == 3)
+            assertTrue(fridgesDao.query("Test1").listOrder == 1)
+            assertTrue(fridgesDao.query("Test2").listOrder == 2)
+            assertTrue(fridgesDao.query("Hehe").listOrder == 3)
+        }
     }
 }

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.models.Bottle
+import com.scullyapps.spoonsbottleup.models.BottleRoom
 import kotlinx.android.synthetic.main.widget_plaque.view.*
 
 class CountBottleView : LinearLayout {
@@ -19,11 +20,11 @@ class CountBottleView : LinearLayout {
     @JvmField
     var inverted = false
 
-    var bottle: Bottle
+    var bottle: BottleRoom
 
     var normalBgId = 0
 
-    constructor(context: Context, bottle: Bottle) : super(context) {
+    constructor(context: Context, bottle: BottleRoom) : super(context) {
         this.bottle = bottle
         init()
     }

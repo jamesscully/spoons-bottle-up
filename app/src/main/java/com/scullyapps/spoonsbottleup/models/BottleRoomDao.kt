@@ -19,6 +19,6 @@ interface BottleRoomDao {
     @Query("SELECT * FROM Bottles WHERE Name = :name LIMIT 1")
     fun queryByName(name: String) : BottleRoom?
 
-//    @Query("SELECT * FROM Bottles WHERE Name = :fridgeName")
-//    fun queryByFridge(fridgeName: String) : List<Fridge>
+    @Query("SELECT * FROM Bottles WHERE FridgeID = :fridgeName ORDER BY ListOrder ASC")
+    fun queryByFridge(fridgeName: String) : List<BottleRoom>
 }
