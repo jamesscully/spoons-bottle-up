@@ -18,16 +18,14 @@ class  GeneralSettingsFragment : PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when(preference?.key) {
             RESET_DATABASE -> {
-
                 val dialog = DataWarningDialog(
                         requireContext(),
                         "Reset database",
                         "This will revert any changes to your fridges and bottles. Do you wish to continue?",
                         "Stay",
-                "Revert"
-                )
-                {
-                    _, _ -> BottleDatabase.copyDatabaseFromAssets()
+                        "Revert") { _, _ ->
+                    requireContext().deleteDatabase("BottlesDatabase")
+                    BottleDatabase.getInstance(requireContext())
                 }
 
                 dialog.show()

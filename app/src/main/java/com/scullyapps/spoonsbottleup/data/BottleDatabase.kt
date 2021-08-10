@@ -17,6 +17,7 @@ abstract class BottleDatabase : RoomDatabase() {
     companion object {
         private var INSTANCE: BottleDatabase? = null
 
+
         fun getInstance(context: Context): BottleDatabase {
             synchronized(this) {
                 var instance = INSTANCE

@@ -5,7 +5,7 @@ import androidx.room.*
 @Entity(tableName = "Fridges")
 data class Fridge(
         @PrimaryKey(autoGenerate = true)
-        var id: Int,
+        var id: Int = 0,
 
         @ColumnInfo(name = "Name")
         var name: String,

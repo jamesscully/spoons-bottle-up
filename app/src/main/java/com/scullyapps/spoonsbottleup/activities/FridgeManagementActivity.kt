@@ -21,9 +21,15 @@ class FridgeManagementActivity : AppCompatActivity() {
     var bottles: List<Bottle> = emptyList()
     var toRemove: MutableList<Bottle> = ArrayList()
 
+    lateinit var database: BottleDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fridge_management)
+
+        // initialize database
+        database = BottleDatabase.getInstance(this)
+
 
         val bundle = intent.extras
         val fridge: Fridge
@@ -33,10 +39,8 @@ class FridgeManagementActivity : AppCompatActivity() {
             // retrieve our fridge
             val fridgeName = bundle.getString("name", "NONE")
 
-            val database = BottleDatabase.getInstance(this)
 
             fridge = database.fridgeRoomDao.query(fridgeName)
-
             bottles = database.bottleRoomDao.queryByFridge(fridge.name)
 
             toolbar.title = "Editing $fridgeName"
@@ -72,7 +76,9 @@ class FridgeManagementActivity : AppCompatActivity() {
 
             Log.d("SaveOrder", "Updating (${bottle.name}) ${bottle.id} to LO: $i")
 
-            BottleDatabase.BottleUtils.setListOrder(bottle.id, i)
+            bottle.listOrder = i
+
+            database.bottleRoomDao.update(bottle)
         }
     }
 

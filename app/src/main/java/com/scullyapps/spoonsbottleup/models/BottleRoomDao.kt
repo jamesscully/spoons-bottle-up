@@ -10,6 +10,9 @@ interface BottleRoomDao {
     @Update
     fun update(bottle: Bottle)
 
+    @Delete
+    fun delete(bottle: Bottle)
+
     @Query("SELECT * FROM Bottles")
     fun getAll() : List<Bottle>?
 

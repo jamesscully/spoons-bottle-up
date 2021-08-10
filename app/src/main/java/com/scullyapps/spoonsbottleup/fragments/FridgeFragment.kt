@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.scullyapps.spoonsbottleup.App
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.adapters.FridgeRecyclerViewAdapter
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
+import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import java.util.*
 
@@ -17,6 +19,8 @@ class FridgeFragment : Fragment() {
 
     private var recyclerView : RecyclerView? = null
 
+    lateinit var database: BottleDatabase
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_settings_fridges, menu)
@@ -24,6 +28,9 @@ class FridgeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        database = BottleDatabase.getInstance(App.getContext())
+
         if (arguments != null) {
             mColumnCount = requireArguments().getInt(ARG_COLUMN_COUNT)
         }
@@ -45,18 +52,11 @@ class FridgeFragment : Fragment() {
     }
 
     fun getAllFridgeViews(context: Context) : List<FridgeView> {
-        val fridges = BottleDatabase.FridgeUtils.getAll()
+        val fridges = database.fridgeRoomDao.getAll()
         val fridgeViews = ArrayList<FridgeView>()
 
         fridges.forEach {fridge ->
-            fridgeViews.add(fridge.toView(context))
-        }
-
-        // add the default fridge to the first/top of the list
-        val defaultFridge = BottleDatabase.FridgeUtils.getDefault().toView(context)
-
-        if (defaultFridge.size > 0) {
-            fridgeViews.add(0, defaultFridge)
+            fridgeViews.add(FridgeView(context, fridge))
         }
 
         return fridgeViews

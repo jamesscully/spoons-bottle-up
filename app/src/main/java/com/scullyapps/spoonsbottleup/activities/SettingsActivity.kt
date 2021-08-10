@@ -16,6 +16,8 @@ import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.fragments.GeneralSettingsFragment
+import com.scullyapps.spoonsbottleup.models.Bottle
+import com.scullyapps.spoonsbottleup.models.Fridge
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 import kotlinx.android.synthetic.main.activity_settings.*
 
@@ -25,9 +27,13 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
     lateinit var toolbar: Toolbar
     lateinit var sectionsPagerAdapter : SettingsPagerAdapter
 
+    lateinit var database: BottleDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        database = BottleDatabase.getInstance(this)
 
         sectionsPagerAdapter = SettingsPagerAdapter(this, supportFragmentManager)
         toolbar = findViewById(R.id.toolbar_settings)
@@ -62,7 +68,7 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
                     setTitle("Delete fridge")
                     setMessage("Are you sure you wish to delete fridge: " + item.fridge.name + "?")
                     setPositiveButton("Delete") {_, _ ->
-                        BottleDatabase.FridgeUtils.delete(item.fridge.name)
+                        database.fridgeRoomDao.delete(item.fridge)
                         getFridgeFragment()?.refreshRecyclerView(this@SettingsActivity)
                     }
                 }.create().show()
@@ -71,7 +77,7 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
             // Open fridge edit activity
             FridgeFragment.InteractionAction.EDIT -> {
                 val intent = Intent(this, FridgeManagementActivity::class.java).apply {
-                    putExtra("name", item?.fridge?.name)
+                    putExtra("name", item.fridge.name)
                 }
 
                 startActivity(intent)
@@ -99,7 +105,7 @@ class SettingsActivity : AppCompatActivity(), OnListFragmentInteractionListener 
             setTitle("Add a new fridge")
 
             setPositiveButton("Add") { _, _ ->
-                BottleDatabase.FridgeUtils.add(editText.text.toString())
+                database.fridgeRoomDao.insert(Fridge(0, editText.text.toString(), 0))
                 getFridgeFragment()?.refreshRecyclerView(this@SettingsActivity)
             }
 

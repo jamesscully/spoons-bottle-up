@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.scullyapps.spoonsbottleup.App
 import com.scullyapps.spoonsbottleup.R
+import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment
 import com.scullyapps.spoonsbottleup.fragments.FridgeFragment.OnListFragmentInteractionListener
 import com.scullyapps.spoonsbottleup.ui.FridgeView
 
 class FridgeRecyclerViewAdapter(private var mValues: List<FridgeView>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<FridgeRecyclerViewAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.widget_fridge_list, parent, false)
@@ -30,7 +33,10 @@ class FridgeRecyclerViewAdapter(private var mValues: List<FridgeView>, private v
         val txtName = holder.txtName
         val txtAmt  = holder.txtAmt
 
-        val bottlesAmount = mValues[position].fridge.bottles.size
+        val fridge = mValues[position].fridge
+
+
+        val bottlesAmount = BottleDatabase.getInstance(App.getContext()).bottleRoomDao.queryByFridge(fridge.name).size
 
         holder.fridge = mValues[position]
 
