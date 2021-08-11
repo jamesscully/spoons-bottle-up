@@ -18,6 +18,8 @@ import com.scullyapps.spoonsbottleup.ui.CountBottleView
 import com.scullyapps.spoonsbottleup.ui.FridgeHeaderView
 import com.scullyapps.spoonsbottleup.ui.dialogs.DataWarningDialog
 import kotlinx.android.synthetic.main.activity_count.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class CountActivity : AppCompatActivity() {
     private var bottlingUp = false

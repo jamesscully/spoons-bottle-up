@@ -6,6 +6,7 @@ import androidx.test.runner.AndroidJUnit4
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.models.*
 import junit.framework.Assert.assertTrue
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -91,12 +92,34 @@ class BottleDatabaseTest {
 
         fridge3.name = "Hehe"
 
-        runBlocking {
-            fridgesDao.update(fridge1, fridge2, fridge3)
+        fridgesDao.update(fridge1, fridge2, fridge3)
 
-            assertTrue(fridgesDao.query("Test1").listOrder == 1)
-            assertTrue(fridgesDao.query("Test2").listOrder == 2)
-            assertTrue(fridgesDao.query("Hehe").listOrder == 3)
+        assertTrue(fridgesDao.query("Test1").listOrder == 1)
+        assertTrue(fridgesDao.query("Test2").listOrder == 2)
+        assertTrue(fridgesDao.query("Hehe").listOrder == 3)
+    }
+
+    @Test
+    fun updateBottleTest() {
+        val bottle1 = Bottle(1,"Test1", 5, 5, "Frid", 5, 28, 330)
+        val bottle2 = Bottle(2,"Test3", 5, 5, "Frid", 6, 28, 330)
+        val bottle3 = Bottle(3,"Test5", 5, 5, "Frid", 7, 28, 330)
+
+        bottlesDao.insert(bottle1, bottle2, bottle3)
+
+        bottle1.listOrder = 1
+        bottle2.listOrder = 2
+        bottle3.listOrder = 3
+
+        bottle3.name = "Hehe"
+
+        run {
+            bottlesDao.update(bottle1, bottle2, bottle3)
         }
+
+
+        assertTrue(bottlesDao.query(1)?.listOrder == 1)
+        assertTrue(bottlesDao.query(2)?.listOrder == 2)
+        assertTrue(bottlesDao.query(3)?.listOrder == 3)
     }
 }
