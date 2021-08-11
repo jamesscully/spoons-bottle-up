@@ -4,11 +4,12 @@ import androidx.room.*
 
 @Dao
 interface BottleRoomDao {
-    @Insert
-    fun insert(bottle: Bottle)
 
-    @Update
-    fun update(bottle: Bottle)
+    @Insert
+    fun insert(vararg bottle: Bottle)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(vararg bottle: Bottle)
 
     @Delete
     fun delete(bottle: Bottle)

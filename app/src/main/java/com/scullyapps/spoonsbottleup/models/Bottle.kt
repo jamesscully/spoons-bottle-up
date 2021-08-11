@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Bottles")
 data class Bottle(
         @PrimaryKey(autoGenerate = true)
-        val id: Int,
+        val id: Long,
         @ColumnInfo(name = "Name")
         var name: String,
         @ColumnInfo(name = "StepAmount")
@@ -17,7 +17,7 @@ data class Bottle(
         @ColumnInfo(name = "FridgeID")
         var fridgeName: String? = "Default Fridge",
         @ColumnInfo(name = "ListOrder")
-        var listOrder: Int = -1,
+        var listOrder: Int,
 
         @ColumnInfo(name="MinimumAge")
         var minimumAge: Int,

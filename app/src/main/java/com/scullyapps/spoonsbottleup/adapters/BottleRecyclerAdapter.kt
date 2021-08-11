@@ -18,9 +18,10 @@ import com.scullyapps.spoonsbottleup.ui.dialogs.EditBottleDialog
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchHelperAdapter
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchHelperViewHolder
 import java.util.*
+import kotlin.collections.ArrayList
 
 class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, private val fridgeName : String) : RecyclerView.Adapter<BottleRecyclerAdapter.ViewHolder>(), ItemTouchHelperAdapter {
-    val items: MutableList<Bottle> = ArrayList()
+    val items: ArrayList<Bottle> = ArrayList()
     private var toRemove: MutableList<Bottle> = ArrayList()
     private var touchHelper: ItemTouchHelper? = null
     var modified = false
@@ -57,7 +58,7 @@ class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, private val fridgeName :
 
             // when the user has finished with the form, update our dataset
             dialog.onSubmitted = {b ->
-
+                Log.d("BottleRecyclerAdapter: ", "Returned bottle has an ID: ${b.id} and LO of ${b.listOrder}")
                 // remove if not relevant to this fridge
                 if(fridgeName != b.fridgeName) {
                     Log.d("RecyclerListAdapter", "Moving fridge")

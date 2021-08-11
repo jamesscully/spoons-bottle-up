@@ -15,11 +15,16 @@ import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.models.Fridge
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback
 import kotlinx.android.synthetic.main.activity_fridge_management.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class FridgeManagementActivity : AppCompatActivity() {
 
     var bottles: List<Bottle> = emptyList()
     var toRemove: MutableList<Bottle> = ArrayList()
+
+    private val TAG = "FridgeManagementActivity"
 
     lateinit var database: BottleDatabase
 
@@ -30,7 +35,6 @@ class FridgeManagementActivity : AppCompatActivity() {
         // initialize database
         database = BottleDatabase.getInstance(this)
 
-
         val bundle = intent.extras
         val fridge: Fridge
         val toolbar = findViewById<Toolbar>(R.id.toolbar_fridgeman)
@@ -38,7 +42,6 @@ class FridgeManagementActivity : AppCompatActivity() {
         if (bundle != null) {
             // retrieve our fridge
             val fridgeName = bundle.getString("name", "NONE")
-
 
             fridge = database.fridgeRoomDao.query(fridgeName)
             bottles = database.bottleRoomDao.queryByFridge(fridge.name)
@@ -74,11 +77,13 @@ class FridgeManagementActivity : AppCompatActivity() {
         for(i in 0 until adapter.items.size) {
             val bottle = adapter.items[i]
 
-            Log.d("SaveOrder", "Updating (${bottle.name}) ${bottle.id} to LO: $i")
+            Log.d(TAG, "Updating (${bottle.name}) ${bottle.id} to LO: $i")
 
             bottle.listOrder = i
 
-            database.bottleRoomDao.update(bottle)
+            run {
+                database.bottleRoomDao.update(bottle)
+            }
         }
     }
 

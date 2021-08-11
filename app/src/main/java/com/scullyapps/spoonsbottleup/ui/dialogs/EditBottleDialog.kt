@@ -9,6 +9,8 @@ import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.models.Bottle
 import kotlinx.android.synthetic.main.dialog_edit_bottle.view.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 class EditBottleDialog(context: Context, bottle: Bottle) : AlertDialog.Builder(context) {
 
@@ -35,9 +37,9 @@ class EditBottleDialog(context: Context, bottle: Bottle) : AlertDialog.Builder(c
         step.setText("${bottle.step}")
 
 
-        val fridgeNames = arrayListOf<String>()
-        database.fridgeRoomDao.getAll().forEach { fridge ->
-            fridgeNames.add(fridge.name)
+        val fridgeNames = ArrayList<String>()
+        database.fridgeRoomDao.getAll().forEach { f ->
+            fridgeNames.add(f.name)
         }
 
 
@@ -50,7 +52,9 @@ class EditBottleDialog(context: Context, bottle: Bottle) : AlertDialog.Builder(c
 
             bottle.fridgeName = fridge.selectedItem as String
 
-            database.bottleRoomDao.update(bottle)
+            runBlocking {
+                database.bottleRoomDao.update(bottle)
+            }
 
             onSubmitted(bottle)
 
