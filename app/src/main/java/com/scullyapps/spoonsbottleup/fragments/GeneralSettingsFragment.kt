@@ -1,8 +1,10 @@
 package com.scullyapps.spoonsbottleup.fragments
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.scullyapps.spoonsbottleup.App
 import com.scullyapps.spoonsbottleup.R
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.ui.dialogs.DataWarningDialog
@@ -24,8 +26,18 @@ class  GeneralSettingsFragment : PreferenceFragmentCompat() {
                         "This will revert any changes to your fridges and bottles. Do you wish to continue?",
                         "Stay",
                         "Revert") { _, _ ->
-                    requireContext().deleteDatabase("BottlesDatabase")
-                    BottleDatabase.getInstance(requireContext())
+
+                    // close database connections
+                    BottleDatabase.getInstance(requireContext()).close()
+
+                    // delete, requesting another instance will reset to db from assets folder
+                    val deleted = App.getContext().deleteDatabase("BottleDatabase.db")
+
+                    var toastText = "Database has been reset"
+                    if(!deleted)
+                        toastText = "Error resetting database"
+
+                    Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
                 }
 
                 dialog.show()
