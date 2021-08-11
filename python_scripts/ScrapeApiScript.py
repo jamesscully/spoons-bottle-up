@@ -161,7 +161,6 @@ def addBottleToDB(bottle):
 	if bottle.id in IDBlackList:
 		print("[IGNORE] {}, id: {}".format(bottle.name, bottle.id))
 		return
-		# print("[   ADD] {} (size: {}), id: {}\n[  DESC] {}\n".format(bottle.name, bottle.getML(), bottle.id, bottle.description.strip("\n")))
 
 	cursor = conn.cursor()
 	cursor.execute("INSERT or IGNORE INTO Bottles (ID, Name, ListOrder, StepAmount, MaxAmount, MinimumAge, SizeML) VALUES (?,?,?,?,?,?,?)", (item.id, item.name, 0, 2, -1, item.minimumAge, item.getML()))
@@ -252,8 +251,24 @@ def presets():
 
 	for id in tonic_flavours:
 		cursor.execute("UPDATE Bottles SET MaxAmount = 6 WHERE ID = " + str(id))
-
 		conn.commit()
+
+
+	# Set max amounts for unspecified; rough estimate!
+	cursor.execute("UPDATE Bottles SET MaxAmount = 6 WHERE (SizeML <= 330) AND MaxAmount = -1")
+	cursor.execute("UPDATE Bottles SET MaxAmount = 5 WHERE (SizeML >= 500) AND MaxAmount = -1")
+
+	# Use stable-db to import maxes from up-to-date database
+	cursor.execute("ATTACH DATABASE 'stabledb/Bottles.db' AS BottlesProd")
+
+	# Copy over listOrder and maxes if ID's match
+	cursor.execute('''	
+						UPDATE main.Bottles
+						SET (ListOrder, MaxAmount) = (BottlesProd.Bottles.ListOrder, BottlesProd.Bottles.MaxAmount)
+						FROM BottlesProd.Bottles
+						WHERE BottlesProd.Bottles.ID = main.Bottles.ID;
+				''')
+	conn.commit()
 	
 
 presets()

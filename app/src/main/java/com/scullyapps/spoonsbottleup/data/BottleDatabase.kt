@@ -1,6 +1,7 @@
 package com.scullyapps.spoonsbottleup.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -9,7 +10,11 @@ import com.scullyapps.spoonsbottleup.models.BottleRoomDao
 import com.scullyapps.spoonsbottleup.models.Fridge
 import com.scullyapps.spoonsbottleup.models.FridgeRoomDao
 
-@Database(entities = [Bottle::class, Fridge::class], version = 1, exportSchema = true)
+@Database(
+        entities = [Bottle::class, Fridge::class],
+        version = 1,
+        exportSchema = true
+)
 abstract class BottleDatabase : RoomDatabase() {
     abstract val bottleRoomDao: BottleRoomDao
     abstract val fridgeRoomDao: FridgeRoomDao
@@ -39,3 +44,4 @@ abstract class BottleDatabase : RoomDatabase() {
         }
     }
 }
+
