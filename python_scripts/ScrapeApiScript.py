@@ -1,3 +1,4 @@
+from sqlite3.dbapi2 import Error
 import requests
 import json
 import sqlite3
@@ -20,10 +21,13 @@ data = menuList.json()
 ##########################
 
 
-if os.path.exists("bottles.db"):
-	os.remove("bottles.db")
-else:
-	print("No pre-generated database found.")
+try:
+	if os.path.exists("bottles.db"):
+		os.remove("bottles.db")
+	else:
+		print("No pre-generated database found.")
+except PermissionError as e:
+	print("Could not remove existing database, ignoring")
 
 
 # Load all sub-categories (i.e. drinks, food)
@@ -112,9 +116,10 @@ bottles_table_create = '''
 
 fridges_table_create = '''
 	CREATE TABLE IF NOT EXISTS "Fridges" (
-		`name` TEXT NOT NULL, 
+		`id` INTEGER NOT NULL,
+		`Name` TEXT NOT NULL, 
 		`ListOrder` INTEGER NOT NULL, 
-		PRIMARY KEY(`name`)
+		PRIMARY KEY(`id`)
 		)
 '''
 
@@ -268,8 +273,8 @@ def presets():
 						FROM BottlesProd.Bottles
 						WHERE BottlesProd.Bottles.ID = main.Bottles.ID;
 				''')
-	conn.commit()
-	
+	conn.commit()	
+
+	conn.close()
 
 presets()
-
