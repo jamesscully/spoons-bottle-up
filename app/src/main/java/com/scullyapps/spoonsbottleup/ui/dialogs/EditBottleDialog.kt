@@ -3,6 +3,7 @@ package com.scullyapps.spoonsbottleup.ui.dialogs
 
 import android.app.AlertDialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import com.scullyapps.spoonsbottleup.R
@@ -52,7 +53,9 @@ class EditBottleDialog(context: Context, bottle: Bottle) : AlertDialog.Builder(c
 
             bottle.fridgeName = fridge.selectedItem as String
 
-            runBlocking {
+            Log.d("EditBottleDialog", "Setting fridgename to: ${fridge.selectedItem as String}")
+
+            run {
                 database.bottleRoomDao.update(bottle)
             }
 

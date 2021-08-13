@@ -13,6 +13,7 @@ import com.scullyapps.spoonsbottleup.adapters.BottleRecyclerAdapter
 import com.scullyapps.spoonsbottleup.data.BottleDatabase
 import com.scullyapps.spoonsbottleup.models.Bottle
 import com.scullyapps.spoonsbottleup.models.Fridge
+import com.scullyapps.spoonsbottleup.ui.dialogs.EditBottleDialog
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback
 import kotlinx.android.synthetic.main.activity_fridge_management.*
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +39,31 @@ class FridgeManagementActivity : AppCompatActivity() {
         val bundle = intent.extras
         val fridge: Fridge
         val toolbar = findViewById<Toolbar>(R.id.toolbar_fridgeman)
+
+        toolbar?.inflateMenu(R.menu.menu_settings_bottles)
+        toolbar?.setOnMenuItemClickListener { menuItem ->
+
+            when(menuItem.itemId) {
+                R.id.action_add_bottle -> {
+                    var bottleToAdd = Bottle(
+                            0, "New Bottle",
+                            2, -1, "Cupboard",
+                            0, 0, 0
+                    )
+
+                    val dialog = EditBottleDialog(this, bottleToAdd)
+                    dialog.setPositiveButton("Create", null)
+                    dialog.onSubmitted = { bottle ->
+                        database.bottleRoomDao.insert(bottle)
+                    }
+
+                    dialog.show()
+                }
+            }
+            false
+        }
+
+
 
         if (bundle != null) {
             // retrieve our fridge
@@ -67,7 +93,11 @@ class FridgeManagementActivity : AppCompatActivity() {
                 fridgeman_nodata.visibility = View.GONE
             }
         }
+
+
     }
+
+
 
     // since the adapter will map any changes to the order,
     // we can just write the current order of items back to the db
