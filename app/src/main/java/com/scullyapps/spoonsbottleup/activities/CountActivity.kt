@@ -83,6 +83,8 @@ class CountActivity : AppCompatActivity() {
                 } else {
                     view.visibility = View.VISIBLE
                 }
+
+                view.setInputMode(bottlingUp)
             }
 
             if(bottlingUp) {
@@ -105,7 +107,7 @@ class CountActivity : AppCompatActivity() {
     }
 
     private fun accentizeCountViews() {
-        forAllCountViews { view, index ->
+        forAllCountViews(affectVisibleOnly = true) { view, index ->
             if(index % 2 == 0) {
                 view.setBackgroundResource(R.color.plaqueBackgroundAcc)
             } else {
@@ -115,10 +117,16 @@ class CountActivity : AppCompatActivity() {
     }
 
     // Runs f() for each CountBottleView in the RecyclerView
-    private fun forAllCountViews(f: (CountBottleView, Int) -> (Unit)) {
+    private fun forAllCountViews(affectVisibleOnly: Boolean = false, f: (CountBottleView, Int) -> (Unit)) {
         var index = 0
         for(view in count_layout_main.allViews) {
             if (view is CountBottleView) {
+
+                // if we only want visible ones, then skip
+                if(affectVisibleOnly && view.visibility != View.VISIBLE) {
+                    continue
+                }
+
                 f(view, index)
 
                 index++
