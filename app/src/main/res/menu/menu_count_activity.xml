@@ -2,14 +2,16 @@
 <menu
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_keep_screen_on"
+        android:icon="@drawable/ic_screen_lock"
+        android:title="Keep screen awake"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_toggle_max_lock"
         android:icon="@drawable/ic_lock"
         android:title="Lock/unlock maxes"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/action_save_list"
-        android:icon="@drawable/ic_save"
-        android:title="Save bottle list"
-        app:showAsAction="always" />
+
 </menu>

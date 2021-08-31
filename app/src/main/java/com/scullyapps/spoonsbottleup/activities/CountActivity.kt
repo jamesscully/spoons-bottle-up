@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.Space
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.allViews
 import androidx.lifecycle.observe
@@ -26,6 +28,8 @@ class CountActivity : AppCompatActivity() {
     private var fridges: List<Fridge> = emptyList()
 
     private val TAG = "CountActivity"
+
+    private var _keepScreenOn : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,8 +151,16 @@ class CountActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_save_list -> {
+            R.id.action_keep_screen_on -> {
+                if(_keepScreenOn) {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                    Toast.makeText(this, "Screen lock disabled", Toast.LENGTH_LONG).show()
+                } else {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                    Toast.makeText(this, "Screen lock enabled", Toast.LENGTH_LONG).show()
+                }
 
+                _keepScreenOn = !_keepScreenOn
             }
 
             R.id.action_toggle_max_lock -> {
