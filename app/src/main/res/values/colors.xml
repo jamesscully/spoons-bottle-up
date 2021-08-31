@@ -13,6 +13,6 @@
     <color name="itemViewBackground">#F0F0F0</color>
 
     <color name="plaqueBackground">#FAFAFA</color>
-    <color name="plaqueBackgroundAcc">#DBDBDB</color>
+    <color name="plaqueBackgroundAcc">#E8E8E8</color>
 
 </resources>

@@ -54,4 +54,7 @@ KnownBottleMaxes = {
 		"Trivento Malbec": 10,
 		"Peroni": 7,
 		"Kopparberg": 6,
+        "Seltzer": 7,
+        "Erdinger": 5,
+        "Tusker": 5
 	}
