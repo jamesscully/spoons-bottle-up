@@ -17,15 +17,15 @@ class  GeneralSettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.layout_settings_general, rootKey)
     }
 
-    override fun onPreferenceTreeClick(preference: Preference?): Boolean {
-        when(preference?.key) {
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+        when(preference.key) {
             RESET_DATABASE -> {
                 val dialog = DataWarningDialog(
-                        requireContext(),
-                        "Reset database",
-                        "This will revert any changes to your fridges and bottles. Do you wish to continue?",
-                        "Stay",
-                        "Revert") { _, _ ->
+                    requireContext(),
+                    "Reset database",
+                    "This will revert any changes to your fridges and bottles. Do you wish to continue?",
+                    "Stay",
+                    "Revert") { _, _ ->
 
                     // close database connections
                     BottleDatabase.getInstance(requireContext()).close()
