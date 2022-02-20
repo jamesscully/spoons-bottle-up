@@ -10,6 +10,7 @@ import android.widget.Space
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.allViews
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.preference.PreferenceManager
 import com.scullyapps.spoonsbottleup.R
