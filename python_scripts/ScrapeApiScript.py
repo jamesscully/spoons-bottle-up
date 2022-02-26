@@ -18,6 +18,9 @@ menuList = requests.get(url = API_URLs.MenuListURL)
 
 data = menuList.json()
 
+file_log_found = "logs/found.txt"
+file_log_ignored = "logs/ignore.txt"
+
 ##########################
 
 
@@ -61,10 +64,12 @@ def findAllCansAndBottles():
 	#				- products (actual data)
 	#					- bottle!
 	
-	sub_menu = drinks_category['subMenu']
+	found_file = open(file_log_found, 'w')
+	ignore_file = open(file_log_ignored, 'w')
 
-	for category in sub_menu:
+	for category in drinks_category['subMenu']:
 		for group in category['productGroups']:
+			print("Category: " + category['headerText'])
 			for product in group['products']:
 				try:
 					eposName = product['eposName']
@@ -83,18 +88,27 @@ def findAllCansAndBottles():
 
 					# some products dont have a portion size, avoid breaking everything!
 				except KeyError:
-					print("- No portion size for: " + product['displayName'])
+					pass
 					
 				
 				# if we have match for can or bottle
 				if portion == "Can" or re.match('^.*(B|b)ottle', portion) or re.match('^.*(G|g)lass', portion) or product['productId'] in IDWhiteList:
-					print("+ Found product: " + product['displayName'] + ", can/bottle: " + portion)
+					print("\t+ Found product: " + product['displayName'] + ", can/bottle: " + portion)
+
+					message = "Found product: " + product['displayName'] + ", ID: " + str(product['productId']) + " category: {} \n".format(category['headerText'])
+					found_file.write(message)
 
 					# add to appropriate array
 					if product['minimumAge'] >= 18:
 						alcohols.append(Bottle(product))
 					else:
 						soft_drinks.append(Bottle(product))
+				else:
+					message = "Ignored product: " + product['displayName'] + ", ID: " + str(product['productId']) + " category: {} \n".format(category['headerText'])
+					ignore_file.write(message)
+	
+	found_file.close()
+	ignore_file.close()
 					
 				
 				
@@ -266,13 +280,13 @@ def presets():
 	# Use stable-db to import maxes from up-to-date database
 	cursor.execute("ATTACH DATABASE 'stabledb/Bottles.db' AS BottlesProd")
 
-	# Copy over listOrder and maxes if ID's match
-	cursor.execute('''	
-						UPDATE main.Bottles
-						SET (ListOrder, MaxAmount) = (BottlesProd.Bottles.ListOrder, BottlesProd.Bottles.MaxAmount)
-						FROM BottlesProd.Bottles
-						WHERE BottlesProd.Bottles.ID = main.Bottles.ID;
-				''')
+	# # Copy over listOrder and maxes if ID's match
+	# cursor.execute('''	
+	# 					UPDATE main.Bottles
+	# 					SET (ListOrder, MaxAmount) = (BottlesProd.Bottles.ListOrder, BottlesProd.Bottles.MaxAmount)
+	# 					FROM BottlesProd.Bottles
+	# 					WHERE BottlesProd.Bottles.ID = main.Bottles.ID;
+	# 			''')
 	conn.commit()	
 
 	conn.close()

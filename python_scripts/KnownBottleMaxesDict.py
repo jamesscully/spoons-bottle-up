@@ -7,7 +7,7 @@ KnownBottleMaxes = {
 		"Hooch": 12,
 		"Strathmore sparkling": 12,
 		"Strathmore still": 18,
-		"Beck’s Blue - Alcohol free": 6,
+		# "Beck’s Blue - Alcohol free": 6,
 		"Beck’s": 12,
 		"Budweiser": 10,
 		"Brut": 4,

@@ -27,6 +27,4 @@ IDBlackList = [
     10000115433,
     10000017483, # White Zinfandel Rose
     10000125490  # Wolf Blass
-
-    
 ]
