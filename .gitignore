@@ -94,7 +94,22 @@ app/.idea
 app/src/main/java/com/scullyapps/spoonsbottleup/data/API.kt
 
 python_scripts/API_URLs.py
+python_scripts/V2/API_URLs.py
 python_scripts/__pycache__/
+python_scripts/V2/__pycache__/
+python_scripts/V2/classes/__pycache__/
 python_scripts/bottles.db
 
 *.old
+/app/schemas/com.scullyapps.spoonsbottleup.data.BottleDatabase/1.json
+/app/schemas/com.scullyapps.spoonsbottleup.data.BottleRoomDatabase/1.json
+/python_scripts/405.json
+/python_scripts/activity.txt
+/python_scripts/bottles.db.bak
+/app/src/main/assets/Bottles-8aug.db.bak
+/app/src/main/assets/Bottles-11aug.db.bak
+/python_scripts/logs/found.txt
+/python_scripts/frag_signin.txt
+/python_scripts/golden.sql
+/python_scripts/logs/ignore.txt
+/python_scripts/strings.txt
