@@ -10,6 +10,7 @@ import android.widget.Space
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.allViews
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.preference.PreferenceManager
@@ -106,9 +107,9 @@ class CountActivity : AppCompatActivity() {
         }
 
         // we only want to show the button if our total selected (amongst views) is > 0
-        CountBottleView.totalSelected.observe(this) { count ->
+        CountBottleView.totalSelected.observe(this, Observer { count ->
             showControls(count > 0)
-        }
+        })
     }
 
     private fun accentizeCountViews() {

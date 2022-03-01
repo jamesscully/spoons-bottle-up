@@ -7,5 +7,6 @@ IDWhiteList = [
     10000129811, # Blk Cordial
     10000129813, # Org Cordial
     10000000703, # Milk
-    10000139489  # Becks
+    10000139489, # Becks
+    10000000373  # Banana Sambuca
 ]
