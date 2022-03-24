@@ -72,24 +72,28 @@ def loopAllProducts():
 						
 			filtered = [Product]
 
+			l = lambda x: x.isDrink
+
 			if choice == 'f':
-				filtered = list(filter(lambda x: x.isFood, _products))
+				l = lambda x: x.isFood
 			elif choice == 'd':
-				filtered = list(filter(lambda x: x.isDrink, _products))
+				l = lambda x: x.isDrink
 			elif choice == 'm':
-				filtered = list(filter(lambda x: x.isMisc, _products))
+				l = lambda x: x.isMisc
 			elif choice == 'x':
-				filtered = list(filter(lambda x: x.isDraught, _products))
+				l = lambda x: x.isDraught
 			elif choice == 'c':
-				filtered = list(filter(lambda x: x.isCanOrBottle, _products))
+				l = lambda x: x.isCanOrBottle
 			elif choice == 'r':
-				filtered = list(filter(lambda x: x.minimumAge >= 18, _products))
+				l = lambda x: x.minimumAge >= 18
 			elif choice == 's':
-				filtered = list(filter(lambda x: x.isSpirit, _products))
+				l = lambda x: x.isSpirit
 			elif choice == 'b':
-				filtered = list(filter(lambda x: x.productId in IDBlackList, _products))
+				l = lambda x: x.productId in IDBlackList
 			else:
 				loopAllProducts()
+
+			filtered = list(filter(l, _products))
 
 			if len(filtered) > 0 and choice != 'b': 
 				print("\n--------------")
@@ -151,7 +155,7 @@ def addBottleToDB(product: Product):
 		return
 
 	cursor = conn.cursor()
-	cursor.execute("INSERT or IGNORE INTO Product (ID, Name, Description, EposName, ListOrder, StepAmount, MaxAmount, MinimumAge, FridgeID, IsDrink, IsFood, IsMisc, IsDraught, IsCanOrBottle) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
+	cursor.execute("INSERT or IGNORE INTO Product (ID, Name, Description, EposName, ListOrder, StepAmount, MaxAmount, MinimumAge, FridgeID, IsDrink, IsMisc, IsDraught, IsSpirit, IsCanOrBottle) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
 		(product.productId, 
 		product.displayName, 
 		product.description, 
@@ -162,9 +166,9 @@ def addBottleToDB(product: Product):
 		product.minimumAge, 
 		"", 
 		product.isDrink, 
-		product.isFood, 
 		product.isMisc, 
 		product.isDraught, 
+		product.isSpirit,
 		product.isCanOrBottle)
 	)
 	cursor.execute("INSERT or IGNORE INTO EposNames (ID, EposName, Name) VALUES (?,?,?)", (product.productId, product.eposName, product.displayName))

@@ -113,3 +113,5 @@ python_scripts/bottles.db
 /python_scripts/golden.sql
 /python_scripts/logs/ignore.txt
 /python_scripts/strings.txt
+app/src/main/assets/Bottles-mar.db.bak
+/python_scripts/V2/logs/

@@ -16,9 +16,6 @@ import com.scullyapps.spoonsbottleup.models.Fridge
 import com.scullyapps.spoonsbottleup.ui.dialogs.EditBottleDialog
 import com.scullyapps.spoonsbottleup.ui.fridgeman.ItemTouchCallback
 import kotlinx.android.synthetic.main.activity_fridge_management.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class FridgeManagementActivity : AppCompatActivity() {
 
@@ -46,9 +43,20 @@ class FridgeManagementActivity : AppCompatActivity() {
             when(menuItem.itemId) {
                 R.id.action_add_bottle -> {
                     var bottleToAdd = Bottle(
-                            0, "New Bottle",
-                            2, -1, "Cupboard",
-                            0, 0, 0
+                        0,
+                        "New Bottle",
+                        "",
+                        "",
+                        2,
+                        -1,
+                        "Cupboard",
+                        0,
+                        0,
+                        isDrink = false,
+                        isMisc = false,
+                        isDraught = false,
+                        isSpirit = false,
+                        isCanOrBottle = true
                     )
 
                     val dialog = EditBottleDialog(this, bottleToAdd)
@@ -70,7 +78,7 @@ class FridgeManagementActivity : AppCompatActivity() {
             val fridgeName = bundle.getString("name", "NONE")
 
             fridge = database.fridgeRoomDao.query(fridgeName)
-            bottles = database.bottleRoomDao.queryByFridge(fridge.name)
+            bottles = database.bottleRoomDao.queryBottlesByFridge(fridge.name)
 
             toolbar.title = "Editing $fridgeName"
 
@@ -78,7 +86,7 @@ class FridgeManagementActivity : AppCompatActivity() {
             val callback: ItemTouchHelper.Callback = ItemTouchCallback(adapter)
             val itemTouchHelper = ItemTouchHelper(callback)
 
-            fridgeman_recycler.setHasFixedSize(true)
+//            fridgeman_recycler.setHasFixedSize(true)
             fridgeman_recycler.adapter = adapter
             fridgeman_recycler.layoutManager = LinearLayoutManager(this)
 
@@ -107,7 +115,7 @@ class FridgeManagementActivity : AppCompatActivity() {
         for(i in 0 until adapter.items.size) {
             val bottle = adapter.items[i]
 
-            Log.d(TAG, "Updating (${bottle.name}) ${bottle.id} to LO: $i")
+            Log.d(TAG, "Updating (${bottle.name}) ${bottle.ID} to LO: $i")
 
             bottle.listOrder = i
 

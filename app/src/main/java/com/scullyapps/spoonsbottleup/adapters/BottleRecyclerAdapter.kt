@@ -24,6 +24,9 @@ class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, private val fridgeName :
     val items: ArrayList<Bottle> = ArrayList()
     private var toRemove: MutableList<Bottle> = ArrayList()
     private var touchHelper: ItemTouchHelper? = null
+
+    var toMoved: MutableList<Long> = ArrayList()
+
     var modified = false
 
 
@@ -58,12 +61,15 @@ class BottleRecyclerAdapter(bottles: ArrayList<Bottle>, private val fridgeName :
 
             // when the user has finished with the form, update our dataset
             dialog.onSubmitted = {b ->
-                Log.d("BottleRecyclerAdapter: ", "Returned bottle has an ID: ${b.id} and LO of ${b.listOrder}")
+                Log.d("BottleRecyclerAdapter: ", "Returned bottle has an ID: ${b.ID} and LO of ${b.listOrder}")
                 // remove if not relevant to this fridge
                 if(fridgeName != b.fridgeName) {
                     Log.d("RecyclerListAdapter", "Moving fridge")
-                    items.removeAt(position)
-                    notifyItemRemoved(position)
+//                    items.removeAt(position)
+                    // simply hide holder, since data will already be changed
+                    toMoved.add(b.ID)
+                    holder.itemView.visibility = View.GONE
+//                    notifyItemRemoved(position)
                 } else {
                     items[position] = b
                     notifyDataSetChanged()

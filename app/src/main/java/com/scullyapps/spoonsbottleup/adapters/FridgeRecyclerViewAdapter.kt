@@ -36,7 +36,7 @@ class FridgeRecyclerViewAdapter(private var mValues: List<FridgeView>, private v
         val fridge = mValues[position].fridge
 
 
-        val bottlesAmount = BottleDatabase.getInstance(App.getContext()).bottleRoomDao.queryByFridge(fridge.name).size
+        val bottlesAmount = BottleDatabase.getInstance(App.getContext()).bottleRoomDao.queryBottlesByFridge(fridge.name).size
 
         holder.fridge = mValues[position]
 

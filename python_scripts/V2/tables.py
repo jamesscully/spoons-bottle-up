@@ -1,0 +1,37 @@
+BOTTLE_TABLE_CREATE = """
+CREATE TABLE "Product" (
+	"ID"	INTEGER NOT NULL UNIQUE,
+	"Name"	TEXT NOT NULL UNIQUE,
+	"Description"	TEXT,
+	"EposName"	TEXT,
+    "ListOrder" INTEGER NOT NULL,
+	"StepAmount"	INTEGER NOT NULL,
+	"MaxAmount"	INTEGER NOT NULL,
+    "MinimumAge" INTEGER NOT NULL,
+	"FridgeID"	TEXT,
+	"IsDrink"	INTEGER NOT NULL,
+	"IsMisc"	INTEGER NOT NULL,
+	"IsDraught"	INTEGER NOT NULL,
+	"IsSpirit" INTEGER NOT NULL,
+	"IsCanOrBottle"	INTEGER NOT NULL,
+	PRIMARY KEY("ID" AUTOINCREMENT)
+)
+"""
+
+FRIDGES_TABLE_CREATE = '''
+	CREATE TABLE IF NOT EXISTS "Fridges" (
+		`id` INTEGER NOT NULL,
+		`Name` TEXT NOT NULL, 
+		`ListOrder` INTEGER NOT NULL, 
+		PRIMARY KEY(`id`)
+		)
+'''
+
+EPOS_TABLE_CREATE = '''
+	CREATE TABLE "EposNames" (
+	"ID"	INTEGER UNIQUE,
+	"EposName"	TEXT NOT NULL UNIQUE,
+	"Name"	TEXT NOT NULL,
+	PRIMARY KEY("ID")
+	)
+'''

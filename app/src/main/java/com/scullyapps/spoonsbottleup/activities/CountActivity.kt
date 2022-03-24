@@ -43,11 +43,22 @@ class CountActivity : AppCompatActivity() {
 
         val database = BottleDatabase.getInstance(this)
 
+
+        val undefinedFridgeNameView = FridgeHeaderView(this, "Unsorted")
+        val undefinedBottles = database.bottleRoomDao.getUndefinedBottles()
+
+        if(undefinedBottles.isNotEmpty()) {
+            count_layout_main.addView(undefinedFridgeNameView)
+            undefinedBottles.forEach {
+                count_layout_main.addView(CountBottleView(this, it))
+            }
+        }
+
         fridges = database.fridgeRoomDao.getAll()
 
         fridges.forEach { fridge ->
 
-            var bottles: List<Bottle> = database.bottleRoomDao.queryByFridge(fridge.name)
+            var bottles: List<Bottle> = database.bottleRoomDao.queryBottlesByFridge(fridge.name)
 
             if(bottles.isNotEmpty()) {
                 // add header previous to CountBottleViews

@@ -22,7 +22,7 @@ class FridgeView(context: Context, var fridge: Fridge) : LinearLayout(context) {
 
         database = BottleDatabase.getInstance(context)
 
-        bottles = database.bottleRoomDao.queryByFridge(fridge.name)
+        bottles = database.bottleRoomDao.queryBottlesByFridge(fridge.name)
 
         for(bottle in bottles) {
             addBottle(bottle)
